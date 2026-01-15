@@ -1,69 +1,63 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "TechForge",
+  description:
+    "Kiến tạo giải pháp số cho doanh nghiệp. Đối tác công nghệ tin cậy đồng hành từ ý tưởng đến sản phẩm hoàn chỉnh.",
   navItems: [
     {
-      label: "Home",
+      label: "Trang chủ",
       href: "/",
     },
     {
-      label: "Docs",
-      href: "/docs",
+      label: "Dịch vụ",
+      href: "#services",
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: "Công nghệ",
+      href: "#tech-stack",
     },
     {
-      label: "Blog",
-      href: "/blog",
+      label: "Tại sao TechForge",
+      href: "#why-us",
     },
     {
-      label: "About",
-      href: "/about",
+      label: "FAQ",
+      href: "#faq",
+    },
+    {
+      label: "Liên hệ",
+      href: "#contact",
     },
   ],
   navMenuItems: [
     {
-      label: "Profile",
-      href: "/profile",
+      label: "Trang chủ",
+      href: "/",
     },
     {
-      label: "Dashboard",
-      href: "/dashboard",
+      label: "Dịch vụ",
+      href: "#services",
     },
     {
-      label: "Projects",
-      href: "/projects",
+      label: "Công nghệ",
+      href: "#tech-stack",
     },
     {
-      label: "Team",
-      href: "/team",
+      label: "Tại sao TechForge",
+      href: "#why-us",
     },
     {
-      label: "Calendar",
-      href: "/calendar",
+      label: "FAQ",
+      href: "#faq",
     },
     {
-      label: "Settings",
-      href: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      href: "/help-feedback",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
+      label: "Liên hệ",
+      href: "#contact",
     },
   ],
   links: {
-    github: "https://github.com/heroui-inc/heroui",
-    twitter: "https://twitter.com/hero_ui",
-    docs: "https://heroui.com",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
+    zalo: "https://zalo.me/0945700813",
+    phone: "tel:0945700813",
   },
 };
