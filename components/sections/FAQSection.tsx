@@ -5,34 +5,34 @@ import { FadeIn } from "@/components/ui/motion-primitives";
 
 const faqItems = [
   {
-    question: "Chi phi du an duoc tinh nhu the nao?",
+    question: "Chi phí dự án được tính như thế nào?",
     answer:
-      "Chi phi phu thuoc vao scope, do phuc tap va timeline cua du an. Chung toi cung cap bao gia chi tiet sau khi phan tich yeu cau, khong phat sinh chi phi an. Co the thanh toan theo giai doan de giam rui ro cho ca hai ben.",
+      "Chi phí phụ thuộc vào scope, độ phức tạp và timeline của dự án. Chúng tôi cung cấp báo giá chi tiết sau khi phân tích yêu cầu, không phát sinh chi phí ẩn. Có thể thanh toán theo giai đoạn để giảm rủi ro cho cả hai bên.",
   },
   {
-    question: "Thoi gian hoan thanh du an bao lau?",
+    question: "Thời gian hoàn thành dự án bao lâu?",
     answer:
-      "Tuy thuoc vao quy mo du an. MVP cho startup thuong tu 4-8 tuan, du an enterprise tu 3-6 thang. Chung toi cam ket timeline ro rang ngay tu dau va bao cao tien do dinh ky hang tuan.",
+      "Tùy thuộc vào quy mô dự án. MVP cho startup thường từ 4-8 tuần, dự án enterprise từ 3-6 tháng. Chúng tôi cam kết timeline rõ ràng ngay từ đầu và báo cáo tiến độ định kỳ hàng tuần.",
   },
   {
-    question: "Co ho tro sau khi ban giao khong?",
+    question: "Có hỗ trợ sau khi bàn giao không?",
     answer:
-      "Co. Tat ca du an deu co warranty period tu 1-3 thang tuy goi. Chung toi cung cung cap goi maintenance & support dai han voi SLA ro rang de dam bao he thong van hanh on dinh.",
+      "Có. Tất cả dự án đều có warranty period từ 1-3 tháng tùy gói. Chúng tôi cũng cung cấp gói maintenance & support dài hạn với SLA rõ ràng để đảm bảo hệ thống vận hành ổn định.",
   },
   {
-    question: "Lam sao dam bao chat luong code?",
+    question: "Làm sao đảm bảo chất lượng code?",
     answer:
-      "Chung toi ap dung code review dinh ky, automated testing (unit test, integration test), CI/CD pipeline, va tuan thu coding standards quoc te. Ban giao kem documentation day du va source code sach.",
+      "Chúng tôi áp dụng code review định kỳ, automated testing (unit test, integration test), CI/CD pipeline, và tuân thủ coding standards quốc tế. Bàn giao kèm documentation đầy đủ và source code sạch.",
   },
   {
-    question: "Co ky NDA bao mat thong tin khong?",
+    question: "Có ký NDA bảo mật thông tin không?",
     answer:
-      "Co. Chung toi luon ky NDA (Non-Disclosure Agreement) truoc khi bat dau du an de dam bao an toan thong tin tuyet doi cho doanh nghiep. Day la quy trinh bat buoc voi moi khach hang.",
+      "Có. Chúng tôi luôn ký NDA (Non-Disclosure Agreement) trước khi bắt đầu dự án để đảm bảo an toàn thông tin tuyệt đối cho doanh nghiệp. Đây là quy trình bắt buộc với mọi khách hàng.",
   },
   {
-    question: "Lam viec remote hay onsite?",
+    question: "Làm việc remote hay onsite?",
     answer:
-      "Linh hoat theo nhu cau cua doanh nghiep. Team co the lam viec 100% remote, onsite tai van phong khach hang, hoac hybrid. Bao cao tien do dinh ky qua meeting online hoac truc tiep tuy yeu cau.",
+      "Linh hoạt theo nhu cầu của doanh nghiệp. Team có thể làm việc 100% remote, onsite tại văn phòng khách hàng, hoặc hybrid. Báo cáo tiến độ định kỳ qua meeting online hoặc trực tiếp tùy yêu cầu.",
   },
 ];
 
@@ -44,13 +44,13 @@ export default function FAQSection() {
         <FadeIn distance={40} duration={0.8}>
           <div className="text-center mb-12">
             <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-wider mb-3">
-              Cau hoi thuong gap
+              Câu hỏi thường gặp
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
-              Giai dap thac mac
+              Giải đáp thắc mắc
             </h2>
             <p className="text-lg text-slate-600">
-              Nhung cau hoi pho bien ve dich vu cua chung toi
+              Những câu hỏi phổ biến về dịch vụ của chúng tôi
             </p>
           </div>
         </FadeIn>

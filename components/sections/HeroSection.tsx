@@ -16,6 +16,16 @@ import {
 } from "lucide-react";
 import { Link } from "@heroui/link";
 import Image from "next/image";
+import {
+  ReactIcon,
+  NextJSIcon,
+  TypeScriptIcon,
+  NodeJSIcon,
+  PythonIcon,
+  DockerIcon,
+  TailwindIcon,
+  PostgreSQLIcon,
+} from "@/components/ui/tech-brand-icons";
 
 // Glassmorphism floating badge component
 function GlassBadge({
@@ -40,9 +50,9 @@ function GlassBadge({
     >
       <motion.div
         className="flex items-center gap-2 px-4 py-2.5 rounded-2xl
-          bg-white/70 backdrop-blur-xl
-          border border-white/50
-          shadow-lg shadow-black/5"
+          bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl
+          border border-white/50 dark:border-slate-700/50
+          shadow-lg shadow-black/5 dark:shadow-black/20"
         animate={{ y: [-4, 4, -4] }}
         transition={{
           duration: 3 + delay,
@@ -57,39 +67,61 @@ function GlassBadge({
         >
           <Icon className="w-4 h-4" style={{ color }} />
         </div>
-        <span className="text-sm font-semibold text-slate-700">{label}</span>
+        <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+          {label}
+        </span>
       </motion.div>
     </motion.div>
   );
 }
 
-// Tech icon for scroll reveal - simplified version
+// Tech icon for scroll reveal - with brand SVG icons
 function TechIconReveal({
   icon: Icon,
-  color,
   name,
-  delay,
+  scrollProgress,
+  index,
+  total,
 }: {
   icon: React.ElementType;
-  color: string;
   name: string;
-  delay: number;
+  scrollProgress: MotionValue<number>;
+  index: number;
+  total: number;
 }) {
+  // Calculate stagger timing for each icon
+  const startThreshold = 0.1 + (index / total) * 0.3;
+  const endThreshold = startThreshold + 0.15;
+
+  const opacity = useTransform(
+    scrollProgress,
+    [startThreshold, endThreshold],
+    [0, 1],
+  );
+
+  const yPos = useTransform(
+    scrollProgress,
+    [startThreshold, endThreshold],
+    [40, 0],
+  );
+
+  const scaleVal = useTransform(
+    scrollProgress,
+    [startThreshold, endThreshold],
+    [0.7, 1],
+  );
+
   return (
     <motion.div
       className="flex flex-col items-center gap-2"
-      initial={{ opacity: 0, y: 30, scale: 0.8 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay, duration: 0.5, ease: "easeOut" }}
-      viewport={{ once: true, margin: "-50px" }}
+      style={{ opacity, y: yPos, scale: scaleVal }}
     >
-      <div
-        className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg bg-white"
-        style={{ boxShadow: `0 8px 30px ${color}25` }}
-      >
-        <Icon className="w-7 h-7" style={{ color }} />
+      <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+        <Icon className="w-8 h-8" />
       </div>
-      <span className="text-xs font-medium text-slate-500">{name}</span>
+      <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+        {name}
+      </span>
     </motion.div>
   );
 }
@@ -163,23 +195,25 @@ export default function HeroSection() {
   ];
 
   const techIcons = [
-    { icon: Code2, color: "#E34F26", name: "HTML5" },
-    { icon: Layers, color: "#1572B6", name: "CSS3" },
-    { icon: Zap, color: "#F7DF1E", name: "JavaScript" },
-    { icon: Globe, color: "#61DAFB", name: "React" },
-    { icon: Database, color: "#000000", name: "Next.js" },
-    { icon: Cpu, color: "#3178C6", name: "TypeScript" },
+    { icon: ReactIcon, name: "React" },
+    { icon: NextJSIcon, name: "Next.js" },
+    { icon: TypeScriptIcon, name: "TypeScript" },
+    { icon: NodeJSIcon, name: "Node.js" },
+    { icon: PythonIcon, name: "Python" },
+    { icon: TailwindIcon, name: "Tailwind" },
+    { icon: PostgreSQLIcon, name: "PostgreSQL" },
+    { icon: DockerIcon, name: "Docker" },
   ];
 
   return (
     <section
       ref={heroRef}
       id="hero"
-      className="relative min-h-[120vh] w-full overflow-hidden bg-slate-50"
+      className="relative min-h-[120vh] w-full overflow-hidden bg-slate-50 dark:bg-slate-900"
     >
-      {/* Background Layer - hero-video.webp bleeding right */}
+      {/* Background Layer - hero-video.webp bleeding right (full width, centered laptop) */}
       <motion.div
-        className="absolute top-0 right-0 w-[65%] h-full z-0"
+        className="absolute top-0 right-0 w-[60%] h-full z-0"
         style={{ scale: imageScale, opacity: imageOpacity }}
       >
         {/* The image */}
@@ -188,7 +222,7 @@ export default function HeroSection() {
             src="/hero-video.webp"
             alt="TechForge Portfolio Showcase"
             fill
-            className="object-cover object-left"
+            className="object-cover object-center"
             priority
             quality={85}
           />
@@ -196,32 +230,16 @@ export default function HeroSection() {
 
         {/* Gradient mask - fades from left to right */}
         <div
-          className="absolute inset-0 z-10"
-          style={{
-            background: `linear-gradient(
-              to right,
-              rgb(248, 250, 252) 0%,
-              rgb(248, 250, 252) 10%,
-              rgba(248, 250, 252, 0.95) 20%,
-              rgba(248, 250, 252, 0.7) 35%,
-              rgba(248, 250, 252, 0.3) 50%,
-              rgba(248, 250, 252, 0) 70%
-            )`,
-          }}
+          className="absolute inset-0 z-10 bg-gradient-to-r 
+            from-slate-50 via-slate-50/70 to-transparent
+            dark:from-slate-900 dark:via-slate-900/70 dark:to-transparent"
         />
 
         {/* Top/Bottom gradient for blending */}
         <div
-          className="absolute inset-0 z-10"
-          style={{
-            background: `linear-gradient(
-              to bottom,
-              rgb(248, 250, 252) 0%,
-              transparent 15%,
-              transparent 85%,
-              rgb(248, 250, 252) 100%
-            )`,
-          }}
+          className="absolute inset-0 z-10 bg-gradient-to-b 
+            from-slate-50 via-transparent to-slate-50
+            dark:from-slate-900 dark:via-transparent dark:to-slate-900"
         />
       </motion.div>
 
@@ -251,12 +269,12 @@ export default function HeroSection() {
           <div className="max-w-xl">
             {/* Badge */}
             <FadeIn delay={0} distance={30}>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-slate-200 shadow-sm mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-slate-200 dark:border-slate-700 shadow-sm mb-6">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0066FF] opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0066FF]" />
                 </span>
-                <span className="text-sm font-medium text-slate-600">
+                <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
                   IT Solutions Partner
                 </span>
               </div>
@@ -265,14 +283,14 @@ export default function HeroSection() {
             {/* Main Title */}
             <FadeIn delay={0.1} distance={40}>
               <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 tracking-tight">
-                <span className="text-slate-900">Tech</span>
+                <span className="text-slate-900 dark:text-white">Tech</span>
                 <span className="text-[#0066FF]">Forge</span>
               </h1>
             </FadeIn>
 
             {/* Tagline */}
             <FadeIn delay={0.2} distance={40}>
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-slate-700 mb-4">
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-slate-700 dark:text-slate-200 mb-4">
                 Kiến tạo giải pháp số
                 <br />
                 <span className="text-[#0066FF]">cho doanh nghiệp</span>
@@ -281,7 +299,7 @@ export default function HeroSection() {
 
             {/* Subtitle */}
             <FadeIn delay={0.3} distance={40}>
-              <p className="text-base md:text-lg text-slate-500 mb-8 leading-relaxed">
+              <p className="text-base md:text-lg text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
                 Đối tác công nghệ tin cậy đồng hành cùng doanh nghiệp từ ý tưởng
                 đến sản phẩm hoàn chỉnh. Chúng tôi giúp bạn số hóa, tối ưu quy
                 trình và tăng trưởng bền vững.
@@ -328,7 +346,9 @@ export default function HeroSection() {
                       />
                       {stat.suffix && <span>{stat.suffix}</span>}
                     </div>
-                    <span className="text-sm text-slate-500">{stat.label}</span>
+                    <span className="text-sm text-slate-500 dark:text-slate-400">
+                      {stat.label}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -339,15 +359,16 @@ export default function HeroSection() {
 
       {/* Tech Icons Scroll Reveal Section */}
       <div className="absolute bottom-[15%] left-0 right-0 z-30">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-4 md:gap-8">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="flex items-center justify-center gap-4 md:gap-6 flex-wrap">
             {techIcons.map((tech, index) => (
               <TechIconReveal
                 key={tech.name}
                 icon={tech.icon}
-                color={tech.color}
                 name={tech.name}
-                delay={index * 0.1}
+                scrollProgress={scrollYProgress}
+                index={index}
+                total={techIcons.length}
               />
             ))}
           </div>
@@ -366,7 +387,7 @@ export default function HeroSection() {
           href="#services"
           className="flex flex-col items-center gap-2 group cursor-pointer"
         >
-          <span className="text-xs text-slate-400 uppercase tracking-widest group-hover:text-slate-600 transition-colors">
+          <span className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-widest group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors">
             Khám phá
           </span>
           <motion.div
@@ -377,7 +398,7 @@ export default function HeroSection() {
               ease: "easeInOut",
             }}
           >
-            <ChevronDown className="w-6 h-6 text-slate-300 group-hover:text-[#0066FF] transition-colors" />
+            <ChevronDown className="w-6 h-6 text-slate-300 dark:text-slate-600 group-hover:text-[#0066FF] transition-colors" />
           </motion.div>
         </a>
       </motion.div>

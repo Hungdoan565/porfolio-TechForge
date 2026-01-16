@@ -13,14 +13,14 @@ const serviceOptions = [
   { value: "consulting", label: "Technical Consulting" },
   { value: "mvp", label: "MVP Development" },
   { value: "maintenance", label: "Maintenance & Support" },
-  { value: "other", label: "Khac" },
+  { value: "other", label: "Khác" },
 ];
 
 export default function ContactSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert(
-      "Cam on ban da lien he! Chung toi se phan hoi trong thoi gian som nhat.",
+      "Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.",
     );
   };
 
@@ -31,14 +31,14 @@ export default function ContactSection() {
         <FadeIn distance={40} duration={0.8}>
           <div className="text-center mb-12">
             <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-wider mb-3">
-              Lien he
+              Liên hệ
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
-              Bat dau du an cua ban
+              Bắt đầu dự án của bạn
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Lien he ngay de duoc tu van mien phi ve giai phap cong nghe phu
-              hop
+              Liên hệ ngay để được tư vấn miễn phí về giải pháp công nghệ phù
+              hợp
             </p>
           </div>
         </FadeIn>
@@ -52,13 +52,13 @@ export default function ContactSection() {
               transition={{ duration: 0.3 }}
             >
               <h3 className="text-xl font-bold text-slate-800 mb-6">
-                Gui yeu cau tu van
+                Gửi yêu cầu tư vấn
               </h3>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input
-                    label="Ho va ten"
-                    placeholder="Nguyen Van A"
+                    label="Họ và tên"
+                    placeholder="Nguyễn Văn A"
                     variant="bordered"
                     isRequired
                     classNames={{
@@ -67,7 +67,7 @@ export default function ContactSection() {
                     }}
                   />
                   <Input
-                    label="So dien thoai"
+                    label="Số điện thoại"
                     placeholder="0912 345 678"
                     variant="bordered"
                     type="tel"
@@ -89,8 +89,8 @@ export default function ContactSection() {
                   }}
                 />
                 <Select
-                  label="Loai dich vu"
-                  placeholder="Chon dich vu quan tam"
+                  label="Loại dịch vụ"
+                  placeholder="Chọn dịch vụ quan tâm"
                   variant="bordered"
                   classNames={{
                     trigger: "border-slate-200 hover:border-blue-300",
@@ -101,8 +101,8 @@ export default function ContactSection() {
                   ))}
                 </Select>
                 <Textarea
-                  label="Mo ta yeu cau"
-                  placeholder="Mo ta ngan gon ve du an hoac van de ban can giai quyet..."
+                  label="Mô tả yêu cầu"
+                  placeholder="Mô tả ngắn gọn về dự án hoặc vấn đề bạn cần giải quyết..."
                   variant="bordered"
                   minRows={4}
                   classNames={{
@@ -117,7 +117,7 @@ export default function ContactSection() {
                   radius="full"
                   className="w-full font-semibold bg-[#0066FF] hover:bg-[#0052CC] shadow-lg shadow-blue-500/25"
                 >
-                  Gui yeu cau tu van
+                  Gửi yêu cầu tư vấn
                 </Button>
               </form>
             </motion.div>
@@ -140,11 +140,11 @@ export default function ContactSection() {
                   <div className="flex items-center gap-3 mb-3">
                     <MessageCircle className="w-6 h-6" />
                     <h3 className="text-xl font-bold">
-                      Lien he nhanh qua Zalo
+                      Liên hệ nhanh qua Zalo
                     </h3>
                   </div>
                   <p className="text-white/80 mb-6">
-                    Phan hoi nhanh trong vong 2 gio lam viec
+                    Phản hồi nhanh trong vòng 2 giờ làm việc
                   </p>
                   <Link
                     href="https://zalo.me/0945700813"
@@ -165,7 +165,7 @@ export default function ContactSection() {
                 transition={{ duration: 0.3 }}
               >
                 <h3 className="text-xl font-bold text-slate-800">
-                  Thong tin lien he
+                  Thông tin liên hệ
                 </h3>
 
                 <div className="space-y-5">
@@ -178,7 +178,7 @@ export default function ContactSection() {
                       <p className="text-lg font-semibold text-slate-800">
                         0945 700 813
                       </p>
-                      <p className="text-sm text-slate-600">Huy Dien</p>
+                      <p className="text-sm text-slate-600">Huy Diễn</p>
                     </div>
                   </div>
 
@@ -187,12 +187,12 @@ export default function ContactSection() {
                       <Clock className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500">Gio lam viec</p>
+                      <p className="text-sm text-slate-500">Giờ làm việc</p>
                       <p className="text-lg font-semibold text-slate-800">
                         T2 - T7: 9:00 - 18:00
                       </p>
                       <p className="text-sm text-slate-600">
-                        Ho tro khan cap 24/7
+                        Hỗ trợ khẩn cấp 24/7
                       </p>
                     </div>
                   </div>
@@ -202,12 +202,12 @@ export default function ContactSection() {
                       <MapPin className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500">Khu vuc</p>
+                      <p className="text-sm text-slate-500">Khu vực</p>
                       <p className="text-lg font-semibold text-slate-800">
-                        TP. Ho Chi Minh
+                        TP. Hồ Chí Minh
                       </p>
                       <p className="text-sm text-slate-600">
-                        Ho tro remote toan quoc
+                        Hỗ trợ remote toàn quốc
                       </p>
                     </div>
                   </div>

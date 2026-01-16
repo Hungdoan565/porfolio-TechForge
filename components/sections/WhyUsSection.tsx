@@ -14,58 +14,58 @@ import {
 const features = [
   {
     icon: ShieldCheck,
-    title: "Chat luong code",
+    title: "Chất lượng code",
     description:
-      "Code sach, co documentation, de bao tri va mo rong theo chuan quoc te",
+      "Code sạch, có documentation, dễ bảo trì và mở rộng theo chuẩn quốc tế",
     color: "text-[#0066FF]",
     bg: "bg-blue-50",
   },
   {
     icon: Clock,
-    title: "Giao dung deadline",
-    description: "98% du an giao dung han cam ket voi bao cao tien do dinh ky",
+    title: "Giao đúng deadline",
+    description: "98% dự án giao đúng hạn cam kết với báo cáo tiến độ định kỳ",
     color: "text-emerald-600",
     bg: "bg-emerald-50",
   },
   {
     icon: Headphones,
-    title: "Ho tro sau ban giao",
+    title: "Hỗ trợ sau bàn giao",
     description:
-      "Bao hanh va ho tro ky thuat lien tuc sau khi hoan thanh du an",
+      "Bảo hành và hỗ trợ kỹ thuật liên tục sau khi hoàn thành dự án",
     color: "text-sky-600",
     bg: "bg-sky-50",
   },
   {
     icon: LayoutGrid,
-    title: "Quy trinh chuyen nghiep",
+    title: "Quy trình chuyên nghiệp",
     description:
-      "Lam viec theo Agile/Scrum voi sprint ro rang, minh bach tu dau den cuoi",
+      "Làm việc theo Agile/Scrum với sprint rõ ràng, minh bạch từ đầu đến cuối",
     color: "text-orange-600",
     bg: "bg-orange-50",
   },
   {
     icon: Wallet,
-    title: "Gia ca minh bach",
+    title: "Giá cả minh bạch",
     description:
-      "Bao gia ro rang, chi tiet, khong phat sinh chi phi an trong suot du an",
+      "Báo giá rõ ràng, chi tiết, không phát sinh chi phí ẩn trong suốt dự án",
     color: "text-teal-600",
     bg: "bg-teal-50",
   },
   {
     icon: Lock,
-    title: "Bao mat thong tin",
+    title: "Bảo mật thông tin",
     description:
-      "Ky NDA bao mat, dam bao an toan tuyet doi cho du lieu doanh nghiep",
+      "Ký NDA bảo mật, đảm bảo an toàn tuyệt đối cho dữ liệu doanh nghiệp",
     color: "text-rose-600",
     bg: "bg-rose-50",
   },
 ];
 
 const stats = [
-  { value: 50, suffix: "+", label: "Du an hoan thanh" },
-  { value: 30, suffix: "+", label: "Khach hang tin tuong" },
-  { value: 5, suffix: "+", label: "Nam kinh nghiem" },
-  { value: 10, suffix: "+", label: "Cong nghe thanh thao" },
+  { value: 50, suffix: "+", label: "Dự án hoàn thành" },
+  { value: 30, suffix: "+", label: "Khách hàng tin tưởng" },
+  { value: 5, suffix: "+", label: "Năm kinh nghiệm" },
+  { value: 10, suffix: "+", label: "Công nghệ thành thạo" },
 ];
 
 export default function WhyUsSection() {
@@ -85,14 +85,14 @@ export default function WhyUsSection() {
         <FadeIn distance={40} duration={0.8}>
           <div className="text-center mb-16">
             <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-wider mb-3">
-              Tai sao chon chung toi
+              Tại sao chọn chúng tôi
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
-              Cam ket chat luong va su hai long
+              Cam kết chất lượng và sự hài lòng
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Chung toi khong chi code, chung toi xay dung moi quan he doi tac
-              lau dai voi khach hang
+              Chúng tôi không chỉ code, chúng tôi xây dựng mối quan hệ đối tác
+              lâu dài với khách hàng
             </p>
           </div>
         </FadeIn>

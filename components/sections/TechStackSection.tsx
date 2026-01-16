@@ -20,14 +20,14 @@ export default function TechStackSection() {
         <FadeIn distance={40} duration={0.8}>
           <div className="text-center mb-16 px-4">
             <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-wider mb-3">
-              Cong nghe
+              Công nghệ
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
-              Stack cong nghe hien dai
+              Stack công nghệ hiện đại
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Su dung cac cong nghe moi nhat dam bao hieu suat va kha nang mo
-              rong
+              Sử dụng các công nghệ mới nhất đảm bảo hiệu suất và khả năng mở
+              rộng
             </p>
           </div>
         </FadeIn>
@@ -40,7 +40,7 @@ export default function TechStackSection() {
         {/* Bottom caption */}
         <FadeIn delay={0.4} distance={20}>
           <p className="text-center text-sm text-slate-500 mt-12 px-4">
-            Va nhieu cong nghe khac tuy theo yeu cau du an
+            Và nhiều công nghệ khác tùy theo yêu cầu dự án
           </p>
         </FadeIn>
       </div>

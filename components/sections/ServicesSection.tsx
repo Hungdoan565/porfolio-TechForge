@@ -15,9 +15,9 @@ const services = [
   {
     icon: Code2,
     title: "Custom Software Development",
-    titleVi: "Phat trien phan mem theo yeu cau",
+    titleVi: "Phát triển phần mềm theo yêu cầu",
     description:
-      "Xay dung giai phap phan mem duoc thiet ke rieng, toi uu cho quy trinh kinh doanh cua doanh nghiep ban.",
+      "Xây dựng giải pháp phần mềm được thiết kế riêng, tối ưu cho quy trình kinh doanh của doanh nghiệp bạn.",
     features: [
       "Web Applications",
       "Mobile Applications",
@@ -30,14 +30,14 @@ const services = [
   {
     icon: Settings,
     title: "Technical Consulting",
-    titleVi: "Tu van cong nghe",
+    titleVi: "Tư vấn công nghệ",
     description:
-      "Tu van chuyen sau giup doanh nghiep dua ra quyet dinh cong nghe dung dan, tiet kiem chi phi va thoi gian.",
+      "Tư vấn chuyên sâu giúp doanh nghiệp đưa ra quyết định công nghệ đúng đắn, tiết kiệm chi phí và thời gian.",
     features: [
-      "Tu van kien truc he thong",
-      "Danh gia & toi uu code",
-      "Lua chon tech stack",
-      "Quy trinh Agile/Scrum",
+      "Tư vấn kiến trúc hệ thống",
+      "Đánh giá & tối ưu code",
+      "Lựa chọn tech stack",
+      "Quy trình Agile/Scrum",
     ],
     color: "#10B981",
     bgColor: "bg-emerald-50",
@@ -45,9 +45,9 @@ const services = [
   {
     icon: Rocket,
     title: "MVP Development",
-    titleVi: "Xay dung MVP cho Startup",
+    titleVi: "Xây dựng MVP cho Startup",
     description:
-      "Bien y tuong thanh san pham thuc te trong thoi gian ngan nhat, giup startup nhanh chong validate thi truong.",
+      "Biến ý tưởng thành sản phẩm thực tế trong thời gian ngắn nhất, giúp startup nhanh chóng validate thị trường.",
     features: [
       "Rapid Prototyping",
       "Lean Development",
@@ -76,14 +76,14 @@ export default function ServicesSection() {
         <FadeIn distance={40} duration={0.8}>
           <div className="text-center mb-16">
             <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-wider mb-3">
-              Dich vu
+              Dịch vụ
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
-              Giai phap cong nghe toan dien
+              Giải pháp công nghệ toàn diện
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Dap ung moi nhu cau so hoa cua doanh nghiep voi doi ngu chuyen gia
-              giau kinh nghiem
+              Đáp ứng mọi nhu cầu số hóa của doanh nghiệp với đội ngũ chuyên gia
+              giàu kinh nghiệm
             </p>
           </div>
         </FadeIn>
@@ -163,7 +163,7 @@ export default function ServicesSection() {
                     href="#contact"
                     className="inline-flex items-center gap-2 text-[#0066FF] font-semibold hover:text-[#0052CC] transition-colors group/link"
                   >
-                    Tim hieu them
+                    Tìm hiểu thêm
                     <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
                   </Link>
                 </motion.div>
@@ -176,14 +176,14 @@ export default function ServicesSection() {
         <FadeIn distance={40} duration={0.8} delay={0.4}>
           <div className="text-center mt-16">
             <p className="text-slate-600 mb-4">
-              Khong tim thay dich vu phu hop? Hay lien he de duoc tu van giai
-              phap rieng.
+              Không tìm thấy dịch vụ phù hợp? Hãy liên hệ để được tư vấn giải
+              pháp riêng.
             </p>
             <Link
               href="#contact"
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#0066FF] text-white rounded-full font-semibold hover:bg-[#0052CC] transition-all shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30"
             >
-              Lien he tu van
+              Liên hệ tư vấn
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
