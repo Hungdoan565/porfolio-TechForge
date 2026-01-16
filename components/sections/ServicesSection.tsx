@@ -1,6 +1,7 @@
 "use client";
 
-import { FadeIn, HoverScale } from "@/components/ui/motion-primitives";
+import { FadeIn } from "@/components/ui/motion-primitives";
+import SpotlightCard from "@/components/ui/SpotlightCard";
 import { Link } from "@heroui/link";
 import { motion } from "framer-motion";
 import {
@@ -10,6 +11,7 @@ import {
   Check,
   ArrowRight,
 } from "@/components/ui/icons";
+import type { LucideIcon } from "lucide-react";
 
 const services = [
   {
@@ -25,7 +27,10 @@ const services = [
       "API & Integration",
     ],
     color: "#0066FF",
-    bgColor: "bg-blue-50",
+    spotlightColor: "rgba(0, 102, 255, 0.15)",
+    hoverBorderColor: "rgba(0, 102, 255, 0.4)",
+    iconBg: "bg-blue-500/10 dark:bg-blue-500/20",
+    iconGlow: "bg-blue-500/30",
   },
   {
     icon: Settings,
@@ -40,7 +45,10 @@ const services = [
       "Quy trình Agile/Scrum",
     ],
     color: "#10B981",
-    bgColor: "bg-emerald-50",
+    spotlightColor: "rgba(16, 185, 129, 0.15)",
+    hoverBorderColor: "rgba(16, 185, 129, 0.4)",
+    iconBg: "bg-emerald-500/10 dark:bg-emerald-500/20",
+    iconGlow: "bg-emerald-500/30",
   },
   {
     icon: Rocket,
@@ -55,35 +63,93 @@ const services = [
       "Market-ready Product",
     ],
     color: "#F59E0B",
-    bgColor: "bg-amber-50",
+    spotlightColor: "rgba(245, 158, 11, 0.15)",
+    hoverBorderColor: "rgba(245, 158, 11, 0.4)",
+    iconBg: "bg-amber-500/10 dark:bg-amber-500/20",
+    iconGlow: "bg-amber-500/30",
   },
 ];
+
+// Icon Glow Component
+function IconWithGlow({
+  Icon,
+  color,
+  bgClass,
+  glowClass,
+}: {
+  Icon: LucideIcon;
+  color: string;
+  bgClass: string;
+  glowClass: string;
+}) {
+  return (
+    <motion.div
+      className="relative"
+      whileHover={{
+        scale: 1.1,
+        rotate: [0, -5, 5, 0],
+      }}
+      transition={{ duration: 0.4 }}
+    >
+      {/* Glow effect behind icon */}
+      <div
+        className={`absolute inset-0 ${glowClass} rounded-2xl blur-xl opacity-60 transition-opacity duration-300 group-hover:opacity-100`}
+      />
+      {/* Icon container */}
+      <div
+        className={`relative w-14 h-14 rounded-2xl ${bgClass} flex items-center justify-center transition-all duration-300`}
+      >
+        <Icon
+          className="w-7 h-7 transition-transform duration-300"
+          color={color}
+          strokeWidth={1.5}
+        />
+      </div>
+    </motion.div>
+  );
+}
 
 export default function ServicesSection() {
   return (
     <section
       id="services"
-      className="py-24 md:py-32 bg-white dark:bg-slate-950 relative overflow-hidden"
+      className="py-24 md:py-32 bg-slate-50 dark:bg-slate-950 relative overflow-hidden"
     >
-      {/* Background decoration - Subtle */}
+      {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50/50 dark:bg-blue-900/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-slate-50/50 dark:bg-slate-800/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+        {/* Gradient orbs */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-blue-500/5 to-purple-500/5 dark:from-blue-500/10 dark:to-purple-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-500/5 to-cyan-500/5 dark:from-emerald-500/10 dark:to-cyan-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+
+        {/* Grid pattern for dark mode */}
+        <div
+          className="absolute inset-0 opacity-0 dark:opacity-[0.02]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: "60px 60px",
+          }}
+        />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
         {/* Section Header */}
         <FadeIn distance={40} duration={0.8}>
           <div className="text-center mb-16">
-            <span className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3">
-              Dịch vụ
-            </span>
+            <motion.span
+              className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              Dich vu
+            </motion.span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              Giải pháp công nghệ toàn diện
+              Giai phap cong nghe toan dien
             </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-              Đáp ứng mọi nhu cầu số hóa của doanh nghiệp với đội ngũ chuyên gia
-              giàu kinh nghiệm
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              Dap ung moi nhu cau so hoa cua doanh nghiep voi doi ngu chuyen gia
+              giau kinh nghiem
             </p>
           </div>
         </FadeIn>
@@ -95,97 +161,104 @@ export default function ServicesSection() {
               key={index}
               distance={60}
               duration={0.8}
-              delay={0.1 * index}
+              delay={0.15 * index}
             >
-              <HoverScale scale={1.02}>
-                <motion.div
-                  className="group h-full flex flex-col bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-xl hover:border-slate-200 dark:hover:border-slate-600 transition-all duration-500 relative overflow-hidden"
-                  whileHover={{
-                    y: -4,
-                  }}
+              <SpotlightCard
+                className="group h-full p-8"
+                spotlightColor={service.spotlightColor}
+                hoverBorderColor={service.hoverBorderColor}
+                showBorderGlow={true}
+              >
+                {/* Icon */}
+                <IconWithGlow
+                  Icon={service.icon}
+                  color={service.color}
+                  bgClass={service.iconBg}
+                  glowClass={service.iconGlow}
+                />
+
+                {/* Title */}
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white mt-6 mb-1 group-hover:text-[#0066FF] dark:group-hover:text-blue-400 transition-colors duration-300">
+                  {service.title}
+                </h3>
+                <p
+                  className="text-sm font-medium mb-4 transition-colors duration-300"
+                  style={{ color: service.color }}
                 >
-                  {/* Icon */}
-                  <motion.div
-                    className={`relative w-14 h-14 rounded-2xl ${service.bgColor} flex items-center justify-center mb-6`}
-                    whileHover={{
-                      scale: 1.1,
-                      rotate: [0, -5, 5, 0],
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <service.icon
-                      className="w-7 h-7"
-                      style={{ color: service.color }}
-                      strokeWidth={1.5}
-                    />
-                  </motion.div>
+                  {service.titleVi}
+                </p>
 
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-1 group-hover:text-[#0066FF] dark:group-hover:text-blue-400 transition-colors">
-                    {service.title}
-                  </h3>
-                  <p
-                    className="text-sm font-medium mb-4"
-                    style={{ color: service.color }}
-                  >
-                    {service.titleVi}
-                  </p>
+                {/* Description */}
+                <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+                  {service.description}
+                </p>
 
-                  {/* Description */}
-                  <p className="text-slate-600 dark:text-slate-300 mb-6 flex-grow leading-relaxed">
-                    {service.description}
-                  </p>
-
-                  {/* Features */}
-                  <ul className="space-y-2.5 mb-6">
-                    {service.features.map((feature, idx) => (
-                      <motion.li
-                        key={idx}
-                        className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.1 * idx }}
-                        viewport={{ once: true }}
+                {/* Features */}
+                <ul className="space-y-2.5 mb-6">
+                  {service.features.map((feature, idx) => (
+                    <motion.li
+                      key={idx}
+                      className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300"
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * idx + 0.3 }}
+                      viewport={{ once: true }}
+                    >
+                      <div
+                        className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                        style={{
+                          backgroundColor: `${service.color}15`,
+                        }}
                       >
-                        <div className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-100 dark:group-hover:bg-blue-900 transition-colors">
-                          <Check
-                            className="w-3 h-3 text-[#0066FF] dark:text-blue-400"
-                            strokeWidth={3}
-                          />
-                        </div>
+                        <Check
+                          className="w-3 h-3"
+                          color={service.color}
+                          strokeWidth={3}
+                        />
+                      </div>
+                      <span className="group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300">
                         {feature}
-                      </motion.li>
-                    ))}
-                  </ul>
+                      </span>
+                    </motion.li>
+                  ))}
+                </ul>
 
-                  {/* CTA */}
-                  <Link
-                    href="#contact"
-                    className="inline-flex items-center gap-2 text-[#0066FF] dark:text-blue-400 font-semibold hover:text-[#0052CC] dark:hover:text-blue-300 transition-colors group/link"
-                  >
-                    Tìm hiểu thêm
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-                  </Link>
-                </motion.div>
-              </HoverScale>
+                {/* CTA */}
+                <Link
+                  href="#contact"
+                  className="inline-flex items-center gap-2 font-semibold transition-all duration-300 group/link"
+                  style={{ color: service.color }}
+                >
+                  <span className="relative">
+                    Tim hieu them
+                    <span
+                      className="absolute bottom-0 left-0 w-0 h-0.5 group-hover/link:w-full transition-all duration-300"
+                      style={{ backgroundColor: service.color }}
+                    />
+                  </span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+                </Link>
+              </SpotlightCard>
             </FadeIn>
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <FadeIn distance={40} duration={0.8} delay={0.4}>
+        <FadeIn distance={40} duration={0.8} delay={0.5}>
           <div className="text-center mt-16">
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              Không tìm thấy dịch vụ phù hợp? Hãy liên hệ để được tư vấn giải
-              pháp riêng.
+            <p className="text-slate-600 dark:text-slate-400 mb-6">
+              Khong tim thay dich vu phu hop? Hay lien he de duoc tu van giai
+              phap rieng.
             </p>
-            <Link
-              href="#contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#0066FF] text-white rounded-full font-semibold hover:bg-[#0052CC] transition-all shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30"
-            >
-              Liên hệ tư vấn
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Link
+                href="#contact"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-[#0066FF] text-white rounded-full font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 hover:bg-[#0052CC]"
+              >
+                Lien he tu van
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
           </div>
         </FadeIn>
       </div>
