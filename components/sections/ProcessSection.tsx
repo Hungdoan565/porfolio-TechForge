@@ -146,25 +146,25 @@ export default function ProcessSection() {
   return (
     <section
       id="process"
-      className="py-24 md:py-32 bg-slate-50 relative overflow-hidden"
+      className="py-24 md:py-32 bg-slate-50 dark:bg-slate-900 relative overflow-hidden"
     >
       {/* Background decoration - Subtle */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-sky-100/50 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-100/50 dark:bg-blue-900/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-sky-100/50 dark:bg-sky-900/30 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
         {/* Section Header */}
         <FadeIn distance={40} duration={0.8}>
           <div className="text-center mb-16">
-            <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-wider mb-3">
+            <span className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3">
               Quy trình
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-4">
               Quy trình làm việc chuyên nghiệp
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
               5 bước đơn giản để biến ý tưởng thành sản phẩm hoàn chỉnh
             </p>
           </div>
@@ -180,11 +180,11 @@ export default function ProcessSection() {
               onMouseLeave={() => setIsAutoPlaying(true)}
             >
               {/* Orbit ring */}
-              <div className="absolute w-80 h-80 rounded-full border-2 border-dashed border-slate-200" />
+              <div className="absolute w-80 h-80 rounded-full border-2 border-dashed border-slate-200 dark:border-slate-700" />
 
               {/* Center content */}
               <motion.div
-                className="absolute w-32 h-32 rounded-full bg-[#0066FF] flex items-center justify-center shadow-lg shadow-blue-500/30"
+                className="absolute w-32 h-32 rounded-full bg-[#0066FF] dark:bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >
@@ -204,10 +204,10 @@ export default function ProcessSection() {
                     key={step.id}
                     className={`absolute w-14 h-14 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 ${
                       isActive
-                        ? "bg-white shadow-xl shadow-blue-500/20 scale-125 z-20"
-                        : "bg-white/80 hover:bg-white hover:shadow-lg z-10"
+                        ? "bg-white dark:bg-slate-800 shadow-xl shadow-blue-500/20 scale-125 z-20"
+                        : "bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg z-10"
                     } border-2 ${
-                      isActive ? "border-[#0066FF]" : "border-slate-200"
+                      isActive ? "border-[#0066FF] dark:border-blue-400" : "border-slate-200 dark:border-slate-700"
                     }`}
                     style={{
                       left: `calc(50% + ${pos.x}px - 28px)`,
@@ -222,12 +222,12 @@ export default function ProcessSection() {
                   >
                     <Icon
                       className={`w-6 h-6 ${
-                        isActive ? "text-[#0066FF]" : "text-slate-500"
+                        isActive ? "text-[#0066FF] dark:text-blue-400" : "text-slate-500 dark:text-slate-400"
                       }`}
                     />
                     {/* Status indicator */}
                     <span
-                      className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${getStatusColor(
+                      className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white dark:border-slate-800 ${getStatusColor(
                         step.status,
                       )}`}
                     />
@@ -269,16 +269,16 @@ export default function ProcessSection() {
                     key={step.id}
                     className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all ${
                       isActive
-                        ? "bg-blue-50 border-2 border-blue-200"
-                        : "bg-white border border-slate-200"
+                        ? "bg-blue-50 dark:bg-blue-900/30 border-2 border-blue-200 dark:border-blue-700"
+                        : "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
                     }`}
                     onClick={() => setActiveStep(step.id)}
                   >
                     <div
                       className={`w-12 h-12 rounded-xl flex items-center justify-center ${
                         isActive
-                          ? "bg-[#0066FF] text-white"
-                          : "bg-slate-100 text-slate-500"
+                          ? "bg-[#0066FF] dark:bg-blue-600 text-white"
+                          : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400"
                       }`}
                     >
                       <Icon className="w-6 h-6" />
@@ -286,12 +286,12 @@ export default function ProcessSection() {
                     <div className="text-left">
                       <p
                         className={`font-semibold ${
-                          isActive ? "text-[#0066FF]" : "text-slate-800"
+                          isActive ? "text-[#0066FF] dark:text-blue-400" : "text-slate-800 dark:text-white"
                         }`}
                       >
                         {step.shortTitle}
                       </p>
-                      <p className="text-sm text-slate-500">{step.duration}</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">{step.duration}</p>
                     </div>
                     <span
                       className={`ml-auto w-3 h-3 rounded-full ${getStatusColor(
@@ -314,24 +314,24 @@ export default function ProcessSection() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.3 }}
-                  className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100"
+                  className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-lg border border-slate-100 dark:border-slate-700"
                 >
                   {/* Step number */}
                   <div className="flex items-center gap-4 mb-6">
-                    <span className="text-6xl font-bold text-[#0066FF]">
+                    <span className="text-6xl font-bold text-[#0066FF] dark:text-blue-400">
                       0{activeStepData.id}
                     </span>
                     <div>
-                      <h3 className="text-2xl font-bold text-slate-800">
+                      <h3 className="text-2xl font-bold text-slate-800 dark:text-white">
                         {activeStepData.title}
                       </h3>
-                      <span className="text-sm text-[#0066FF] font-medium">
+                      <span className="text-sm text-[#0066FF] dark:text-blue-400 font-medium">
                         {activeStepData.duration}
                       </span>
                     </div>
                   </div>
 
-                  <p className="text-slate-600 mb-6 text-lg">
+                  <p className="text-slate-600 dark:text-slate-300 mb-6 text-lg">
                     {activeStepData.description}
                   </p>
 
@@ -345,8 +345,8 @@ export default function ProcessSection() {
                         transition={{ delay: idx * 0.1 }}
                         className="flex items-center gap-3"
                       >
-                        <div className="w-2 h-2 rounded-full bg-[#0066FF]" />
-                        <span className="text-slate-700">{detail}</span>
+                        <div className="w-2 h-2 rounded-full bg-[#0066FF] dark:bg-blue-400" />
+                        <span className="text-slate-700 dark:text-slate-300">{detail}</span>
                       </motion.li>
                     ))}
                   </ul>
@@ -354,7 +354,7 @@ export default function ProcessSection() {
                   {/* CTA */}
                   <a
                     href="#contact"
-                    className="inline-flex items-center gap-2 text-[#0066FF] font-semibold hover:text-[#0052CC] transition-colors group"
+                    className="inline-flex items-center gap-2 text-[#0066FF] dark:text-blue-400 font-semibold hover:text-[#0052CC] dark:hover:text-blue-300 transition-colors group"
                   >
                     Bắt đầu dự án
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

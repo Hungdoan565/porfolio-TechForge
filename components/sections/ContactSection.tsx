@@ -25,18 +25,18 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32 bg-white">
+    <section id="contact" className="py-24 md:py-32 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Section Header */}
         <FadeIn distance={40} duration={0.8}>
           <div className="text-center mb-12">
-            <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-wider mb-3">
+            <span className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3">
               Liên hệ
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-4">
               Bắt đầu dự án của bạn
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
               Liên hệ ngay để được tư vấn miễn phí về giải pháp công nghệ phù
               hợp
             </p>
@@ -47,11 +47,11 @@ export default function ContactSection() {
           {/* Contact Form */}
           <FadeIn distance={50} duration={0.8} delay={0.1}>
             <motion.div
-              className="bg-white rounded-3xl shadow-lg shadow-slate-200/50 p-8 md:p-10 border border-slate-100"
+              className="bg-white dark:bg-slate-800 rounded-3xl shadow-lg shadow-slate-200/50 dark:shadow-black/20 p-8 md:p-10 border border-slate-100 dark:border-slate-700"
               whileHover={{ y: -5 }}
               transition={{ duration: 0.3 }}
             >
-              <h3 className="text-xl font-bold text-slate-800 mb-6">
+              <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-6">
                 Gửi yêu cầu tư vấn
               </h3>
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -160,53 +160,53 @@ export default function ContactSection() {
 
               {/* Contact Details */}
               <motion.div
-                className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 space-y-6"
+                className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-8 space-y-6"
                 whileHover={{ y: -5 }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-xl font-bold text-slate-800">
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white">
                   Thông tin liên hệ
                 </h3>
 
                 <div className="space-y-5">
                   <div className="flex items-start gap-4 group">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-[#0066FF] flex-shrink-0 group-hover:bg-blue-100 transition-colors">
+                    <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-[#0066FF] dark:text-blue-400 flex-shrink-0 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/50 transition-colors">
                       <Phone className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500">Hotline / Zalo</p>
-                      <p className="text-lg font-semibold text-slate-800">
+                      <p className="text-sm text-slate-500 dark:text-slate-400">Hotline / Zalo</p>
+                      <p className="text-lg font-semibold text-slate-800 dark:text-white">
                         0945 700 813
                       </p>
-                      <p className="text-sm text-slate-600">Huy Diễn</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">Huy Diễn</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4 group">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 flex-shrink-0 group-hover:bg-emerald-100 transition-colors">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 flex-shrink-0 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-900/50 transition-colors">
                       <Clock className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500">Giờ làm việc</p>
-                      <p className="text-lg font-semibold text-slate-800">
+                      <p className="text-sm text-slate-500 dark:text-slate-400">Giờ làm việc</p>
+                      <p className="text-lg font-semibold text-slate-800 dark:text-white">
                         T2 - T7: 9:00 - 18:00
                       </p>
-                      <p className="text-sm text-slate-600">
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
                         Hỗ trợ khẩn cấp 24/7
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4 group">
-                    <div className="w-12 h-12 rounded-2xl bg-sky-50 flex items-center justify-center text-sky-600 flex-shrink-0 group-hover:bg-sky-100 transition-colors">
+                    <div className="w-12 h-12 rounded-2xl bg-sky-50 dark:bg-sky-900/30 flex items-center justify-center text-sky-600 dark:text-sky-400 flex-shrink-0 group-hover:bg-sky-100 dark:group-hover:bg-sky-900/50 transition-colors">
                       <MapPin className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500">Khu vực</p>
-                      <p className="text-lg font-semibold text-slate-800">
+                      <p className="text-sm text-slate-500 dark:text-slate-400">Khu vực</p>
+                      <p className="text-lg font-semibold text-slate-800 dark:text-white">
                         TP. Hồ Chí Minh
                       </p>
-                      <p className="text-sm text-slate-600">
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
                         Hỗ trợ remote toàn quốc
                       </p>
                     </div>

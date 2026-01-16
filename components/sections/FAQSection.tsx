@@ -38,18 +38,18 @@ const faqItems = [
 
 export default function FAQSection() {
   return (
-    <section id="faq" className="py-24 md:py-32 bg-slate-50">
+    <section id="faq" className="py-24 md:py-32 bg-slate-50 dark:bg-slate-900">
       <div className="max-w-4xl mx-auto px-4 md:px-8">
         {/* Section Header */}
         <FadeIn distance={40} duration={0.8}>
           <div className="text-center mb-12">
-            <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-wider mb-3">
+            <span className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3">
               Câu hỏi thường gặp
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-4">
               Giải đáp thắc mắc
             </h2>
-            <p className="text-lg text-slate-600">
+            <p className="text-lg text-slate-600 dark:text-slate-300">
               Những câu hỏi phổ biến về dịch vụ của chúng tôi
             </p>
           </div>
@@ -57,7 +57,7 @@ export default function FAQSection() {
 
         {/* FAQ Accordion */}
         <FadeIn distance={40} duration={0.8} delay={0.2}>
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-2 md:p-4">
+          <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-2 md:p-4">
             <Accordion
               variant="splitted"
               selectionMode="multiple"
@@ -68,14 +68,14 @@ export default function FAQSection() {
                   key={index}
                   aria-label={item.question}
                   title={
-                    <span className="text-base md:text-lg font-semibold text-slate-800">
+                    <span className="text-base md:text-lg font-semibold text-slate-800 dark:text-white">
                       {item.question}
                     </span>
                   }
-                  className="bg-slate-50 rounded-2xl px-4 md:px-6 hover:bg-slate-100 transition-colors"
+                  className="bg-slate-50 dark:bg-slate-700 rounded-2xl px-4 md:px-6 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors"
                   classNames={{
                     trigger: "py-4 md:py-5",
-                    content: "pt-0 pb-4 md:pb-5 text-slate-600 leading-relaxed",
+                    content: "pt-0 pb-4 md:pb-5 text-slate-600 dark:text-slate-300 leading-relaxed",
                   }}
                 >
                   {item.answer}

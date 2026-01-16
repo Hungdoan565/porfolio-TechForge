@@ -72,25 +72,25 @@ export default function WhyUsSection() {
   return (
     <section
       id="why-us"
-      className="py-24 md:py-32 bg-white relative overflow-hidden"
+      className="py-24 md:py-32 bg-white dark:bg-slate-950 relative overflow-hidden"
     >
       {/* Background decoration - Subtle */}
       <div className="absolute inset-0 opacity-40 pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-50 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-slate-50 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-50 dark:bg-blue-900/20 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-slate-50 dark:bg-slate-800/20 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
         {/* Section Header */}
         <FadeIn distance={40} duration={0.8}>
           <div className="text-center mb-16">
-            <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-wider mb-3">
+            <span className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3">
               Tại sao chọn chúng tôi
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-4">
               Cam kết chất lượng và sự hài lòng
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
               Chúng tôi không chỉ code, chúng tôi xây dựng mối quan hệ đối tác
               lâu dài với khách hàng
             </p>
@@ -103,10 +103,10 @@ export default function WhyUsSection() {
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
-                className="relative text-center p-6 md:p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300 group"
+                className="relative text-center p-6 md:p-8 rounded-3xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-200 dark:hover:border-blue-700 hover:shadow-lg transition-all duration-300 group"
                 whileHover={{ y: -5 }}
               >
-                <div className="text-3xl md:text-5xl font-bold text-[#0066FF] flex items-baseline justify-center">
+                <div className="text-3xl md:text-5xl font-bold text-[#0066FF] dark:text-blue-400 flex items-baseline justify-center">
                   <CountUp
                     end={stat.value}
                     duration={2.5}
@@ -115,7 +115,7 @@ export default function WhyUsSection() {
                   />
                   <span>{stat.suffix}</span>
                 </div>
-                <span className="text-sm text-slate-600 mt-3 block font-medium">
+                <span className="text-sm text-slate-600 dark:text-slate-300 mt-3 block font-medium">
                   {stat.label}
                 </span>
               </motion.div>
@@ -133,7 +133,7 @@ export default function WhyUsSection() {
               delay={0.08 * index}
             >
               <motion.div
-                className="group p-6 md:p-8 rounded-3xl bg-slate-50/50 hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-slate-200 relative overflow-hidden"
+                className="group p-6 md:p-8 rounded-3xl bg-slate-50/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl transition-all duration-300 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 relative overflow-hidden"
                 whileHover={{ y: -5 }}
               >
                 <motion.div
@@ -147,10 +147,10 @@ export default function WhyUsSection() {
                   <feature.icon className="w-6 h-6" strokeWidth={1.5} />
                 </motion.div>
 
-                <h3 className="text-lg font-bold text-slate-800 mb-2 group-hover:text-[#0066FF] transition-colors">
+                <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-2 group-hover:text-[#0066FF] dark:group-hover:text-blue-400 transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
