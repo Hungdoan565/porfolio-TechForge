@@ -1,161 +1,245 @@
 "use client";
 
-import { FadeIn, CountUp } from "@/components/ui/motion-primitives";
+import React from "react";
 import { motion } from "framer-motion";
-import {
-  ShieldCheck,
-  Clock,
-  Headphones,
-  LayoutGrid,
-  Wallet,
-  Lock,
-} from "lucide-react";
 
-const features = [
+// Import all new components
+import { AsymmetricBento } from "@/components/ui/AsymmetricBento";
+import { OrbitingTech } from "@/components/ui/OrbitingTech";
+import { TestimonialTicker } from "@/components/ui/TestimonialTicker";
+import { CulturePreview } from "@/components/ui/CulturePreview";
+import { CaseStudyGrid } from "@/components/ui/CaseStudyCard";
+import { FadeIn } from "@/components/ui/motion-primitives";
+
+// ============================================
+// DATA - Placeholder, thêm vào sau
+// ============================================
+
+// Testimonials data (placeholder)
+const testimonials = [
   {
-    icon: ShieldCheck,
-    title: "Chất lượng code",
-    description:
-      "Code sạch, có documentation, dễ bảo trì và mở rộng theo chuẩn quốc tế",
-    color: "text-[#0066FF]",
-    bg: "bg-blue-50",
+    quote: "Chất lượng code xuất sắc, đúng deadline",
+    author: "Nguyễn Văn A",
+    role: "CEO",
+    company: "TechCorp",
   },
   {
-    icon: Clock,
-    title: "Giao đúng deadline",
-    description: "98% dự án giao đúng hạn cam kết với báo cáo tiến độ định kỳ",
-    color: "text-emerald-600",
-    bg: "bg-emerald-50",
+    quote: "Team làm việc chuyên nghiệp, hỗ trợ 24/7",
+    author: "Trần Thị B",
+    role: "CTO",
+    company: "StartupX",
   },
   {
-    icon: Headphones,
-    title: "Hỗ trợ sau bàn giao",
-    description:
-      "Bảo hành và hỗ trợ kỹ thuật liên tục sau khi hoàn thành dự án",
-    color: "text-sky-600",
-    bg: "bg-sky-50",
+    quote: "Đã hợp tác 3 dự án, rất hài lòng",
+    author: "Lê Văn C",
+    role: "Product Manager",
+    company: "InnovateCo",
   },
   {
-    icon: LayoutGrid,
-    title: "Quy trình chuyên nghiệp",
-    description:
-      "Làm việc theo Agile/Scrum với sprint rõ ràng, minh bạch từ đầu đến cuối",
-    color: "text-orange-600",
-    bg: "bg-orange-50",
-  },
-  {
-    icon: Wallet,
-    title: "Giá cả minh bạch",
-    description:
-      "Báo giá rõ ràng, chi tiết, không phát sinh chi phí ẩn trong suốt dự án",
-    color: "text-teal-600",
-    bg: "bg-teal-50",
-  },
-  {
-    icon: Lock,
-    title: "Bảo mật thông tin",
-    description:
-      "Ký NDA bảo mật, đảm bảo an toàn tuyệt đối cho dữ liệu doanh nghiệp",
-    color: "text-rose-600",
-    bg: "bg-rose-50",
+    quote: "Giao tiếp tốt, báo cáo tiến độ rõ ràng",
+    author: "Phạm Thị D",
+    role: "Founder",
+    company: "DigitalHub",
   },
 ];
 
-const stats = [
-  { value: 50, suffix: "+", label: "Dự án hoàn thành" },
-  { value: 30, suffix: "+", label: "Khách hàng tin tưởng" },
-  { value: 5, suffix: "+", label: "Năm kinh nghiệm" },
-  { value: 10, suffix: "+", label: "Công nghệ thành thạo" },
+// Culture values (placeholder)
+const cultureValues = [
+  {
+    title: "Collaboration First",
+    description:
+      "Chúng tôi tin rằng ý tưởng tốt nhất đến từ sự hợp tác. Làm việc nhóm, chia sẻ kiến thức.",
+    emoji: "🤝",
+    teamMembers: [],
+  },
+  {
+    title: "Always Learning",
+    description:
+      "Tech talks hàng tuần, budget học tập, conference attendance. Không ngừng phát triển.",
+    emoji: "📚",
+    teamMembers: [],
+  },
+  {
+    title: "Work-Life Balance",
+    description:
+      "Remote-first, flexible hours, mental health days. Sức khỏe quan trọng hơn deadline.",
+    emoji: "⚖️",
+    teamMembers: [],
+  },
 ];
+
+// Case studies (placeholder)
+const caseStudies = [
+  {
+    title: "TechCorp App",
+    category: "Mobile App",
+    description: "Ứng dụng quản lý doanh nghiệp toàn diện với React Native",
+    stats: [
+      { label: "Revenue", value: "+150%" },
+      { label: "Users", value: "50K+" },
+    ],
+    color: "#0066FF",
+  },
+  {
+    title: "E-commerce Platform",
+    category: "Web Platform",
+    description: "Nền tảng thương mại điện tử với Next.js và headless CMS",
+    stats: [
+      { label: "Performance", value: "3x faster" },
+      { label: "Conversion", value: "+80%" },
+    ],
+    color: "#10B981",
+  },
+];
+
+// ============================================
+// SECTION COMPONENT
+// ============================================
 
 export default function WhyUsSection() {
   return (
     <section
       id="why-us"
-      className="py-24 md:py-32 bg-white dark:bg-slate-950 relative overflow-hidden"
+      className="py-20 md:py-28 lg:py-32 bg-slate-50 dark:bg-slate-950 relative overflow-hidden"
     >
-      {/* Background decoration - Subtle */}
-      <div className="absolute inset-0 opacity-40 pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-50 dark:bg-blue-900/20 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-slate-50 dark:bg-slate-800/20 rounded-full blur-3xl" />
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-blue-500/5 to-purple-500/5 dark:from-blue-500/10 dark:to-purple-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-500/5 to-cyan-500/5 dark:from-emerald-500/10 dark:to-cyan-500/10 rounded-full blur-3xl" />
+
+        {/* Grid pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
+            backgroundSize: "40px 40px",
+          }}
+        />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-        {/* Section Header */}
+        {/* ============================================ */}
+        {/* SECTION 1: Asymmetric Bento Hero + Stats */}
+        {/* ============================================ */}
         <FadeIn distance={40} duration={0.8}>
-          <div className="text-center mb-16">
-            <span className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3">
-              Tại sao chọn chúng tôi
-            </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              Cam kết chất lượng và sự hài lòng
-            </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-              Chúng tôi không chỉ code, chúng tôi xây dựng mối quan hệ đối tác
-              lâu dài với khách hàng
-            </p>
-          </div>
+          <AsymmetricBento
+            heroTitle="Tại sao chọn chúng tôi?"
+            heroSubtitle="Chúng tôi không chỉ code, chúng tôi xây dựng mối quan hệ đối tác lâu dài với khách hàng"
+            floatingTestimonial={{
+              quote: "Team làm việc chuyên nghiệp, đúng cam kết",
+              author: "Nguyễn Văn A",
+              role: "CEO, TechCorp",
+            }}
+          />
         </FadeIn>
 
-        {/* Stats Row - Clean Style */}
-        <FadeIn distance={50} duration={0.8} delay={0.1}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                className="relative text-center p-6 md:p-8 rounded-3xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-200 dark:hover:border-blue-700 hover:shadow-lg transition-all duration-300 group"
-                whileHover={{ y: -5 }}
+        {/* ============================================ */}
+        {/* SECTION 2: Orbiting Tech Stack */}
+        {/* ============================================ */}
+        <div className="mt-20 md:mt-28">
+          <FadeIn distance={40} duration={0.8}>
+            <div className="text-center mb-8 md:mb-12">
+              <motion.span
+                className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
               >
-                <div className="text-3xl md:text-5xl font-bold text-[#0066FF] dark:text-blue-400 flex items-baseline justify-center">
-                  <CountUp
-                    end={stat.value}
-                    duration={2.5}
-                    delay={0.2 * index}
-                    className="tabular-nums"
-                  />
-                  <span>{stat.suffix}</span>
-                </div>
-                <span className="text-sm text-slate-600 dark:text-slate-300 mt-3 block font-medium">
-                  {stat.label}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </FadeIn>
+                Tech Stack
+              </motion.span>
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 dark:text-white">
+                Công nghệ chúng tôi sử dụng
+              </h3>
+            </div>
+          </FadeIn>
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {features.map((feature, index) => (
-            <FadeIn
-              key={index}
-              distance={40}
-              duration={0.6}
-              delay={0.08 * index}
-            >
-              <motion.div
-                className="group p-6 md:p-8 rounded-3xl bg-slate-50/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl transition-all duration-300 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 relative overflow-hidden"
-                whileHover={{ y: -5 }}
+          <FadeIn delay={0.2} distance={40} duration={0.8}>
+            <OrbitingTech className="max-w-[500px] md:max-w-[550px]" />
+          </FadeIn>
+        </div>
+
+        {/* ============================================ */}
+        {/* SECTION 3: Testimonial Ticker */}
+        {/* ============================================ */}
+        <div className="mt-20 md:mt-28">
+          <FadeIn distance={40} duration={0.8}>
+            <div className="text-center mb-6 md:mb-8">
+              <motion.span
+                className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
               >
-                <motion.div
-                  className={`relative w-12 h-12 rounded-2xl ${feature.bg} flex items-center justify-center ${feature.color} mb-5`}
-                  whileHover={{
-                    scale: 1.15,
-                    rotate: [0, -10, 10, 0],
-                  }}
-                  transition={{ duration: 0.3 }}
+                Khách hàng nói gì
+              </motion.span>
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 dark:text-white">
+                Được tin tưởng bởi hàng chục doanh nghiệp
+              </h3>
+            </div>
+          </FadeIn>
+
+          <TestimonialTicker testimonials={testimonials} speed={40} />
+        </div>
+
+        {/* ============================================ */}
+        {/* SECTION 4: Culture Preview */}
+        {/* ============================================ */}
+        <div className="mt-20 md:mt-28">
+          <FadeIn distance={40} duration={0.8}>
+            <div className="text-center mb-8 md:mb-12">
+              <motion.span
+                className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+              >
+                Văn hóa làm việc
+              </motion.span>
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 dark:text-white">
+                Giá trị cốt lõi của team
+              </h3>
+            </div>
+          </FadeIn>
+
+          <CulturePreview values={cultureValues} />
+        </div>
+
+        {/* ============================================ */}
+        {/* SECTION 5: Case Study Previews */}
+        {/* ============================================ */}
+        <div className="mt-20 md:mt-28">
+          <FadeIn distance={40} duration={0.8}>
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-12">
+              <div>
+                <motion.span
+                  className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <feature.icon className="w-6 h-6" strokeWidth={1.5} />
-                </motion.div>
-
-                <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-2 group-hover:text-[#0066FF] dark:group-hover:text-blue-400 transition-colors">
-                  {feature.title}
+                  Case Studies
+                </motion.span>
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 dark:text-white">
+                  Dự án tiêu biểu
                 </h3>
-                <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            </FadeIn>
-          ))}
+              </div>
+
+              <motion.a
+                href="#portfolio"
+                className="mt-4 md:mt-0 inline-flex items-center gap-2 text-[#0066FF] dark:text-blue-400 font-medium hover:underline"
+                whileHover={{ x: 5 }}
+              >
+                Xem tất cả dự án
+                <span>→</span>
+              </motion.a>
+            </div>
+          </FadeIn>
+
+          <CaseStudyGrid caseStudies={caseStudies} />
         </div>
       </div>
     </section>
