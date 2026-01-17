@@ -10,11 +10,11 @@ interface TechIconProps {
 // React - Official logo from reactjs.org
 export const ReactIcon = ({ className, size = 24 }: TechIconProps) => (
   <svg
-    viewBox="-11.5 -10.232 23 20.463"
-    width={size}
-    height={size}
     className={className}
     fill="#61DAFB"
+    height={size}
+    viewBox="-11.5 -10.232 23 20.463"
+    width={size}
   >
     <circle r="2.05" />
     <g fill="none" stroke="#61DAFB" strokeWidth="1">
@@ -28,11 +28,11 @@ export const ReactIcon = ({ className, size = 24 }: TechIconProps) => (
 // Vue.js - Official logo
 export const VueIcon = ({ className, size = 24 }: TechIconProps) => (
   <svg
+    className={className}
+    height={size}
+    preserveAspectRatio="xMidYMid"
     viewBox="0 0 256 221"
     width={size}
-    height={size}
-    className={className}
-    preserveAspectRatio="xMidYMid"
   >
     <path
       d="M204.8 0H256L128 220.8 0 0h97.92L128 51.2 157.44 0h47.36Z"
@@ -48,10 +48,10 @@ export const VueIcon = ({ className, size = 24 }: TechIconProps) => (
 
 // TypeScript - Official logo from typescriptlang.org
 export const TypeScriptIcon = ({ className, size = 24 }: TechIconProps) => (
-  <svg viewBox="0 0 128 128" width={size} height={size} className={className}>
+  <svg className={className} height={size} viewBox="0 0 128 128" width={size}>
     <path
-      fill="#3178c6"
       d="M2 63.91v62.5h125v-125H2zm100.73-5a15.56 15.56 0 0 1 7.82 4.5 20.58 20.58 0 0 1 3 4.08c.05.12-5.43 3.77-8.75 5.83a7.92 7.92 0 0 0-3.4-3.18c-1.54-.85-3.28-1.15-6.3-1.08-3.6.09-5.27.68-6.84 2.4a5.51 5.51 0 0 0-1 6c.89 2.05 2.81 3.28 7.11 4.56 7.89 2.34 11.28 3.88 14.12 6.4a15.87 15.87 0 0 1 4.5 8.42 27.34 27.34 0 0 1-.12 9.65 16.27 16.27 0 0 1-5.52 8.53c-3.47 2.65-7.55 3.9-13.16 4.05-8.18.21-14.2-2.11-18.22-7a22.3 22.3 0 0 1-3.4-6.24c.14-.1 1.19-.61 2.35-1.13l3.8-1.91 2.6-1.33a14.87 14.87 0 0 0 2.47 4c2.4 2.65 5.52 3.84 10.08 3.84 4.85 0 8.13-1.58 9.48-4.57a7.09 7.09 0 0 0-.13-6.09c-1-1.92-3.17-3.28-8.46-5.28-6.08-2.29-8.73-3.67-11.34-5.9a14.26 14.26 0 0 1-4.48-7.16 22.84 22.84 0 0 1-.3-8.86 14.47 14.47 0 0 1 5.13-8.34c3.21-2.43 7-3.73 12.14-4.16 5.37-.45 9.62.44 13.13 2.74zM74.06 64.44v5.22H57v45.29H45.46V69.66H28.4v-5.06a52 52 0 0 1 .17-5.36c.07-.1 10.33-.14 22.78-.1l22.63.07z"
+      fill="#3178c6"
     />
   </svg>
 );
@@ -59,72 +59,72 @@ export const TypeScriptIcon = ({ className, size = 24 }: TechIconProps) => (
 // Tailwind CSS - Official logo
 export const TailwindIcon = ({ className, size = 24 }: TechIconProps) => (
   <svg
-    viewBox="0 0 54 33"
-    width={size}
-    height={size}
     className={className}
     fill="none"
+    height={size}
+    viewBox="0 0 54 33"
+    width={size}
   >
     <path
+      clipRule="evenodd"
+      d="M27 0c-7.2 0-11.7 3.6-13.5 10.8 2.7-3.6 5.85-4.95 9.45-4.05 2.054.513 3.522 2.004 5.147 3.653C30.744 13.09 33.808 16.2 40.5 16.2c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C36.756 3.11 33.692 0 27 0zM13.5 16.2C6.3 16.2 1.8 19.8 0 27c2.7-3.6 5.85-4.95 9.45-4.05 2.054.514 3.522 2.004 5.147 3.653C17.244 29.29 20.308 32.4 27 32.4c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C23.256 19.31 20.192 16.2 13.5 16.2z"
       fill="#38bdf8"
       fillRule="evenodd"
-      d="M27 0c-7.2 0-11.7 3.6-13.5 10.8 2.7-3.6 5.85-4.95 9.45-4.05 2.054.513 3.522 2.004 5.147 3.653C30.744 13.09 33.808 16.2 40.5 16.2c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C36.756 3.11 33.692 0 27 0zM13.5 16.2C6.3 16.2 1.8 19.8 0 27c2.7-3.6 5.85-4.95 9.45-4.05 2.054.514 3.522 2.004 5.147 3.653C17.244 29.29 20.308 32.4 27 32.4c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C23.256 19.31 20.192 16.2 13.5 16.2z"
-      clipRule="evenodd"
     />
   </svg>
 );
 
 // Node.js - Official logo
 export const NodeIcon = ({ className, size = 24 }: TechIconProps) => (
-  <svg viewBox="0 0 128 128" width={size} height={size} className={className}>
+  <svg className={className} height={size} viewBox="0 0 128 128" width={size}>
     <path
-      fill="#83CD29"
       d="M112.771 30.334L68.674 4.729c-2.781-1.584-6.402-1.584-9.205 0L14.901 30.334C12.031 31.985 10 35.088 10 38.407v51.142c0 3.319 2.084 6.423 4.954 8.083l11.775 6.688c5.628 2.772 7.617 2.772 10.178 2.772 8.333 0 13.093-5.039 13.093-13.828v-50.49c0-.713-.371-1.774-1.071-1.774h-5.623c-.712 0-2.306 1.061-2.306 1.773v50.49c0 3.896-3.524 7.773-10.11 4.48L18.723 90.73c-.424-.23-.723-.693-.723-1.181V38.407c0-.482.555-.966.982-1.213l44.424-25.561c.415-.235 1.025-.235 1.439 0l43.882 25.555c.42.253.272.722.272 1.219v51.142c0 .488.183.963-.232 1.198l-44.086 25.576c-.378.227-.847.227-1.261 0l-11.307-6.749c-.341-.198-.746-.269-1.073-.086-3.146 1.783-3.726 2.02-6.677 3.043-.726.253-1.797.692.41 1.929l14.798 8.754a9.294 9.294 0 004.647 1.246c1.642 0 3.25-.426 4.667-1.246l43.885-25.582c2.87-1.672 4.23-4.764 4.23-8.083V38.407c0-3.319-1.36-6.414-4.229-8.073zM77.91 81.445c-11.726 0-14.309-3.235-15.17-9.066-.1-.628-.633-1.379-1.272-1.379h-5.731c-.709 0-1.279.86-1.279 1.566 0 7.466 4.059 16.512 23.453 16.512 14.039 0 22.088-5.455 22.088-15.109 0-9.572-6.467-12.084-20.082-13.886-13.762-1.819-15.16-2.738-15.16-5.962 0-2.658 1.184-6.203 11.374-6.203 9.105 0 12.461 1.954 13.842 8.091.118.577.645 1.206 1.27 1.206h5.731c.36 0 .704-.266.955-.577.256-.31.373-.587.339-.992-.67-7.611-5.822-11.161-22.14-11.161-12.657 0-20.197 5.346-20.197 14.311 0 9.698 7.529 12.378 19.689 13.575 14.577 1.431 15.607 3.596 15.607 6.498-.003 5.028-4.093 7.576-13.317 7.576z"
+      fill="#83CD29"
     />
   </svg>
 );
 
 // Python - Official logo
 export const PythonIcon = ({ className, size = 24 }: TechIconProps) => (
-  <svg viewBox="0 0 128 128" width={size} height={size} className={className}>
+  <svg className={className} height={size} viewBox="0 0 128 128" width={size}>
     <linearGradient
+      gradientTransform="translate(0 -1117.09)"
+      gradientUnits="userSpaceOnUse"
       id="python-a"
       x1="70.252"
       x2="170.66"
       y1="1237.48"
       y2="1151.99"
-      gradientTransform="translate(0 -1117.09)"
-      gradientUnits="userSpaceOnUse"
     >
       <stop offset="0" stopColor="#5A9FD4" />
       <stop offset="1" stopColor="#306998" />
     </linearGradient>
     <linearGradient
+      gradientTransform="translate(0 -1117.09)"
+      gradientUnits="userSpaceOnUse"
       id="python-b"
       x1="209.47"
       x2="130.86"
       y1="1098.81"
       y2="1159.68"
-      gradientTransform="translate(0 -1117.09)"
-      gradientUnits="userSpaceOnUse"
     >
       <stop offset="0" stopColor="#FFD43B" />
       <stop offset="1" stopColor="#FFE873" />
     </linearGradient>
     <path
-      fill="url(#python-a)"
       d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z"
+      fill="url(#python-a)"
     />
     <path
-      fill="url(#python-b)"
       d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z"
+      fill="url(#python-b)"
     />
   </svg>
 );
 
 // PostgreSQL - Official elephant logo
 export const PostgreSQLIcon = ({ className, size = 24 }: TechIconProps) => (
-  <svg viewBox="0 0 128 128" width={size} height={size} className={className}>
+  <svg className={className} height={size} viewBox="0 0 128 128" width={size}>
     <path
       d="M93.809 92.112c.785-6.533.55-7.492 5.416-6.433l1.235.108c3.742.17 8.637-.602 11.513-1.938 6.191-2.873 9.861-7.668 3.758-6.409-13.924 2.873-14.881-1.842-14.881-1.842 14.703-21.815 20.849-49.508 15.543-56.287-14.47-18.489-39.517-9.746-39.936-9.52l-.134.025c-2.751-.571-5.83-.912-9.289-.968-6.301-.104-11.082 1.652-14.709 4.402 0 0-44.683-18.409-42.604 23.151.442 8.841 12.672 66.898 27.26 49.362 5.332-6.412 10.484-11.834 10.484-11.834 2.558 1.699 5.622 2.567 8.834 2.255l.249-.212c-.078.796-.044 1.575.099 2.497-3.757 4.199-2.653 4.936-10.166 6.482-7.602 1.566-3.136 4.355-.221 5.084 3.535.884 11.712 2.136 17.238-5.598l-.22.882c1.474 1.18 1.375 8.477 1.583 13.69.209 5.214.558 10.079 1.621 12.948 1.063 2.868 2.317 10.256 12.191 8.14 8.252-1.764 14.561-4.309 15.136-28.136z"
       fill="#336791"
@@ -147,15 +147,15 @@ export const PostgreSQLIcon = ({ className, size = 24 }: TechIconProps) => (
 // MongoDB - Official leaf logo
 export const MongoDBIcon = ({ className, size = 24 }: TechIconProps) => (
   <svg
-    viewBox="0 0 120 258"
-    width={size}
-    height={size}
     className={className}
     fill="none"
+    height={size}
+    viewBox="0 0 120 258"
+    width={size}
   >
     <path
-      fill="#00ED64"
       d="M83.009 28.756C72.133 15.909 62.767 2.86 60.854.15a.488.488 0 0 0-.705 0c-1.913 2.71-11.28 15.758-22.155 28.605-93.353 118.536 14.703 198.531 14.703 198.531l.906.602c.806 12.346 2.82 30.111 2.82 30.111h8.056s2.014-17.665 2.82-30.111l.906-.702c.101 0 108.157-79.895 14.804-198.431ZM60.45 225.48s-4.834-4.115-6.143-6.223v-.2l5.84-129.076c0-.401.605-.401.605 0l5.841 129.076v.2c-1.31 2.108-6.143 6.223-6.143 6.223Z"
+      fill="#00ED64"
     />
   </svg>
 );
@@ -163,16 +163,16 @@ export const MongoDBIcon = ({ className, size = 24 }: TechIconProps) => (
 // AWS - Official logo
 export const AWSIcon = ({ className, size = 24 }: TechIconProps) => (
   <svg
+    className={className}
+    height={size}
     viewBox="0 0 304 182"
     width={size}
-    height={size}
-    className={className}
     xmlSpace="preserve"
   >
     <path
-      fill="#252f3e"
       className="dark:fill-white"
       d="m86 66 2 9c0 3 1 5 3 8v2l-1 3-7 4-2 1-3-1-4-5-3-6c-8 9-18 14-29 14-9 0-16-3-20-8-5-4-8-11-8-19s3-15 9-20c6-6 14-8 25-8a79 79 0 0 1 22 3v-7c0-8-2-13-5-16-3-4-8-5-16-5l-11 1a80 80 0 0 0-14 5h-2c-1 0-2-1-2-3v-5l1-3c0-1 1-2 3-2l12-5 16-2c12 0 20 3 26 8 5 6 8 14 8 25v32zM46 82l10-2c4-1 7-4 10-7l3-6 1-9v-4a84 84 0 0 0-19-2c-6 0-11 1-15 4-3 2-4 6-4 11s1 8 3 11c3 2 6 4 11 4zm80 10-4-1-2-3-23-78-1-4 2-2h10l4 1 2 4 17 66 15-66 2-4 4-1h8l4 1 2 4 16 67 17-67 2-4 4-1h9c2 0 3 1 3 2v2l-1 2-24 78-2 4-4 1h-9l-4-1-1-4-16-65-15 64-2 4-4 1h-9zm129 3a66 66 0 0 1-27-6l-3-3-1-2v-5c0-2 1-3 2-3h2l3 1a54 54 0 0 0 23 5c6 0 11-2 14-4 4-2 5-5 5-9l-2-7-10-5-15-5c-7-2-13-6-16-10a24 24 0 0 1 5-34l10-5a44 44 0 0 1 20-2 110 110 0 0 1 12 3l4 2 3 2 1 4v4c0 3-1 4-2 4l-4-2c-6-2-12-3-19-3-6 0-11 0-14 2s-4 5-4 9c0 3 1 5 3 7s5 4 11 6l14 4c7 3 12 6 15 10s5 9 5 14l-3 12-7 8c-3 3-7 5-11 6l-14 2z"
+      fill="#252f3e"
     />
     <path
       d="M274 144A220 220 0 0 1 4 124c-4-3-1-6 2-4a300 300 0 0 0 263 16c5-2 10 4 5 8z"
@@ -187,70 +187,70 @@ export const AWSIcon = ({ className, size = 24 }: TechIconProps) => (
 
 // Google Cloud - Official logo
 export const GCPIcon = ({ className, size = 24 }: TechIconProps) => (
-  <svg viewBox="0 0 128 128" width={size} height={size} className={className}>
+  <svg className={className} height={size} viewBox="0 0 128 128" width={size}>
     <path
-      fill="#ea4535"
       d="M80.6 40.3h.4l-.2-.2 14-14v-.3a50 50 0 0 0-11.3-8.8l-3.5 15.6c1.8 1.5 3.3 3.5 4.4 5.7z"
-    />
-    <path
-      fill="#557ebf"
-      d="M108.1 47.8a49.6 49.6 0 0 0-10.1-22L82.2 40.3a29.7 29.7 0 0 1 4.9 20.1l18 2.5a47.2 47.2 0 0 0 3-15.1z"
-    />
-    <path
-      fill="#36a852"
-      d="M64 97.8a33.3 33.3 0 0 1-28-15.2L19.2 97a49.3 49.3 0 0 0 35.5 21.5 50 50 0 0 0 21.3-1.5l-4.6-18a32.8 32.8 0 0 1-7.4.8z"
-    />
-    <path
-      fill="#f9bc15"
-      d="M19.5 97a49.3 49.3 0 0 1-7.5-35l-19-3.2a68.2 68.2 0 0 0 6.6 43.6l19.9-5.4z"
-    />
-    <path
-      fill="#587dbd"
-      d="M82.1 40.3a29.7 29.7 0 0 1 4.9 20l18 2.5a47 47 0 0 0-7-27.4l-15.9 5z"
-    />
-    <path
-      fill="#f9bc15"
-      d="M36 82.6l-16.8 14.5a49.5 49.5 0 0 0 44.8 20.4l-4.6-18a33.3 33.3 0 0 1-23.4-17z"
-    />
-    <path
       fill="#ea4535"
-      d="M83.4 20.5a50 50 0 0 0-19.4-4.5 49.3 49.3 0 0 0-32.8 12.5l16.8 14.5a29.7 29.7 0 0 1 31.9-6.9l3.5-15.6z"
     />
     <path
+      d="M108.1 47.8a49.6 49.6 0 0 0-10.1-22L82.2 40.3a29.7 29.7 0 0 1 4.9 20.1l18 2.5a47.2 47.2 0 0 0 3-15.1z"
       fill="#557ebf"
-      d="M87 60.4a29.6 29.6 0 0 1-51.1 22.2L19.2 97a49.3 49.3 0 0 0 76.9-12.3L87 60.4z"
     />
     <path
+      d="M64 97.8a33.3 33.3 0 0 1-28-15.2L19.2 97a49.3 49.3 0 0 0 35.5 21.5 50 50 0 0 0 21.3-1.5l-4.6-18a32.8 32.8 0 0 1-7.4.8z"
       fill="#36a852"
+    />
+    <path
+      d="M19.5 97a49.3 49.3 0 0 1-7.5-35l-19-3.2a68.2 68.2 0 0 0 6.6 43.6l19.9-5.4z"
+      fill="#f9bc15"
+    />
+    <path
+      d="M82.1 40.3a29.7 29.7 0 0 1 4.9 20l18 2.5a47 47 0 0 0-7-27.4l-15.9 5z"
+      fill="#587dbd"
+    />
+    <path
+      d="M36 82.6l-16.8 14.5a49.5 49.5 0 0 0 44.8 20.4l-4.6-18a33.3 33.3 0 0 1-23.4-17z"
+      fill="#f9bc15"
+    />
+    <path
+      d="M83.4 20.5a50 50 0 0 0-19.4-4.5 49.3 49.3 0 0 0-32.8 12.5l16.8 14.5a29.7 29.7 0 0 1 31.9-6.9l3.5-15.6z"
+      fill="#ea4535"
+    />
+    <path
+      d="M87 60.4a29.6 29.6 0 0 1-51.1 22.2L19.2 97a49.3 49.3 0 0 0 76.9-12.3L87 60.4z"
+      fill="#557ebf"
+    />
+    <path
       d="M64 16c-17.2 0-32.4 8.8-41.2 22.1L39.5 53a29.7 29.7 0 0 1 56.4 4.9L108 55.4A50 50 0 0 0 64 16z"
+      fill="#36a852"
     />
   </svg>
 );
 
 // Azure - Official logo
 export const AzureIcon = ({ className, size = 24 }: TechIconProps) => (
-  <svg viewBox="0 0 96 96" width={size} height={size} className={className}>
+  <svg className={className} height={size} viewBox="0 0 96 96" width={size}>
     <defs>
       <linearGradient
+        gradientTransform="translate(1075 -1117) scale(1 -1)"
+        gradientUnits="userSpaceOnUse"
         id="azure-a"
         x1="-1032.17"
         x2="-1059.21"
         y1="145.31"
         y2="65.43"
-        gradientTransform="translate(1075 -1117) scale(1 -1)"
-        gradientUnits="userSpaceOnUse"
       >
         <stop offset="0" stopColor="#114a8b" />
         <stop offset="1" stopColor="#0669bc" />
       </linearGradient>
       <linearGradient
+        gradientTransform="translate(1075 -1117) scale(1 -1)"
+        gradientUnits="userSpaceOnUse"
         id="azure-b"
         x1="-1023.73"
         x2="-1029.98"
         y1="108.08"
         y2="105.97"
-        gradientTransform="translate(1075 -1117) scale(1 -1)"
-        gradientUnits="userSpaceOnUse"
       >
         <stop offset="0" stopOpacity=".3" />
         <stop offset=".07" stopOpacity=".2" />
@@ -259,33 +259,33 @@ export const AzureIcon = ({ className, size = 24 }: TechIconProps) => (
         <stop offset="1" stopOpacity="0" />
       </linearGradient>
       <linearGradient
+        gradientTransform="translate(1075 -1117) scale(1 -1)"
+        gradientUnits="userSpaceOnUse"
         id="azure-c"
         x1="-1027.16"
         x2="-997.48"
         y1="147.64"
         y2="68.56"
-        gradientTransform="translate(1075 -1117) scale(1 -1)"
-        gradientUnits="userSpaceOnUse"
       >
         <stop offset="0" stopColor="#3ccbf4" />
         <stop offset="1" stopColor="#2892df" />
       </linearGradient>
     </defs>
     <path
-      fill="url(#azure-a)"
       d="M33.34 6.54h26.04l-27.03 80.1a4.15 4.15 0 0 1-3.94 2.81H8.15a4.14 4.14 0 0 1-3.93-5.47L29.4 9.38a4.15 4.15 0 0 1 3.94-2.83z"
+      fill="url(#azure-a)"
     />
     <path
-      fill="#0078d4"
       d="M71.17 60.26H29.88a1.91 1.91 0 0 0-1.3 3.31l26.53 24.76a4.17 4.17 0 0 0 2.85 1.13h23.38z"
+      fill="#0078d4"
     />
     <path
-      fill="url(#azure-b)"
       d="M33.34 6.54a4.12 4.12 0 0 0-3.95 2.88L4.25 83.92a4.14 4.14 0 0 0 3.91 5.54h20.79a4.44 4.44 0 0 0 3.4-2.9l5.02-14.78 17.91 16.7a4.24 4.24 0 0 0 2.67.97h23.29L71.02 60.26H41.24L59.47 6.55z"
+      fill="url(#azure-b)"
     />
     <path
-      fill="url(#azure-c)"
       d="M66.6 9.36a4.14 4.14 0 0 0-3.93-2.82H33.65a4.15 4.15 0 0 1 3.93 2.82l25.18 74.62a4.15 4.15 0 0 1-3.93 5.48h29.02a4.15 4.15 0 0 0 3.93-5.48z"
+      fill="url(#azure-c)"
     />
   </svg>
 );
@@ -293,11 +293,11 @@ export const AzureIcon = ({ className, size = 24 }: TechIconProps) => (
 // Docker - Official whale logo
 export const DockerIcon = ({ className, size = 24 }: TechIconProps) => (
   <svg
-    viewBox="0 0 24 24"
-    width={size}
-    height={size}
     className={className}
     fill="#2496ED"
+    height={size}
+    viewBox="0 0 24 24"
+    width={size}
   >
     <path d="M13.98 11.08h2.12a.19.19 0 0 0 .19-.19V9.01a.19.19 0 0 0-.19-.19h-2.12a.18.18 0 0 0-.18.18v1.9c0 .1.08.18.18.18m-2.95-5.43h2.12a.19.19 0 0 0 .18-.19V3.57a.19.19 0 0 0-.18-.18h-2.12a.18.18 0 0 0-.19.18v1.9c0 .1.09.18.19.18m0 2.71h2.12a.19.19 0 0 0 .18-.18V6.29a.19.19 0 0 0-.18-.18h-2.12a.18.18 0 0 0-.19.18v1.89c0 .1.09.18.19.18m-2.93 0h2.12a.19.19 0 0 0 .18-.18V6.29a.18.18 0 0 0-.18-.18H8.1a.18.18 0 0 0-.18.18v1.89c0 .1.08.18.18.18m-2.96 0h2.11a.19.19 0 0 0 .19-.18V6.29a.18.18 0 0 0-.19-.18H5.14a.19.19 0 0 0-.19.18v1.89c0 .1.08.18.19.18m5.89 2.72h2.12a.19.19 0 0 0 .18-.19V9.01a.19.19 0 0 0-.18-.19h-2.12a.18.18 0 0 0-.19.18v1.9c0 .1.09.18.19.18m-2.93 0h2.12a.18.18 0 0 0 .18-.19V9.01a.18.18 0 0 0-.18-.19H8.1a.18.18 0 0 0-.18.18v1.9c0 .1.08.18.18.18m-2.96 0h2.11a.18.18 0 0 0 .19-.19V9.01a.18.18 0 0 0-.18-.19H5.14a.19.19 0 0 0-.19.19v1.88c0 .1.08.19.19.19m-2.92 0h2.12a.18.18 0 0 0 .18-.19V9.01a.18.18 0 0 0-.18-.19H2.22a.18.18 0 0 0-.19.18v1.9c0 .1.08.18.19.18m21.54-1.19c-.06-.05-.67-.51-1.95-.51-.34 0-.68.03-1.01.09a3.77 3.77 0 0 0-1.72-2.57l-.34-.2-.23.33a4.6 4.6 0 0 0-.6 1.43c-.24.97-.1 1.88.4 2.66a4.7 4.7 0 0 1-1.75.42H.76a.75.75 0 0 0-.76.75 11.38 11.38 0 0 0 .7 4.06 6.03 6.03 0 0 0 2.4 3.12c1.18.73 3.1 1.14 5.28 1.14.98 0 1.96-.08 2.93-.26a12.25 12.25 0 0 0 3.82-1.4 10.5 10.5 0 0 0 2.61-2.13c1.25-1.42 2-3 2.55-4.4h.23c1.37 0 2.21-.55 2.68-1 .3-.3.55-.66.7-1.06l.1-.28Z" />
   </svg>
@@ -306,62 +306,62 @@ export const DockerIcon = ({ className, size = 24 }: TechIconProps) => (
 // Next.js - Official N logo
 export const NextJsIcon = ({ className, size = 24 }: TechIconProps) => (
   <svg
-    viewBox="0 0 180 180"
-    width={size}
-    height={size}
     className={className}
     fill="none"
+    height={size}
+    viewBox="0 0 180 180"
+    width={size}
   >
     <mask
+      height="180"
       id="nextjs-mask"
+      maskUnits="userSpaceOnUse"
       style={{ maskType: "alpha" }}
       width="180"
-      height="180"
       x="0"
       y="0"
-      maskUnits="userSpaceOnUse"
     >
-      <circle cx="90" cy="90" r="90" fill="black" className="dark:fill-white" />
+      <circle className="dark:fill-white" cx="90" cy="90" fill="black" r="90" />
     </mask>
     <g mask="url(#nextjs-mask)">
-      <circle cx="90" cy="90" r="90" fill="black" className="dark:fill-white" />
+      <circle className="dark:fill-white" cx="90" cy="90" fill="black" r="90" />
       <path
-        fill="url(#nextjs-grad)"
         d="M149.508 157.52L69.142 54H54v71.97h12.114V69.384l73.885 95.461a90.304 90.304 0 009.509-7.325z"
+        fill="url(#nextjs-grad)"
       />
-      <path fill="url(#nextjs-grad2)" d="M115 54h12v72h-12z" />
+      <path d="M115 54h12v72h-12z" fill="url(#nextjs-grad2)" />
     </g>
     <defs>
       <linearGradient
+        gradientUnits="userSpaceOnUse"
         id="nextjs-grad"
         x1="109"
-        y1="116.5"
         x2="144.5"
+        y1="116.5"
         y2="160.5"
-        gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="white" className="dark:[stop-color:black]" />
+        <stop className="dark:[stop-color:black]" stopColor="white" />
         <stop
+          className="dark:[stop-color:black]"
           offset="1"
           stopColor="white"
           stopOpacity="0"
-          className="dark:[stop-color:black]"
         />
       </linearGradient>
       <linearGradient
+        gradientUnits="userSpaceOnUse"
         id="nextjs-grad2"
         x1="121"
-        y1="54"
         x2="120.799"
+        y1="54"
         y2="106.875"
-        gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="white" className="dark:[stop-color:black]" />
+        <stop className="dark:[stop-color:black]" stopColor="white" />
         <stop
+          className="dark:[stop-color:black]"
           offset="1"
           stopColor="white"
           stopOpacity="0"
-          className="dark:[stop-color:black]"
         />
       </linearGradient>
     </defs>
@@ -370,11 +370,11 @@ export const NextJsIcon = ({ className, size = 24 }: TechIconProps) => (
 
 // Express - Simple E
 export const ExpressIcon = ({ className, size = 24 }: TechIconProps) => (
-  <svg viewBox="0 0 128 128" width={size} height={size} className={className}>
+  <svg className={className} height={size} viewBox="0 0 128 128" width={size}>
     <path
-      fill="#404137"
       className="dark:fill-white"
       d="M126.67 98.44c-4.56 1.16-7.38.05-9.91-3.75-5.68-8.51-11.95-16.63-18-24.9-.78-1.07-1.59-2.12-2.6-3.45C89 76 81.85 85.2 75.14 94.77c-2.4 3.42-4.92 4.91-9.4 3.7l26.92-36.13L67.6 29.71c4.31-.84 7.29-.41 9.93 3.45 5.83 8.52 12.26 16.63 18.67 25.21 6.45-8.55 12.8-16.67 18.8-25.11 2.41-3.42 5-4.72 9.33-3.46-3.28 4.35-6.49 8.63-9.72 12.88-4.36 5.73-8.64 11.53-13.16 17.14-1.61 2-1.35 3.3.09 5.19C109.9 76 118.16 87.1 126.67 98.44zM1.33 61.74c.72-3.61 1.2-7.29 2.2-10.83 6-21.43 30.6-30.34 47.5-17.06C60.93 41.64 63.39 52.62 62.9 65H7.1c-.84 22.21 15.15 35.62 35.53 28.78 7.15-2.4 11.36-8 13.47-15 1.07-3.51 2.84-4.06 6.14-3.06-1.69 8.76-5.52 16.08-13.52 20.66-12 6.86-29.13 4.64-38.14-4.89C5.26 85.89 3 78.92 2 71.39c-.15-1.2-.46-2.38-.7-3.57q.03-3.04.03-6.08zm5.87-1.49h50.43c-.33-16.06-10.33-27.47-24-27.57-15-.12-25.78 11.02-26.43 27.57z"
+      fill="#404137"
     />
   </svg>
 );
@@ -382,16 +382,16 @@ export const ExpressIcon = ({ className, size = 24 }: TechIconProps) => (
 // FastAPI - Lightning bolt
 export const FastAPIIcon = ({ className, size = 24 }: TechIconProps) => (
   <svg
-    viewBox="0 0 154 154"
-    width={size}
-    height={size}
     className={className}
     fill="none"
+    height={size}
+    viewBox="0 0 154 154"
+    width={size}
   >
-    <circle cx="77" cy="77" r="77" fill="#05998b" />
+    <circle cx="77" cy="77" fill="#05998b" r="77" />
     <path
-      fill="#fff"
       d="M81.375 18.667l-38.75 70H77.5l-3.875 46.666 38.75-70H77.5l3.875-46.666z"
+      fill="#fff"
     />
   </svg>
 );
@@ -399,19 +399,19 @@ export const FastAPIIcon = ({ className, size = 24 }: TechIconProps) => (
 // Nuxt.js - N shape
 export const NuxtIcon = ({ className, size = 24 }: TechIconProps) => (
   <svg
-    viewBox="0 0 400 298"
-    width={size}
-    height={size}
     className={className}
     fill="none"
+    height={size}
+    viewBox="0 0 400 298"
+    width={size}
   >
     <path
-      fill="#00DC82"
       d="M227.92 298H392.4a15.3 15.3 0 0 0 7.26-1.88 14.08 14.08 0 0 0 5.13-5 13.2 13.2 0 0 0 1.9-6.74 12.68 12.68 0 0 0-1.87-6.58L316.36 127.7a14.24 14.24 0 0 0-5.13-5 15.07 15.07 0 0 0-14.52 0 14.24 14.24 0 0 0-5.13 5l-21.38 35.87-42.09-70.67a14.41 14.41 0 0 0-5.17-5.08 15.38 15.38 0 0 0-7.47-2 15.38 15.38 0 0 0-7.47 2 14.41 14.41 0 0 0-5.17 5.08L127.2 227.7H7.6a12.68 12.68 0 0 0-1.87 6.58 13.2 13.2 0 0 0 1.9 6.74 14.08 14.08 0 0 0 5.13 5A15.3 15.3 0 0 0 20.02 248h141.13a52.52 52.52 0 0 0 45.25-25.28l36.2-60.87 21.2-35.62 63.6 106.82h-84.83l-21.2 35.62 6.55 3.05z"
+      fill="#00DC82"
     />
     <path
-      fill="#00DC82"
       d="M7.6 248H127.2l88.2-148.1a14.41 14.41 0 0 0-5.17-5.08 15.38 15.38 0 0 0-7.47-2 15.38 15.38 0 0 0-7.47 2 14.41 14.41 0 0 0-5.17 5.08l-85.43 143.33H7.6a12.68 12.68 0 0 0-1.87 6.58 13.2 13.2 0 0 0 1.9 6.74 14.08 14.08 0 0 0 5.13 5A15.3 15.3 0 0 0 20.02 263h141.13a52.52 52.52 0 0 0 45.25-25.28l36.2-60.87-21.2 35.62-36.2 60.87A52.52 52.52 0 0 1 139.95 298H20.02a15.3 15.3 0 0 1-7.26-1.88 14.08 14.08 0 0 1-5.13-5 13.2 13.2 0 0 1-1.9-6.74A12.68 12.68 0 0 1 7.6 277.8z"
+      fill="#00DC82"
       opacity=".5"
     />
   </svg>
