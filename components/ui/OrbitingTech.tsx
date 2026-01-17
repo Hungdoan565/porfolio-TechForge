@@ -199,66 +199,148 @@ function calculateSmartPosition(
   containerHeight: number,
 ): { x: number; y: number; position: PopoverPosition } {
   const ICON_SIZE = 56;
-  const GAP = 12;
-
-  const centerX = containerWidth / 2;
-  const centerY = containerHeight / 2;
+  const GAP = 16;
+  const MARGIN = 10;
 
   const iconCenterX = iconX + ICON_SIZE / 2;
   const iconCenterY = iconY + ICON_SIZE / 2;
+  const containerCenterY = containerHeight / 2;
 
-  const iconAngle = Math.atan2(iconCenterY - centerY, iconCenterX - centerX);
-  const iconAngleDeg = ((iconAngle * 180) / Math.PI + 360) % 360;
+  // Determine if icon is near bottom (lower 40% of container)
+  const isNearBottom = iconY > containerHeight * 0.6;
+  const isNearTop = iconY < containerHeight * 0.4;
 
-  const priorityOrder: {
+  // Calculate all possible positions
+  const positions: Array<{
     pos: PopoverPosition;
-    minAngle: number;
-    maxAngle: number;
-  }[] = [
-    { pos: "right", minAngle: 315, maxAngle: 45 },
-    { pos: "bottom", minAngle: 45, maxAngle: 135 },
-    { pos: "left", minAngle: 135, maxAngle: 225 },
-    { pos: "top", minAngle: 225, maxAngle: 315 },
-  ];
+    x: number;
+    y: number;
+    fits: boolean;
+    distanceFromEdge: number;
+    priority: number; // Higher is better
+  }> = [];
 
-  for (const { pos, minAngle, maxAngle } of priorityOrder) {
-    let x = 0,
-      y = 0;
-    let fitsInBounds = false;
-    let avoidLogo = false;
+  // Right position - HIGH PRIORITY (unless near edges)
+  const rightX = iconX + ICON_SIZE + GAP;
+  const rightY = iconY;
+  const rightFits =
+    rightX + POPOVER_WIDTH <= containerWidth - MARGIN &&
+    rightY >= MARGIN &&
+    rightY + POPOVER_HEIGHT <= containerHeight - MARGIN;
+  const rightDistance = Math.min(
+    containerWidth - MARGIN - (rightX + POPOVER_WIDTH),
+    rightY - MARGIN,
+    containerHeight - MARGIN - (rightY + POPOVER_HEIGHT)
+  );
+  positions.push({ 
+    pos: "right", 
+    x: rightX, 
+    y: rightY, 
+    fits: rightFits, 
+    distanceFromEdge: rightDistance,
+    priority: 10
+  });
 
-    if (pos === "right") {
-      x = iconX + ICON_SIZE + GAP;
-      y = iconY;
-      fitsInBounds =
-        x + POPOVER_WIDTH <= containerWidth - 10 &&
-        y + POPOVER_HEIGHT <= containerHeight - 10;
-      avoidLogo = iconAngleDeg > 45 && iconAngleDeg < 135;
-    } else if (pos === "left") {
-      x = iconX - POPOVER_WIDTH - GAP;
-      y = iconY;
-      fitsInBounds = x >= 10 && y + POPOVER_HEIGHT <= containerHeight - 10;
-      avoidLogo = iconAngleDeg > 135 && iconAngleDeg < 225;
-    } else if (pos === "top") {
-      x = iconX;
-      y = iconY - POPOVER_HEIGHT - GAP;
-      fitsInBounds = x + POPOVER_WIDTH <= containerWidth - 10 && y >= 10;
-      avoidLogo = iconAngleDeg > 225 && iconAngleDeg < 315;
-    } else {
-      x = iconX;
-      y = iconY + ICON_SIZE + GAP;
-      fitsInBounds =
-        x + POPOVER_WIDTH <= containerWidth - 10 &&
-        y + POPOVER_HEIGHT <= containerHeight - 10;
-      avoidLogo = iconAngleDeg > 45 && iconAngleDeg < 135;
-    }
+  // Left position - HIGH PRIORITY (unless near edges)
+  const leftX = iconX - POPOVER_WIDTH - GAP;
+  const leftY = iconY;
+  const leftFits =
+    leftX >= MARGIN &&
+    leftY >= MARGIN &&
+    leftY + POPOVER_HEIGHT <= containerHeight - MARGIN;
+  const leftDistance = Math.min(
+    leftX - MARGIN,
+    leftY - MARGIN,
+    containerHeight - MARGIN - (leftY + POPOVER_HEIGHT)
+  );
+  positions.push({ 
+    pos: "left", 
+    x: leftX, 
+    y: leftY, 
+    fits: leftFits, 
+    distanceFromEdge: leftDistance,
+    priority: 10
+  });
 
-    if (fitsInBounds && !avoidLogo) {
-      return { x, y, position: pos };
-    }
+  // Top position - DYNAMIC PRIORITY (HIGH when icon is near bottom)
+  const topX = Math.max(MARGIN, Math.min(
+    iconCenterX - POPOVER_WIDTH / 2,
+    containerWidth - POPOVER_WIDTH - MARGIN
+  ));
+  const topY = iconY - POPOVER_HEIGHT - GAP;
+  const topFits =
+    topY >= MARGIN &&
+    topX >= MARGIN &&
+    topX + POPOVER_WIDTH <= containerWidth - MARGIN;
+  const topDistance = Math.min(
+    topY - MARGIN,
+    topX - MARGIN,
+    containerWidth - MARGIN - (topX + POPOVER_WIDTH)
+  );
+  positions.push({ 
+    pos: "top", 
+    x: topX, 
+    y: topY, 
+    fits: topFits, 
+    distanceFromEdge: topDistance,
+    priority: isNearBottom ? 15 : 5 // HIGHER priority when near bottom
+  });
+
+  // Bottom position - DYNAMIC PRIORITY (HIGH when icon is near top)
+  const bottomX = Math.max(MARGIN, Math.min(
+    iconCenterX - POPOVER_WIDTH / 2,
+    containerWidth - POPOVER_WIDTH - MARGIN
+  ));
+  const bottomY = iconY + ICON_SIZE + GAP;
+  const bottomFits =
+    bottomY + POPOVER_HEIGHT <= containerHeight - MARGIN &&
+    bottomX >= MARGIN &&
+    bottomX + POPOVER_WIDTH <= containerWidth - MARGIN;
+  const bottomDistance = Math.min(
+    containerHeight - MARGIN - (bottomY + POPOVER_HEIGHT),
+    bottomX - MARGIN,
+    containerWidth - MARGIN - (bottomX + POPOVER_WIDTH)
+  );
+  positions.push({ 
+    pos: "bottom", 
+    x: bottomX, 
+    y: bottomY, 
+    fits: bottomFits, 
+    distanceFromEdge: bottomDistance,
+    priority: isNearTop ? 15 : 5 // HIGHER priority when near top
+  });
+
+  // Filter positions that fit
+  const fittingPositions = positions.filter(p => p.fits);
+
+  // If we have positions that fit, choose by priority then by space
+  if (fittingPositions.length > 0) {
+    // Sort by priority (descending), then by distance from edge (descending)
+    fittingPositions.sort((a, b) => {
+      if (b.priority !== a.priority) {
+        return b.priority - a.priority;
+      }
+      return b.distanceFromEdge - a.distanceFromEdge;
+    });
+    
+    const best = fittingPositions[0];
+    return { x: best.x, y: best.y, position: best.pos };
   }
 
-  return { x: iconX + ICON_SIZE + GAP, y: iconY, position: "right" };
+  // Fallback: choose the position that fits best even if not perfect
+  // Prioritize left/right over top/bottom
+  const bestEffort = positions.sort((a, b) => {
+    if (b.priority !== a.priority) {
+      return b.priority - a.priority;
+    }
+    return b.distanceFromEdge - a.distanceFromEdge;
+  })[0];
+
+  return { 
+    x: Math.max(MARGIN, Math.min(bestEffort.x, containerWidth - POPOVER_WIDTH - MARGIN)), 
+    y: Math.max(MARGIN, Math.min(bestEffort.y, containerHeight - POPOVER_HEIGHT - MARGIN)), 
+    position: bestEffort.pos 
+  };
 }
 
 export function OrbitingTech({
@@ -336,6 +418,20 @@ export function OrbitingTech({
     }, 150);
   }, []);
 
+  const handlePopoverEnter = useCallback(() => {
+    if (leaveTimeoutRef.current) {
+      clearTimeout(leaveTimeoutRef.current);
+      leaveTimeoutRef.current = null;
+    }
+  }, []);
+
+  const handlePopoverLeave = useCallback(() => {
+    leaveTimeoutRef.current = setTimeout(() => {
+      setHoveredTech(null);
+      setPopoverData(null);
+    }, 150);
+  }, []);
+
   const isPaused = hoveredTech !== null;
 
   return (
@@ -400,19 +496,36 @@ export function OrbitingTech({
         transition={{ duration: 0.3 }}
       />
 
-      {/* Smart positioned popover */}
-      <AnimatePresence>
+      {/* Smart positioned popover with smooth transitions */}
+      <AnimatePresence mode="wait">
         {hoveredTech && popoverData && (
           <motion.div
-            className="absolute z-[100] pointer-events-auto"
+            key={hoveredTech.name}
+            layoutId="tech-popover"
+            className="absolute z-[100]"
             style={{
               left: popoverData.x,
               top: popoverData.y,
+              pointerEvents: 'auto',
             }}
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1,
+              x: 0,
+              y: 0,
+            }}
             exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            transition={{ 
+              duration: 0.25,
+              ease: "easeInOut",
+              layout: {
+                duration: 0.3,
+                ease: "easeInOut"
+              }
+            }}
+            onMouseEnter={handlePopoverEnter}
+            onMouseLeave={handlePopoverLeave}
           >
             <TechPopover
               tech={hoveredTech}
@@ -507,10 +620,11 @@ function OrbitRing({
             <motion.div
               className={cn(
                 "w-14 h-14 md:w-16 md:h-16 rounded-xl",
-                "bg-white dark:bg-slate-800 shadow-lg",
+                "bg-white dark:bg-white/95 shadow-lg",
                 "flex items-center justify-center cursor-pointer",
-                "border-2 border-slate-100 dark:border-slate-700",
+                "border-2 border-slate-100 dark:border-slate-300/50",
                 "transition-colors duration-200",
+                "backdrop-blur-sm",
               )}
               style={{
                 color: tech.color,
