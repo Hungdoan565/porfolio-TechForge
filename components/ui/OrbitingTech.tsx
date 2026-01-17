@@ -3,9 +3,9 @@
 import React, {
   useState,
   useCallback,
-  useRef,
-  useEffect,
   useMemo,
+  useEffect,
+  useRef,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -189,26 +189,6 @@ const defaultTechnologies: TechItemFull[] = [
 
 const POPOVER_WIDTH = 320;
 const POPOVER_HEIGHT = 280;
-const LOGO_SIZE = 96;
-const LOGO_MARGIN = 60;
-
-const orbitStyles = `
-  @keyframes orbitRotate1 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  @keyframes orbitRotate2 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  @keyframes orbitRotate3 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  @keyframes counterRotate1 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-  @keyframes counterRotate2 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-  @keyframes counterRotate3 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-  
-  .orbit-ring-1 { animation: orbitRotate1 30s linear infinite; }
-  .orbit-ring-2 { animation: orbitRotate2 40s linear infinite; }
-  .orbit-ring-3 { animation: orbitRotate3 50s linear infinite; }
-  .counter-rotate-1 { animation: counterRotate1 30s linear infinite; transform-origin: center; }
-  .counter-rotate-2 { animation: counterRotate2 40s linear infinite; transform-origin: center; }
-  .counter-rotate-3 { animation: counterRotate3 50s linear infinite; transform-origin: center; }
-  
-  .orbit-paused { animation-play-state: paused !important; }
-`;
 
 type PopoverPosition = "left" | "right" | "top" | "bottom";
 
@@ -217,8 +197,6 @@ function calculateSmartPosition(
   iconY: number,
   containerWidth: number,
   containerHeight: number,
-  popoverWidth: number,
-  popoverHeight: number,
 ): { x: number; y: number; position: PopoverPosition } {
   const ICON_SIZE = 56;
   const GAP = 12;
@@ -253,25 +231,25 @@ function calculateSmartPosition(
       x = iconX + ICON_SIZE + GAP;
       y = iconY;
       fitsInBounds =
-        x + popoverWidth <= containerWidth - 10 &&
-        y + popoverHeight <= containerHeight - 10;
+        x + POPOVER_WIDTH <= containerWidth - 10 &&
+        y + POPOVER_HEIGHT <= containerHeight - 10;
       avoidLogo = iconAngleDeg > 45 && iconAngleDeg < 135;
     } else if (pos === "left") {
-      x = iconX - popoverWidth - GAP;
+      x = iconX - POPOVER_WIDTH - GAP;
       y = iconY;
-      fitsInBounds = x >= 10 && y + popoverHeight <= containerHeight - 10;
+      fitsInBounds = x >= 10 && y + POPOVER_HEIGHT <= containerHeight - 10;
       avoidLogo = iconAngleDeg > 135 && iconAngleDeg < 225;
     } else if (pos === "top") {
       x = iconX;
-      y = iconY - popoverHeight - GAP;
-      fitsInBounds = x + popoverWidth <= containerWidth - 10 && y >= 10;
+      y = iconY - POPOVER_HEIGHT - GAP;
+      fitsInBounds = x + POPOVER_WIDTH <= containerWidth - 10 && y >= 10;
       avoidLogo = iconAngleDeg > 225 && iconAngleDeg < 315;
     } else {
       x = iconX;
       y = iconY + ICON_SIZE + GAP;
       fitsInBounds =
-        x + popoverWidth <= containerWidth - 10 &&
-        y + popoverHeight <= containerHeight - 10;
+        x + POPOVER_WIDTH <= containerWidth - 10 &&
+        y + POPOVER_HEIGHT <= containerHeight - 10;
       avoidLogo = iconAngleDeg > 45 && iconAngleDeg < 135;
     }
 
@@ -295,19 +273,36 @@ export function OrbitingTech({
     position: PopoverPosition;
   } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const iconRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const leaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const orbits = useMemo(
     () => ({
-      1: { radius: 110, items: technologies.filter((t) => t.orbit === 1) },
-      2: { radius: 175, items: technologies.filter((t) => t.orbit === 2) },
-      3: { radius: 240, items: technologies.filter((t) => t.orbit === 3) },
+      1: {
+        radius: 110,
+        speed: 30,
+        items: technologies.filter((t) => t.orbit === 1),
+      },
+      2: {
+        radius: 175,
+        speed: 40,
+        items: technologies.filter((t) => t.orbit === 2),
+      },
+      3: {
+        radius: 240,
+        speed: 50,
+        items: technologies.filter((t) => t.orbit === 3),
+      },
     }),
     [technologies],
   );
 
   const handleTechHover = useCallback(
     (tech: TechItemFull, e: React.MouseEvent) => {
+      if (leaveTimeoutRef.current) {
+        clearTimeout(leaveTimeoutRef.current);
+        leaveTimeoutRef.current = null;
+      }
+
       const rect = e.currentTarget.getBoundingClientRect();
       const containerRect = containerRef.current?.getBoundingClientRect();
 
@@ -320,8 +315,6 @@ export function OrbitingTech({
           iconY,
           containerRect.width,
           containerRect.height,
-          POPOVER_WIDTH,
-          POPOVER_HEIGHT,
         );
 
         setPopoverData({
@@ -337,173 +330,216 @@ export function OrbitingTech({
   );
 
   const handleTechLeave = useCallback(() => {
-    setHoveredTech(null);
-    setPopoverData(null);
+    leaveTimeoutRef.current = setTimeout(() => {
+      setHoveredTech(null);
+      setPopoverData(null);
+    }, 150);
   }, []);
 
   const isPaused = hoveredTech !== null;
 
   return (
-    <>
-      <style dangerouslySetInnerHTML={{ __html: orbitStyles }} />
-
-      <div
-        ref={containerRef}
-        className={cn(
-          "relative w-full aspect-square max-w-[550px] mx-auto",
-          className,
-        )}
+    <div
+      ref={containerRef}
+      className={cn(
+        "relative w-full aspect-square max-w-[550px] mx-auto",
+        className,
+      )}
+    >
+      {/* Center logo - LUÔN Ở TRUNG TÂM */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+        animate={{ scale: isPaused ? 1.05 : 1 }}
+        transition={{ duration: 0.3 }}
       >
-        {/* Center logo - moves down when popover is open */}
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 z-10"
-          animate={{
-            y: isPaused ? 40 : 0,
-            scale: isPaused ? 0.9 : 1,
-          }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-        >
-          <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-[#0066FF] to-indigo-600 flex items-center justify-center shadow-2xl shadow-blue-500/30">
-            {centerLogo || (
-              <span className="text-3xl md:text-4xl font-bold text-white">
-                TF
-              </span>
-            )}
-          </div>
-        </motion.div>
+        <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-[#0066FF] to-indigo-600 flex items-center justify-center shadow-2xl shadow-blue-500/30">
+          {centerLogo || (
+            <span className="text-3xl md:text-4xl font-bold text-white">
+              TF
+            </span>
+          )}
+        </div>
+      </motion.div>
 
-        {/* Orbit rings */}
-        {Object.entries(orbits).map(([orbitNum, config]) => (
-          <div
-            key={orbitNum}
-            className={cn(
-              "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-slate-200/30 dark:border-slate-700/40",
-              "transition-opacity duration-300",
-              isPaused && "opacity-50",
-            )}
-            style={{ width: config.radius * 2, height: config.radius * 2 }}
-          />
-        ))}
+      {/* Orbit rings */}
+      {Object.entries(orbits).map(([orbitNum, config]) => (
+        <div
+          key={orbitNum}
+          className={cn(
+            "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-slate-200/30 dark:border-slate-700/40 pointer-events-none",
+            "transition-opacity duration-300",
+            isPaused && "opacity-50",
+          )}
+          style={{ width: config.radius * 2, height: config.radius * 2 }}
+        />
+      ))}
 
-        {/* Orbit containers with CSS animation */}
-        {Object.entries(orbits).map(([orbitNum, config]) => (
-          <div
-            key={`orbit-${orbitNum}`}
-            className={cn(
-              "absolute top-1/2 left-1/2",
-              `orbit-ring-${orbitNum}`,
-              isPaused && "orbit-paused",
-            )}
+      {/* Orbiting items */}
+      {Object.entries(orbits).map(([orbitNum, config]) => (
+        <OrbitRing
+          key={orbitNum}
+          radius={config.radius}
+          speed={config.speed}
+          items={config.items}
+          isPaused={isPaused}
+          hoveredTech={hoveredTech}
+          onTechHover={handleTechHover}
+          onTechLeave={handleTechLeave}
+        />
+      ))}
+
+      {/* Center glow */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full blur-3xl pointer-events-none z-0"
+        animate={{
+          backgroundColor: hoveredTech
+            ? `${hoveredTech.color}30`
+            : "rgba(59, 130, 246, 0.2)",
+          scale: isPaused ? 1.1 : 1,
+        }}
+        transition={{ duration: 0.3 }}
+      />
+
+      {/* Smart positioned popover */}
+      <AnimatePresence>
+        {hoveredTech && popoverData && (
+          <motion.div
+            className="absolute z-[100] pointer-events-auto"
             style={{
-              width: config.radius * 2,
-              height: config.radius * 2,
-              marginLeft: -config.radius,
-              marginTop: -config.radius,
+              left: popoverData.x,
+              top: popoverData.y,
+            }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          >
+            <TechPopover
+              tech={hoveredTech}
+              isOpen={true}
+              position={popoverData.position}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Instruction hint */}
+      <motion.p
+        className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-slate-400 dark:text-slate-500 whitespace-nowrap"
+        animate={{ opacity: isPaused ? 0 : 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        Di chuột vào công nghệ để xem chi tiết
+      </motion.p>
+    </div>
+  );
+}
+
+// Separate component for each orbit ring with proper animation
+function OrbitRing({
+  radius,
+  speed,
+  items,
+  isPaused,
+  hoveredTech,
+  onTechHover,
+  onTechLeave,
+}: {
+  radius: number;
+  speed: number;
+  items: TechItemFull[];
+  isPaused: boolean;
+  hoveredTech: TechItemFull | null;
+  onTechHover: (tech: TechItemFull, e: React.MouseEvent) => void;
+  onTechLeave: () => void;
+}) {
+  const [rotation, setRotation] = useState(0);
+  const ICON_SIZE = 56; // w-14 = 56px
+
+  useEffect(() => {
+    let animationFrame: number;
+    let lastTime = performance.now();
+
+    const animate = (time: number) => {
+      const deltaTime = (time - lastTime) / 1000;
+      lastTime = time;
+
+      if (!isPaused) {
+        setRotation((prev) => (prev + (360 / speed) * deltaTime) % 360);
+      }
+
+      animationFrame = requestAnimationFrame(animate);
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isPaused, speed]);
+
+  return (
+    <>
+      {items.map((tech, index) => {
+        const baseAngle = (360 / items.length) * index;
+        const currentAngle = baseAngle + rotation;
+        const angleRad = (currentAngle * Math.PI) / 180;
+        const isHovered = hoveredTech?.name === tech.name;
+
+        // Calculate x, y position from center
+        const x = Math.cos(angleRad) * radius;
+        const y = Math.sin(angleRad) * radius;
+
+        return (
+          <motion.div
+            key={tech.name}
+            className="absolute"
+            style={{
+              // Position from center of container, offset by half icon size
+              left: "50%",
+              top: "50%",
+              width: ICON_SIZE,
+              height: ICON_SIZE,
+              marginLeft: -ICON_SIZE / 2,
+              marginTop: -ICON_SIZE / 2,
+              x,
+              y,
+              zIndex: isHovered ? 50 : 10,
             }}
           >
-            {config.items.map((tech, index) => {
-              const angle = (360 / config.items.length) * index;
-              const isHovered = hoveredTech?.name === tech.name;
-
-              return (
-                <div
-                  key={tech.name}
-                  className="absolute top-1/2 left-1/2"
-                  style={{
-                    width: config.radius * 2,
-                    height: config.radius * 2,
-                    marginLeft: -config.radius,
-                    marginTop: -config.radius,
-                    transform: `rotate(${angle}deg) translateX(${config.radius}px) rotate(-${angle}deg)`,
-                  }}
-                >
-                  <motion.div
-                    ref={(el) => {
-                      if (el) iconRefs.current.set(tech.name, el);
-                    }}
-                    className={cn(
-                      "w-14 h-14 md:w-16 md:h-16 rounded-xl -ml-7 -mt-7 md:-ml-8 md:-mt-8",
-                      "bg-white dark:bg-slate-800 shadow-lg",
-                      "flex items-center justify-center cursor-pointer",
-                      "border-2 border-slate-100 dark:border-slate-700",
-                      `counter-rotate-${orbitNum}`,
-                      isPaused && "orbit-paused",
-                    )}
-                    style={{
-                      color: tech.color,
-                      borderColor: isHovered ? tech.color : undefined,
-                    }}
-                    animate={{
-                      scale: isHovered ? 1.2 : 1,
-                      opacity: isPaused && !isHovered ? 0.4 : 1,
-                    }}
-                    transition={{ duration: 0.2 }}
-                    onMouseEnter={(e) => handleTechHover(tech, e)}
-                    onMouseLeave={handleTechLeave}
-                  >
-                    {tech.icon}
-
-                    {isHovered && (
-                      <motion.div
-                        className="absolute inset-0 rounded-xl pointer-events-none"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        style={{
-                          boxShadow: `0 0 20px ${tech.color}40, inset 0 0 10px ${tech.color}20`,
-                        }}
-                      />
-                    )}
-                  </motion.div>
-                </div>
-              );
-            })}
-          </div>
-        ))}
-
-        {/* Center glow */}
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full blur-3xl pointer-events-none z-0"
-          animate={{
-            backgroundColor: hoveredTech
-              ? `${hoveredTech.color}30`
-              : "rgba(59, 130, 246, 0.2)",
-            scale: isPaused ? 1.2 : 1,
-          }}
-          transition={{ duration: 0.3 }}
-        />
-
-        {/* Smart positioned popover */}
-        <AnimatePresence>
-          {hoveredTech && popoverData && (
             <motion.div
-              className="absolute z-[200] pointer-events-auto"
+              className={cn(
+                "w-14 h-14 md:w-16 md:h-16 rounded-xl",
+                "bg-white dark:bg-slate-800 shadow-lg",
+                "flex items-center justify-center cursor-pointer",
+                "border-2 border-slate-100 dark:border-slate-700",
+                "transition-colors duration-200",
+              )}
               style={{
-                left: popoverData.x,
-                top: popoverData.y,
+                color: tech.color,
+                borderColor: isHovered ? tech.color : undefined,
               }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
+              animate={{
+                scale: isHovered ? 1.2 : 1,
+                opacity: isPaused && !isHovered ? 0.5 : 1,
+              }}
+              transition={{ duration: 0.2 }}
+              onMouseEnter={(e) => onTechHover(tech, e)}
+              onMouseLeave={onTechLeave}
             >
-              <TechPopover
-                tech={hoveredTech}
-                isOpen={true}
-                position={popoverData.position}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+              {tech.icon}
 
-        {/* Instruction hint */}
-        <motion.p
-          className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-slate-400 dark:text-slate-500 whitespace-nowrap"
-          animate={{ opacity: isPaused ? 0 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          Di chuột vào công nghệ để xem chi tiết
-        </motion.p>
-      </div>
+              {isHovered && (
+                <motion.div
+                  className="absolute inset-0 rounded-xl pointer-events-none"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  style={{
+                    boxShadow: `0 0 20px ${tech.color}40, inset 0 0 10px ${tech.color}20`,
+                  }}
+                />
+              )}
+            </motion.div>
+          </motion.div>
+        );
+      })}
     </>
   );
 }
