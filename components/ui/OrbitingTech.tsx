@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { TechPopover, type TechInfo } from "./TechPopover";
 
-// Import react-icons
 import {
   SiReact,
   SiNextdotjs,
@@ -19,7 +18,6 @@ import {
   SiAmazonwebservices,
 } from "react-icons/si";
 
-// Extended TechItem with full info for popover
 export interface TechItemFull extends TechInfo {
   orbit: 1 | 2 | 3;
 }
@@ -30,20 +28,18 @@ interface OrbitingTechProps {
   className?: string;
 }
 
-// Default technologies with full info
 const defaultTechnologies: TechItemFull[] = [
-  // Orbit 1 - Core Frontend
   {
     name: "React",
     icon: <SiReact className="w-6 h-6 md:w-7 md:h-7" />,
     color: "#61DAFB",
     orbit: 1,
     description:
-      "Thu vien UI manh me voi component-based architecture, cho phep xay dung giao dien phuc tap mot cach de dang.",
+      "Thư viện UI mạnh mẽ với component-based architecture, cho phép xây dựng giao diện phức tạp một cách dễ dàng.",
     whyWeUse: [
-      "Ecosystem lon nhat the gioi",
-      "Virtual DOM toi uu hieu suat",
-      "Tai su dung component de dang",
+      "Ecosystem lớn nhất thế giới",
+      "Virtual DOM tối ưu hiệu suất",
+      "Tái sử dụng component dễ dàng",
     ],
     stats: { projects: 45, yearsExp: 5 },
     link: "https://react.dev",
@@ -54,11 +50,11 @@ const defaultTechnologies: TechItemFull[] = [
     color: "#000000",
     orbit: 1,
     description:
-      "Framework React full-stack voi SSR, SSG va API routes. Giai phap hoan hao cho web hien dai.",
+      "Framework React full-stack với SSR, SSG và API routes. Giải pháp hoàn hảo cho web hiện đại.",
     whyWeUse: [
-      "SEO tot voi Server-Side Rendering",
-      "Performance tuyet voi voi Image Optimization",
-      "Deploy de dang voi Vercel",
+      "SEO tốt với Server-Side Rendering",
+      "Performance tuyệt vời với Image Optimization",
+      "Deploy dễ dàng với Vercel",
     ],
     stats: { projects: 35, yearsExp: 4 },
     link: "https://nextjs.org",
@@ -69,28 +65,26 @@ const defaultTechnologies: TechItemFull[] = [
     color: "#3178C6",
     orbit: 1,
     description:
-      "JavaScript voi static typing, giup phat hien loi som va tang trai nghiem developer.",
+      "JavaScript với static typing, giúp phát hiện lỗi sớm và tăng trải nghiệm developer.",
     whyWeUse: [
-      "Type safety giam loi runtime",
-      "IntelliSense va autocomplete manh",
-      "Refactoring an toan va de dang",
+      "Type safety giảm lỗi runtime",
+      "IntelliSense và autocomplete mạnh",
+      "Refactoring an toàn và dễ dàng",
     ],
     stats: { projects: 50, yearsExp: 5 },
     link: "https://www.typescriptlang.org",
   },
-
-  // Orbit 2 - Backend & Styling
   {
     name: "Node.js",
     icon: <SiNodedotjs className="w-6 h-6 md:w-7 md:h-7" />,
     color: "#339933",
     orbit: 2,
     description:
-      "Runtime JavaScript phia server, cho phep xay dung API va backend nhanh chong.",
+      "Runtime JavaScript phía server, cho phép xây dựng API và backend nhanh chóng.",
     whyWeUse: [
-      "Fullstack JavaScript thong nhat",
-      "NPM ecosystem khong lo",
-      "Non-blocking I/O hieu suat cao",
+      "Fullstack JavaScript thống nhất",
+      "NPM ecosystem khổng lồ",
+      "Non-blocking I/O hiệu suất cao",
     ],
     stats: { projects: 40, yearsExp: 5 },
     link: "https://nodejs.org",
@@ -101,11 +95,11 @@ const defaultTechnologies: TechItemFull[] = [
     color: "#06B6D4",
     orbit: 2,
     description:
-      "Utility-first CSS framework giup styling nhanh chong va nhat quan tren toan du an.",
+      "Utility-first CSS framework giúp styling nhanh chóng và nhất quán trên toàn dự án.",
     whyWeUse: [
-      "Phat trien UI nhanh gap 3 lan",
-      "Bundle size nho voi PurgeCSS",
-      "Responsive design de dang",
+      "Phát triển UI nhanh gấp 3 lần",
+      "Bundle size nhỏ với PurgeCSS",
+      "Responsive design dễ dàng",
     ],
     stats: { projects: 40, yearsExp: 3 },
     link: "https://tailwindcss.com",
@@ -116,28 +110,26 @@ const defaultTechnologies: TechItemFull[] = [
     color: "#2D3748",
     orbit: 2,
     description:
-      "ORM the he moi voi type-safety tuyet doi va developer experience tuyet voi.",
+      "ORM thế hệ mới với type-safety tuyệt đối và developer experience tuyệt vời.",
     whyWeUse: [
-      "Auto-generated types tu schema",
-      "Migration de dang va an toan",
-      "Query builder truc quan",
+      "Auto-generated types từ schema",
+      "Migration dễ dàng và an toàn",
+      "Query builder trực quan",
     ],
     stats: { projects: 25, yearsExp: 3 },
     link: "https://www.prisma.io",
   },
-
-  // Orbit 3 - Database & DevOps
   {
     name: "PostgreSQL",
     icon: <SiPostgresql className="w-6 h-6 md:w-7 md:h-7" />,
     color: "#4169E1",
     orbit: 3,
     description:
-      "Co so du lieu quan he manh me nhat, ho tro JSON, full-text search va nhieu tinh nang nang cao.",
+      "Cơ sở dữ liệu quan hệ mạnh mẽ nhất, hỗ trợ JSON, full-text search và nhiều tính năng nâng cao.",
     whyWeUse: [
-      "ACID compliance dam bao data integrity",
-      "Performance tuyet voi voi indexing",
-      "Mo rong tot cho du an lon",
+      "ACID compliance đảm bảo data integrity",
+      "Performance tuyệt vời với indexing",
+      "Mở rộng tốt cho dự án lớn",
     ],
     stats: { projects: 30, yearsExp: 5 },
     link: "https://www.postgresql.org",
@@ -148,11 +140,11 @@ const defaultTechnologies: TechItemFull[] = [
     color: "#47A248",
     orbit: 3,
     description:
-      "NoSQL database linh hoat, phu hop cho du lieu phi cau truc va prototyping nhanh.",
+      "NoSQL database linh hoạt, phù hợp cho dữ liệu phi cấu trúc và prototyping nhanh.",
     whyWeUse: [
-      "Schema linh hoat cho MVP nhanh",
-      "Horizontal scaling de dang",
-      "Document model truc quan",
+      "Schema linh hoạt cho MVP nhanh",
+      "Horizontal scaling dễ dàng",
+      "Document model trực quan",
     ],
     stats: { projects: 20, yearsExp: 4 },
     link: "https://www.mongodb.com",
@@ -163,11 +155,11 @@ const defaultTechnologies: TechItemFull[] = [
     color: "#2496ED",
     orbit: 3,
     description:
-      "Container platform dam bao ung dung chay nhat quan tren moi moi truong.",
+      "Container platform đảm bảo ứng dụng chạy nhất quán trên mọi môi trường.",
     whyWeUse: [
-      "Moi truong dong nhat dev/prod",
-      "Deploy va scale de dang",
-      "Isolation va bao mat tot",
+      "Môi trường đồng nhất dev/prod",
+      "Deploy và scale dễ dàng",
+      "Isolation và bảo mật tốt",
     ],
     stats: { projects: 35, yearsExp: 4 },
     link: "https://www.docker.com",
@@ -178,230 +170,249 @@ const defaultTechnologies: TechItemFull[] = [
     color: "#FF9900",
     orbit: 3,
     description:
-      "Cloud platform hang dau voi day du dich vu tu compute, storage den AI/ML.",
+      "Cloud platform hàng đầu với đầy đủ dịch vụ từ compute, storage đến AI/ML.",
     whyWeUse: [
-      "Dich vu da dang va toan dien",
-      "Scale tu 0 den hang trieu users",
-      "Bao mat va compliance cao",
+      "Dịch vụ đa dạng và toàn diện",
+      "Scale từ 0 đến hàng triệu users",
+      "Bảo mật và compliance cao",
     ],
     stats: { projects: 25, yearsExp: 4 },
     link: "https://aws.amazon.com",
   },
 ];
 
+// CSS styles for continuous rotation
+const orbitStyles = `
+  @keyframes orbitRotate1 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes orbitRotate2 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes orbitRotate3 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes counterRotate1 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+  @keyframes counterRotate2 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+  @keyframes counterRotate3 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+  
+  .orbit-ring-1 { animation: orbitRotate1 30s linear infinite; }
+  .orbit-ring-2 { animation: orbitRotate2 40s linear infinite; }
+  .orbit-ring-3 { animation: orbitRotate3 50s linear infinite; }
+  .counter-rotate-1 { animation: counterRotate1 30s linear infinite; transform-origin: center; }
+  .counter-rotate-2 { animation: counterRotate2 40s linear infinite; transform-origin: center; }
+  .counter-rotate-3 { animation: counterRotate3 50s linear infinite; transform-origin: center; }
+  
+  .orbit-paused { animation-play-state: paused !important; }
+`;
+
 export function OrbitingTech({
   technologies = defaultTechnologies,
   centerLogo,
   className,
 }: OrbitingTechProps) {
-  const [isPaused, setIsPaused] = useState(false);
   const [hoveredTech, setHoveredTech] = useState<TechItemFull | null>(null);
-  const [popoverPosition, setPopoverPosition] = useState<"left" | "right">(
-    "right",
+  const [popoverPos, setPopoverPos] = useState<{ x: number; y: number } | null>(
+    null,
   );
+  const [popoverSide, setPopoverSide] = useState<"left" | "right">("right");
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Group technologies by orbit
   const orbits = {
-    1: {
-      radius: 110,
-      speed: 30,
-      items: technologies.filter((t) => t.orbit === 1),
-    },
-    2: {
-      radius: 175,
-      speed: 40,
-      items: technologies.filter((t) => t.orbit === 2),
-    },
-    3: {
-      radius: 240,
-      speed: 50,
-      items: technologies.filter((t) => t.orbit === 3),
-    },
+    1: { radius: 110, items: technologies.filter((t) => t.orbit === 1) },
+    2: { radius: 175, items: technologies.filter((t) => t.orbit === 2) },
+    3: { radius: 240, items: technologies.filter((t) => t.orbit === 3) },
   };
 
-  // Calculate popover position based on tech position
   const handleTechHover = useCallback(
-    (tech: TechItemFull, index: number, totalItems: number) => {
-      const angle = (360 / totalItems) * index;
-      // If tech is on the left side of the orbit, show popover on left
-      setPopoverPosition(angle > 90 && angle < 270 ? "left" : "right");
+    (tech: TechItemFull, e: React.MouseEvent) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const containerRect = containerRef.current?.getBoundingClientRect();
+
+      if (containerRect) {
+        const containerCenterX = containerRect.width / 2;
+        const iconCenterX = rect.left + rect.width / 2 - containerRect.left;
+
+        const side = iconCenterX < containerCenterX ? "left" : "right";
+        setPopoverSide(side);
+
+        setPopoverPos({
+          x:
+            side === "right"
+              ? rect.right - containerRect.left + 16
+              : rect.left - containerRect.left - 16,
+          y: rect.top + rect.height / 2 - containerRect.top,
+        });
+      }
+
       setHoveredTech(tech);
-      setIsPaused(true);
     },
     [],
   );
 
   const handleTechLeave = useCallback(() => {
     setHoveredTech(null);
-    setIsPaused(false);
+    setPopoverPos(null);
   }, []);
 
-  return (
-    <div
-      className={cn(
-        "relative w-full aspect-square max-w-[550px] mx-auto",
-        className,
-      )}
-    >
-      {/* Center logo */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
-        animate={{ scale: isPaused ? 1.1 : 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-[#0066FF] to-indigo-600 flex items-center justify-center shadow-2xl shadow-blue-500/30">
-          {centerLogo || (
-            <span className="text-3xl md:text-4xl font-bold text-white">
-              TF
-            </span>
-          )}
-        </div>
-      </motion.div>
+  const isPaused = hoveredTech !== null;
 
-      {/* Orbit rings */}
-      {Object.entries(orbits).map(([orbitNum, config]) => (
+  return (
+    <>
+      <style dangerouslySetInnerHTML={{ __html: orbitStyles }} />
+
+      <div
+        ref={containerRef}
+        className={cn(
+          "relative w-full aspect-square max-w-[550px] mx-auto",
+          className,
+        )}
+      >
+        {/* Center logo */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+          <motion.div
+            animate={{ scale: isPaused ? 1.05 : 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-[#0066FF] to-indigo-600 flex items-center justify-center shadow-2xl shadow-blue-500/30">
+              {centerLogo || (
+                <span className="text-3xl md:text-4xl font-bold text-white">
+                  TF
+                </span>
+              )}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Orbit rings */}
+        {Object.entries(orbits).map(([orbitNum, config]) => (
+          <div
+            key={orbitNum}
+            className={cn(
+              "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-slate-200/30 dark:border-slate-700/40",
+              "transition-opacity duration-300",
+              isPaused && "opacity-50",
+            )}
+            style={{ width: config.radius * 2, height: config.radius * 2 }}
+          />
+        ))}
+
+        {/* Orbit containers with CSS animation */}
+        {Object.entries(orbits).map(([orbitNum, config]) => (
+          <div
+            key={`orbit-${orbitNum}`}
+            className={cn(
+              "absolute top-1/2 left-1/2",
+              `orbit-ring-${orbitNum}`,
+              isPaused && "orbit-paused",
+            )}
+            style={{
+              width: config.radius * 2,
+              height: config.radius * 2,
+              marginLeft: -config.radius,
+              marginTop: -config.radius,
+            }}
+          >
+            {config.items.map((tech, index) => {
+              const angle = (360 / config.items.length) * index;
+              const isHovered = hoveredTech?.name === tech.name;
+
+              return (
+                <div
+                  key={tech.name}
+                  className="absolute top-1/2 left-1/2"
+                  style={{
+                    width: config.radius * 2,
+                    height: config.radius * 2,
+                    marginLeft: -config.radius,
+                    marginTop: -config.radius,
+                    transform: `rotate(${angle}deg) translateX(${config.radius}px) rotate(-${angle}deg)`,
+                  }}
+                >
+                  <motion.div
+                    className={cn(
+                      "w-14 h-14 md:w-16 md:h-16 rounded-xl -ml-7 -mt-7 md:-ml-8 md:-mt-8",
+                      "bg-white dark:bg-slate-800 shadow-lg",
+                      "flex items-center justify-center cursor-pointer",
+                      "border-2 border-slate-100 dark:border-slate-700",
+                      `counter-rotate-${orbitNum}`,
+                      isPaused && "orbit-paused",
+                    )}
+                    style={{
+                      color: tech.color,
+                      borderColor: isHovered ? tech.color : undefined,
+                    }}
+                    animate={{
+                      scale: isHovered ? 1.2 : 1,
+                      opacity: isPaused && !isHovered ? 0.4 : 1,
+                    }}
+                    transition={{ duration: 0.2 }}
+                    onMouseEnter={(e) => handleTechHover(tech, e)}
+                    onMouseLeave={handleTechLeave}
+                  >
+                    {tech.icon}
+
+                    {isHovered && (
+                      <motion.div
+                        className="absolute inset-0 rounded-xl pointer-events-none"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        style={{
+                          boxShadow: `0 0 20px ${tech.color}40, inset 0 0 10px ${tech.color}20`,
+                        }}
+                      />
+                    )}
+                  </motion.div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+
+        {/* Center glow */}
         <motion.div
-          key={orbitNum}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-slate-200/30 dark:border-slate-700/40"
-          style={{
-            width: config.radius * 2,
-            height: config.radius * 2,
-          }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full blur-3xl pointer-events-none z-0"
           animate={{
-            opacity: isPaused ? 0.5 : 1,
-            borderColor: isPaused ? "rgba(0, 102, 255, 0.2)" : undefined,
+            backgroundColor: hoveredTech
+              ? `${hoveredTech.color}30`
+              : "rgba(59, 130, 246, 0.2)",
+            scale: isPaused ? 1.2 : 1,
           }}
           transition={{ duration: 0.3 }}
         />
-      ))}
 
-      {/* Orbiting items */}
-      {Object.entries(orbits).map(([, config]) =>
-        config.items.map((tech, index) => {
-          const angleOffset = (360 / config.items.length) * index;
-          const isHovered = hoveredTech?.name === tech.name;
-          const hasHoveredItem = hoveredTech !== null;
-
-          return (
+        {/* Popover - rendered at container level, outside orbits */}
+        <AnimatePresence>
+          {hoveredTech && popoverPos && (
             <motion.div
-              key={tech.name}
-              className="absolute top-1/2 left-1/2"
+              className="absolute z-[200] pointer-events-auto"
               style={{
-                width: config.radius * 2,
-                height: config.radius * 2,
-                marginLeft: -config.radius,
-                marginTop: -config.radius,
+                left: popoverSide === "right" ? popoverPos.x : "auto",
+                right:
+                  popoverSide === "left"
+                    ? `calc(100% - ${popoverPos.x}px)`
+                    : "auto",
+                top: popoverPos.y,
+                transform: "translateY(-50%)",
               }}
-              animate={{
-                rotate: isPaused
-                  ? angleOffset
-                  : [angleOffset, angleOffset + 360],
-              }}
-              transition={{
-                rotate: {
-                  duration: config.speed,
-                  repeat: Infinity,
-                  ease: "linear",
-                },
-              }}
+              initial={{ opacity: 0, x: popoverSide === "right" ? -20 : 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: popoverSide === "right" ? -20 : 20 }}
+              transition={{ duration: 0.2 }}
             >
-              <motion.div
-                className={cn(
-                  "absolute w-14 h-14 md:w-16 md:h-16 rounded-xl",
-                  "bg-white dark:bg-slate-800 shadow-lg",
-                  "flex items-center justify-center cursor-pointer",
-                  "border-2 transition-colors duration-300",
-                  isHovered
-                    ? "border-current"
-                    : "border-slate-100 dark:border-slate-700",
-                )}
-                style={{
-                  left: config.radius - 28,
-                  top: -32,
-                  color: tech.color,
-                  borderColor: isHovered ? tech.color : undefined,
-                }}
-                animate={{
-                  rotate: isPaused
-                    ? -angleOffset
-                    : [-angleOffset, -angleOffset - 360],
-                  scale: isHovered ? 1.25 : 1,
-                  opacity: hasHoveredItem && !isHovered ? 0.4 : 1,
-                  zIndex: isHovered ? 50 : 10,
-                }}
-                transition={{
-                  rotate: {
-                    duration: config.speed,
-                    repeat: Infinity,
-                    ease: "linear",
-                  },
-                  scale: { duration: 0.25, ease: "easeOut" },
-                  opacity: { duration: 0.2 },
-                }}
-                onMouseEnter={() =>
-                  handleTechHover(tech, index, config.items.length)
-                }
-                onMouseLeave={handleTechLeave}
-                whileHover={{
-                  boxShadow: `0 20px 40px -10px ${tech.color}50`,
-                }}
-              >
-                {/* Icon */}
-                <motion.div
-                  animate={{
-                    scale: isHovered ? 1.1 : 1,
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {tech.icon}
-                </motion.div>
-
-                {/* Glow ring on hover */}
-                {isHovered && (
-                  <motion.div
-                    className="absolute inset-0 rounded-xl pointer-events-none"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    style={{
-                      boxShadow: `0 0 20px ${tech.color}40, inset 0 0 10px ${tech.color}20`,
-                    }}
-                  />
-                )}
-
-                {/* Popover */}
-                <TechPopover
-                  tech={tech}
-                  isOpen={isHovered}
-                  position={popoverPosition}
-                />
-              </motion.div>
+              <TechPopover
+                tech={hoveredTech}
+                isOpen={true}
+                position={popoverSide}
+              />
             </motion.div>
-          );
-        }),
-      )}
+          )}
+        </AnimatePresence>
 
-      {/* Center glow effect */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          backgroundColor: hoveredTech
-            ? `${hoveredTech.color}30`
-            : "rgba(59, 130, 246, 0.2)",
-          scale: isPaused ? 1.2 : 1,
-        }}
-        transition={{ duration: 0.3 }}
-      />
-
-      {/* Instruction hint */}
-      <motion.p
-        className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-slate-400 dark:text-slate-500 whitespace-nowrap"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isPaused ? 0 : 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        Hover vao cong nghe de xem chi tiet
-      </motion.p>
-    </div>
+        {/* Instruction hint */}
+        <motion.p
+          className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-slate-400 dark:text-slate-500 whitespace-nowrap"
+          animate={{ opacity: isPaused ? 0 : 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          Di chuột vào công nghệ để xem chi tiết
+        </motion.p>
+      </div>
+    </>
   );
 }
 

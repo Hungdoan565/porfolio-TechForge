@@ -57,7 +57,7 @@ export function TechPopover({
       {isOpen && (
         <motion.div
           className={cn(
-            "absolute z-50 w-72 md:w-80",
+            "absolute z-[100] w-72 md:w-80",
             positionStyles[position],
             className,
           )}
@@ -132,7 +132,7 @@ export function TechPopover({
             {/* Why we use */}
             <div className="px-4 pb-3">
               <p className="text-xs font-semibold text-slate-500 dark:text-slate-500 uppercase tracking-wider mb-2">
-                Tai sao chung toi chon
+                Tại sao chúng tôi chọn
               </p>
               <ul className="space-y-1.5">
                 {tech.whyWeUse.map((reason, index) => (
@@ -165,7 +165,7 @@ export function TechPopover({
                     >
                       {tech.stats.projects}+
                     </p>
-                    <p className="text-xs text-slate-500">Du an</p>
+                    <p className="text-xs text-slate-500">Dự án</p>
                   </div>
                 </div>
                 <div className="w-px bg-slate-200 dark:bg-slate-700" />
@@ -178,7 +178,7 @@ export function TechPopover({
                     >
                       {tech.stats.yearsExp}+
                     </p>
-                    <p className="text-xs text-slate-500">Nam exp</p>
+                    <p className="text-xs text-slate-500">Năm kinh nghiệm</p>
                   </div>
                 </div>
               </div>
