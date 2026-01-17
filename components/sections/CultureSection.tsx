@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Users, BookOpen, Scale, Lightbulb, Heart } from "lucide-react";
+
 import DisplayCards from "@/components/ui/display-cards";
 import { FadeIn } from "@/components/ui/motion-primitives";
 
@@ -78,9 +79,9 @@ export default function CultureSection() {
               <motion.span
                 className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
                 initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0 }}
               >
                 Văn hóa làm việc
               </motion.span>
@@ -103,9 +104,9 @@ export default function CultureSection() {
                     key={stat.label}
                     className="text-center lg:text-left"
                     initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
                     transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+                    viewport={{ once: true }}
+                    whileInView={{ opacity: 1, y: 0 }}
                   >
                     <p className="text-2xl md:text-3xl font-bold text-[#0066FF] dark:text-blue-400">
                       {stat.value}

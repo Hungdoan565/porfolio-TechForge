@@ -45,6 +45,7 @@ export function InvertedCursor({
     const animate = () => {
       if (!cursorRef.current) {
         requestRef.current = requestAnimationFrame(animate);
+
         return;
       }
 
@@ -86,6 +87,7 @@ export function InvertedCursor({
   return (
     <div
       ref={cursorRef}
+      aria-hidden="true"
       className="fixed pointer-events-none z-[9999] rounded-full mix-blend-difference bg-white transition-opacity duration-300"
       style={{
         width: size,
@@ -93,7 +95,6 @@ export function InvertedCursor({
         opacity: visible ? 1 : 0,
         willChange: "transform",
       }}
-      aria-hidden="true"
     />
   );
 }

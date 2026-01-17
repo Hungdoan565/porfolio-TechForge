@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
+
 import { cn } from "@/lib/utils";
 
 interface Position {
@@ -33,6 +34,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
     if (!divRef.current || isFocused) return;
 
     const rect = divRef.current.getBoundingClientRect();
+
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
@@ -59,11 +61,6 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
   return (
     <motion.div
       ref={divRef}
-      onMouseMove={handleMouseMove}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       className={cn(
         "relative rounded-3xl overflow-hidden transition-all duration-500",
         // Light mode
@@ -81,8 +78,13 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
             ? `0 0 30px ${hoverBorderColor.replace("0.5", "0.15")}, 0 0 60px ${hoverBorderColor.replace("0.5", "0.08")}`
             : undefined,
       }}
-      whileHover={{ y: -4, scale: 1.01 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
+      whileHover={{ y: -4, scale: 1.01 }}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
     >
       {/* Spotlight gradient overlay */}
       <div

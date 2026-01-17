@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
 import { cn } from "@/lib/utils";
 
 interface CultureValue {
@@ -64,23 +65,23 @@ export function CulturePreview({
             "group",
           )}
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
           transition={{ delay: index * 0.15, duration: 0.5 }}
-          onMouseEnter={() => setHoveredIndex(index)}
-          onMouseLeave={() => setHoveredIndex(null)}
+          viewport={{ once: true }}
           whileHover={{
             y: -8,
             boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
           }}
+          whileInView={{ opacity: 1, y: 0 }}
+          onMouseEnter={() => setHoveredIndex(index)}
+          onMouseLeave={() => setHoveredIndex(null)}
         >
           {/* Large background emoji */}
           <motion.span
-            className="absolute -right-4 -bottom-4 text-[100px] md:text-[120px] opacity-5 dark:opacity-10 pointer-events-none select-none"
             animate={{
               scale: hoveredIndex === index ? 1.2 : 1,
               rotate: hoveredIndex === index ? 10 : 0,
             }}
+            className="absolute -right-4 -bottom-4 text-[100px] md:text-[120px] opacity-5 dark:opacity-10 pointer-events-none select-none"
             transition={{ duration: 0.3 }}
           >
             {value.emoji}
@@ -88,9 +89,9 @@ export function CulturePreview({
 
           {/* Glow effect on hover */}
           <motion.div
+            animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
             className="absolute inset-0 bg-gradient-to-br from-[#0066FF]/5 to-transparent pointer-events-none"
             initial={{ opacity: 0 }}
-            animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
             transition={{ duration: 0.3 }}
           />
 
@@ -98,11 +99,11 @@ export function CulturePreview({
           <div className="relative z-10">
             {/* Emoji */}
             <motion.span
-              className="text-4xl md:text-5xl block mb-4"
               animate={{
                 scale: hoveredIndex === index ? 1.1 : 1,
                 rotate: hoveredIndex === index ? [0, -10, 10, 0] : 0,
               }}
+              className="text-4xl md:text-5xl block mb-4"
               transition={{ duration: 0.4 }}
             >
               {value.emoji}
@@ -126,15 +127,15 @@ export function CulturePreview({
                       key={avatarIndex}
                       className="w-8 h-8 rounded-full border-2 border-white dark:border-slate-800 overflow-hidden"
                       initial={{ scale: 0, opacity: 0 }}
-                      whileInView={{ scale: 1, opacity: 1 }}
-                      viewport={{ once: true }}
                       transition={{ delay: index * 0.15 + avatarIndex * 0.1 }}
+                      viewport={{ once: true }}
                       whileHover={{ scale: 1.2, zIndex: 10 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
                     >
                       <img
-                        src={avatar}
                         alt="Team member"
                         className="w-full h-full object-cover"
+                        src={avatar}
                       />
                     </motion.div>
                   ))
@@ -150,10 +151,10 @@ export function CulturePreview({
                         avatarIndex === 2 && "from-purple-400 to-purple-600",
                       )}
                       initial={{ scale: 0, opacity: 0 }}
-                      whileInView={{ scale: 1, opacity: 1 }}
-                      viewport={{ once: true }}
                       transition={{ delay: index * 0.15 + avatarIndex * 0.1 }}
+                      viewport={{ once: true }}
                       whileHover={{ scale: 1.2, zIndex: 10 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
                     />
                   ))}
 
@@ -162,9 +163,9 @@ export function CulturePreview({
                 <motion.div
                   className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 border-2 border-white dark:border-slate-800 flex items-center justify-center text-xs font-medium text-slate-600 dark:text-slate-300"
                   initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
                   transition={{ delay: index * 0.15 + 0.4 }}
+                  viewport={{ once: true }}
+                  whileInView={{ scale: 1 }}
                 >
                   +{value.teamMembers.length - 4}
                 </motion.div>
@@ -176,10 +177,10 @@ export function CulturePreview({
           <AnimatePresence>
             {hoveredIndex === index && (
               <motion.div
-                className="absolute inset-0 rounded-2xl pointer-events-none"
-                initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                className="absolute inset-0 rounded-2xl pointer-events-none"
                 exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
                 style={{
                   boxShadow: "inset 0 0 0 1px rgba(0, 102, 255, 0.3)",
                 }}

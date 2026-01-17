@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "@/lib/utils";
 import { motion, useAnimation } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { useEffect, useState, useCallback } from "react";
+
+import { cn } from "@/lib/utils";
 
 interface MagnetizeButtonProps {
   particleCount?: number;
@@ -41,6 +42,7 @@ function MagnetizeButton({
       x: Math.random() * 200 - 100,
       y: Math.random() * 200 - 100,
     }));
+
     setParticles(newParticles);
   }, [particleCount]);
 
@@ -83,22 +85,20 @@ function MagnetizeButton({
         baseStyles,
         className,
       )}
-      onMouseEnter={handleInteractionStart}
-      onMouseLeave={handleInteractionEnd}
-      onTouchStart={handleInteractionStart}
-      onTouchEnd={handleInteractionEnd}
+      disabled={disabled}
+      type={type}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      type={type}
-      disabled={disabled}
+      onMouseEnter={handleInteractionStart}
+      onMouseLeave={handleInteractionEnd}
+      onTouchEnd={handleInteractionEnd}
+      onTouchStart={handleInteractionStart}
     >
       {/* Particles */}
       {particles.map((_, index) => (
         <motion.div
           key={index}
-          custom={index}
-          initial={{ x: particles[index]?.x || 0, y: particles[index]?.y || 0 }}
           animate={particlesControl}
           className={cn(
             "absolute w-1.5 h-1.5 rounded-full",
@@ -106,6 +106,8 @@ function MagnetizeButton({
             "transition-opacity duration-300",
             isAttracting ? "opacity-100" : "opacity-30",
           )}
+          custom={index}
+          initial={{ x: particles[index]?.x || 0, y: particles[index]?.y || 0 }}
           style={{
             left: "50%",
             top: "50%",

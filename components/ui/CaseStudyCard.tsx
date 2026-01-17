@@ -2,8 +2,9 @@
 
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+
 import { cn } from "@/lib/utils";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
 
 interface CaseStudy {
   title: string;
@@ -54,12 +55,18 @@ export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
     const rect = cardRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
+
     setMousePosition({ x, y });
   };
 
   return (
     <motion.div
       ref={cardRef}
+      animate={{
+        rotateX: isHovered ? mousePosition.y * -10 : 0,
+        rotateY: isHovered ? mousePosition.x * 10 : 0,
+        scale: isHovered ? 1.02 : 1,
+      }}
       className={cn(
         "relative rounded-2xl overflow-hidden cursor-pointer group",
         "bg-white dark:bg-slate-800",
@@ -67,24 +74,19 @@ export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
         "h-[280px] md:h-[320px]",
         className,
       )}
+      style={{
+        transformStyle: "preserve-3d",
+      }}
+      transition={{ duration: 0.2 }}
+      whileHover={{
+        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.2)",
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
         setMousePosition({ x: 0, y: 0 });
       }}
       onMouseMove={handleMouseMove}
-      whileHover={{
-        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.2)",
-      }}
-      style={{
-        transformStyle: "preserve-3d",
-      }}
-      animate={{
-        rotateX: isHovered ? mousePosition.y * -10 : 0,
-        rotateY: isHovered ? mousePosition.x * 10 : 0,
-        scale: isHovered ? 1.02 : 1,
-      }}
-      transition={{ duration: 0.2 }}
     >
       {/* Background gradient */}
       <div
@@ -98,9 +100,9 @@ export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
       <div className="absolute top-0 right-0 w-1/2 h-full opacity-20 dark:opacity-30">
         {caseStudy.image ? (
           <img
-            src={caseStudy.image}
             alt={caseStudy.title}
             className="w-full h-full object-cover"
+            src={caseStudy.image}
           />
         ) : (
           <div
@@ -116,13 +118,13 @@ export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
       <div className="relative z-10 p-6 md:p-8 h-full flex flex-col">
         {/* Category badge */}
         <motion.span
+          animate={{
+            scale: isHovered ? 1.05 : 1,
+          }}
           className="inline-flex items-center self-start px-3 py-1 rounded-full text-xs font-medium mb-4"
           style={{
             backgroundColor: `${caseStudy.color || "#0066FF"}15`,
             color: caseStudy.color || "#0066FF",
-          }}
-          animate={{
-            scale: isHovered ? 1.05 : 1,
           }}
         >
           {caseStudy.category}
@@ -140,12 +142,12 @@ export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
 
         {/* Stats - revealed on hover */}
         <motion.div
-          className="flex gap-4 mt-4"
-          initial={{ opacity: 0, y: 20 }}
           animate={{
             opacity: isHovered ? 1 : 0,
             y: isHovered ? 0 : 20,
           }}
+          className="flex gap-4 mt-4"
+          initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3, delay: 0.1 }}
         >
           {caseStudy.stats?.map((stat, index) => (
@@ -168,13 +170,13 @@ export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
 
         {/* Arrow indicator */}
         <motion.div
-          className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center"
-          style={{
-            backgroundColor: `${caseStudy.color || "#0066FF"}15`,
-          }}
           animate={{
             scale: isHovered ? 1.1 : 1,
             rotate: isHovered ? 45 : 0,
+          }}
+          className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center"
+          style={{
+            backgroundColor: `${caseStudy.color || "#0066FF"}15`,
           }}
           transition={{ duration: 0.3 }}
         >
@@ -187,12 +189,12 @@ export function CaseStudyCard({ caseStudy, className }: CaseStudyCardProps) {
 
       {/* Hover spotlight effect */}
       <motion.div
+        animate={{
+          opacity: isHovered ? 1 : 0,
+        }}
         className="absolute inset-0 pointer-events-none"
         style={{
           background: `radial-gradient(600px circle at ${(mousePosition.x + 0.5) * 100}% ${(mousePosition.y + 0.5) * 100}%, ${caseStudy.color || "#0066FF"}10, transparent 40%)`,
-        }}
-        animate={{
-          opacity: isHovered ? 1 : 0,
         }}
       />
     </motion.div>
@@ -220,9 +222,9 @@ export function CaseStudyGrid({
         <motion.div
           key={caseStudy.title}
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
           transition={{ delay: index * 0.15, duration: 0.5 }}
+          viewport={{ once: true }}
+          whileInView={{ opacity: 1, y: 0 }}
         >
           <CaseStudyCard caseStudy={caseStudy} />
         </motion.div>

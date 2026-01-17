@@ -1,6 +1,7 @@
 "use client";
 
 import { Accordion, AccordionItem } from "@heroui/accordion";
+
 import { FadeIn } from "@/components/ui/motion-primitives";
 
 const faqItems = [
@@ -38,7 +39,7 @@ const faqItems = [
 
 export default function FAQSection() {
   return (
-    <section id="faq" className="py-24 md:py-32 bg-slate-50 dark:bg-slate-900">
+    <section className="py-24 md:py-32 bg-slate-50 dark:bg-slate-900" id="faq">
       <div className="max-w-4xl mx-auto px-4 md:px-8">
         {/* Section Header */}
         <FadeIn distance={40} duration={0.8}>
@@ -56,27 +57,28 @@ export default function FAQSection() {
         </FadeIn>
 
         {/* FAQ Accordion */}
-        <FadeIn distance={40} duration={0.8} delay={0.2}>
+        <FadeIn delay={0.2} distance={40} duration={0.8}>
           <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-2 md:p-4">
             <Accordion
-              variant="splitted"
-              selectionMode="multiple"
               className="gap-3"
+              selectionMode="multiple"
+              variant="splitted"
             >
               {faqItems.map((item, index) => (
                 <AccordionItem
                   key={index}
                   aria-label={item.question}
+                  className="bg-slate-50 dark:bg-slate-700 rounded-2xl px-4 md:px-6 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors"
+                  classNames={{
+                    trigger: "py-4 md:py-5",
+                    content:
+                      "pt-0 pb-4 md:pb-5 text-slate-600 dark:text-slate-300 leading-relaxed",
+                  }}
                   title={
                     <span className="text-base md:text-lg font-semibold text-slate-800 dark:text-white">
                       {item.question}
                     </span>
                   }
-                  className="bg-slate-50 dark:bg-slate-700 rounded-2xl px-4 md:px-6 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors"
-                  classNames={{
-                    trigger: "py-4 md:py-5",
-                    content: "pt-0 pb-4 md:pb-5 text-slate-600 dark:text-slate-300 leading-relaxed",
-                  }}
                 >
                   {item.answer}
                 </AccordionItem>

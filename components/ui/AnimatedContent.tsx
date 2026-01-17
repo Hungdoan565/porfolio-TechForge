@@ -55,6 +55,7 @@ const AnimatedContent: React.FC<AnimatedContentProps> = ({
     if (typeof window === "undefined") return;
 
     const el = ref.current;
+
     if (!el) return;
 
     let scrollerTarget: Element | string | null = container || null;

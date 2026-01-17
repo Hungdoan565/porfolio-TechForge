@@ -73,8 +73,8 @@ const caseStudies = [
 export default function WhyUsSection() {
   return (
     <section
-      id="why-us"
       className="py-20 md:py-28 lg:py-32 bg-slate-50 dark:bg-slate-950 relative overflow-hidden"
+      id="why-us"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -97,12 +97,12 @@ export default function WhyUsSection() {
         {/* ============================================ */}
         <FadeIn distance={40} duration={0.8}>
           <AsymmetricBento
-            heroTitle="Tại sao chọn chúng tôi?"
-            heroSubtitle="Chúng tôi không chỉ code, chúng tôi xây dựng mối quan hệ đối tác lâu dài với khách hàng"
             heroCta={{
               text: "Liên hệ ngay",
               href: "#contact",
             }}
+            heroSubtitle="Chúng tôi không chỉ code, chúng tôi xây dựng mối quan hệ đối tác lâu dài với khách hàng"
+            heroTitle="Tại sao chọn chúng tôi?"
           />
         </FadeIn>
 
@@ -115,9 +115,9 @@ export default function WhyUsSection() {
               <motion.span
                 className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
                 initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0 }}
               >
                 Tech Stack
               </motion.span>
@@ -141,9 +141,9 @@ export default function WhyUsSection() {
               <motion.span
                 className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
                 initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0 }}
               >
                 Khách hàng nói gì
               </motion.span>
@@ -153,7 +153,7 @@ export default function WhyUsSection() {
             </div>
           </FadeIn>
 
-          <TestimonialTicker testimonials={testimonials} speed={40} />
+          <TestimonialTicker speed={40} testimonials={testimonials} />
         </div>
 
         {/* ============================================ */}
@@ -166,9 +166,9 @@ export default function WhyUsSection() {
                 <motion.span
                   className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
                   initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
+                  viewport={{ once: true }}
+                  whileInView={{ opacity: 1, y: 0 }}
                 >
                   Case Studies
                 </motion.span>
@@ -178,8 +178,8 @@ export default function WhyUsSection() {
               </div>
 
               <motion.a
-                href="#portfolio"
                 className="mt-4 md:mt-0 inline-flex items-center gap-2 text-[#0066FF] dark:text-blue-400 font-medium hover:underline"
+                href="#portfolio"
                 whileHover={{ x: 5 }}
               >
                 Xem tất cả dự án

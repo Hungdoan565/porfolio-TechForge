@@ -6,8 +6,8 @@ import TechMarquee from "@/components/ui/TechMarquee";
 export default function TechStackSection() {
   return (
     <section
-      id="tech-stack"
       className="py-24 md:py-32 bg-slate-50 dark:bg-slate-900 relative overflow-hidden"
+      id="tech-stack"
     >
       {/* Background decoration - Subtle */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">

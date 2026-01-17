@@ -1,4 +1,5 @@
 import { Head } from "./head";
+
 import { Navbar } from "@/components/navbar";
 import { CursorFollower } from "@/components/ui/cursor-follower";
 

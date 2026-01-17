@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FadeIn } from "@/components/ui/motion-primitives";
 import {
   MessageCircle,
   Layers,
@@ -12,6 +11,8 @@ import {
   ArrowRight,
   Zap,
 } from "lucide-react";
+
+import { FadeIn } from "@/components/ui/motion-primitives";
 
 interface ProcessStep {
   id: number;
@@ -135,6 +136,7 @@ export default function ProcessSection() {
     const angle = (index / total) * 360 - 90; // Start from top
     const radius = 160;
     const radian = (angle * Math.PI) / 180;
+
     return {
       x: Math.cos(radian) * radius,
       y: Math.sin(radian) * radius,
@@ -145,8 +147,8 @@ export default function ProcessSection() {
 
   return (
     <section
-      id="process"
       className="py-24 md:py-32 bg-slate-50 dark:bg-slate-900 relative overflow-hidden"
+      id="process"
     >
       {/* Background decoration - Subtle */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
@@ -172,7 +174,7 @@ export default function ProcessSection() {
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Orbital Timeline - Desktop */}
-          <FadeIn distance={50} duration={0.8} delay={0.2}>
+          <FadeIn delay={0.2} distance={50} duration={0.8}>
             <div
               ref={containerRef}
               className="relative aspect-square max-w-md mx-auto hidden md:flex items-center justify-center"
@@ -184,8 +186,8 @@ export default function ProcessSection() {
 
               {/* Center content */}
               <motion.div
-                className="absolute w-32 h-32 rounded-full bg-[#0066FF] dark:bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30"
                 animate={{ rotate: 360 }}
+                className="absolute w-32 h-32 rounded-full bg-[#0066FF] dark:bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30"
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >
                 <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center">
@@ -207,22 +209,26 @@ export default function ProcessSection() {
                         ? "bg-white dark:bg-slate-800 shadow-xl shadow-blue-500/20 scale-125 z-20"
                         : "bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg z-10"
                     } border-2 ${
-                      isActive ? "border-[#0066FF] dark:border-blue-400" : "border-slate-200 dark:border-slate-700"
+                      isActive
+                        ? "border-[#0066FF] dark:border-blue-400"
+                        : "border-slate-200 dark:border-slate-700"
                     }`}
                     style={{
                       left: `calc(50% + ${pos.x}px - 28px)`,
                       top: `calc(50% + ${pos.y}px - 28px)`,
                     }}
+                    whileHover={{ scale: isActive ? 1.25 : 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => {
                       setActiveStep(step.id);
                       setIsAutoPlaying(false);
                     }}
-                    whileHover={{ scale: isActive ? 1.25 : 1.1 }}
-                    whileTap={{ scale: 0.95 }}
                   >
                     <Icon
                       className={`w-6 h-6 ${
-                        isActive ? "text-[#0066FF] dark:text-blue-400" : "text-slate-500 dark:text-slate-400"
+                        isActive
+                          ? "text-[#0066FF] dark:text-blue-400"
+                          : "text-slate-500 dark:text-slate-400"
                       }`}
                     />
                     {/* Status indicator */}
@@ -243,16 +249,17 @@ export default function ProcessSection() {
                   const pos2 = getStepPosition(index + 1, processSteps.length);
                   const isActive =
                     step.id === activeStep || step.id + 1 === activeStep;
+
                   return (
                     <line
                       key={`line-${index}`}
-                      x1={`calc(50% + ${pos1.x}px)`}
-                      y1={`calc(50% + ${pos1.y}px)`}
-                      x2={`calc(50% + ${pos2.x}px)`}
-                      y2={`calc(50% + ${pos2.y}px)`}
                       stroke={isActive ? "#0066FF" : "#e2e8f0"}
-                      strokeWidth="2"
                       strokeDasharray={isActive ? "0" : "4"}
+                      strokeWidth="2"
+                      x1={`calc(50% + ${pos1.x}px)`}
+                      x2={`calc(50% + ${pos2.x}px)`}
+                      y1={`calc(50% + ${pos1.y}px)`}
+                      y2={`calc(50% + ${pos2.y}px)`}
                     />
                   );
                 })}
@@ -264,6 +271,7 @@ export default function ProcessSection() {
               {processSteps.map((step) => {
                 const Icon = step.icon;
                 const isActive = step.id === activeStep;
+
                 return (
                   <button
                     key={step.id}
@@ -286,12 +294,16 @@ export default function ProcessSection() {
                     <div className="text-left">
                       <p
                         className={`font-semibold ${
-                          isActive ? "text-[#0066FF] dark:text-blue-400" : "text-slate-800 dark:text-white"
+                          isActive
+                            ? "text-[#0066FF] dark:text-blue-400"
+                            : "text-slate-800 dark:text-white"
                         }`}
                       >
                         {step.shortTitle}
                       </p>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">{step.duration}</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">
+                        {step.duration}
+                      </p>
                     </div>
                     <span
                       className={`ml-auto w-3 h-3 rounded-full ${getStatusColor(
@@ -305,16 +317,16 @@ export default function ProcessSection() {
           </FadeIn>
 
           {/* Step Details */}
-          <FadeIn distance={50} duration={0.8} delay={0.3}>
+          <FadeIn delay={0.3} distance={50} duration={0.8}>
             <AnimatePresence mode="wait">
               {activeStepData && (
                 <motion.div
                   key={activeStepData.id}
-                  initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
                   className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-lg border border-slate-100 dark:border-slate-700"
+                  exit={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.3 }}
                 >
                   {/* Step number */}
                   <div className="flex items-center gap-4 mb-6">
@@ -340,21 +352,23 @@ export default function ProcessSection() {
                     {activeStepData.details.map((detail, idx) => (
                       <motion.li
                         key={idx}
-                        initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.1 }}
                         className="flex items-center gap-3"
+                        initial={{ opacity: 0, x: -10 }}
+                        transition={{ delay: idx * 0.1 }}
                       >
                         <div className="w-2 h-2 rounded-full bg-[#0066FF] dark:bg-blue-400" />
-                        <span className="text-slate-700 dark:text-slate-300">{detail}</span>
+                        <span className="text-slate-700 dark:text-slate-300">
+                          {detail}
+                        </span>
                       </motion.li>
                     ))}
                   </ul>
 
                   {/* CTA */}
                   <a
-                    href="#contact"
                     className="inline-flex items-center gap-2 text-[#0066FF] dark:text-blue-400 font-semibold hover:text-[#0052CC] dark:hover:text-blue-300 transition-colors group"
+                    href="#contact"
                   >
                     Bắt đầu dự án
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

@@ -1,9 +1,9 @@
 "use client";
 
+import type { LucideIcon } from "lucide-react";
+
 import React, { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { cn } from "@/lib/utils";
-import type { LucideIcon } from "lucide-react";
 import {
   TrendingUp,
   Users,
@@ -12,6 +12,8 @@ import {
   Headphones,
   ArrowRight,
 } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 // ============================================
 // TYPES
@@ -139,6 +141,7 @@ function BentoCard({
   return (
     <motion.div
       ref={ref}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
       className={cn(
         "group relative flex flex-col justify-between overflow-hidden rounded-2xl",
         "p-5 md:p-6 h-full min-h-[160px]",
@@ -159,7 +162,6 @@ function BentoCard({
         "hover:-translate-y-1",
       )}
       initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay }}
     >
       {/* Background Icon */}
@@ -247,13 +249,13 @@ function BentoCard({
           )}
         >
           <a
-            href={stat.href}
             className={cn(
               "inline-flex items-center gap-1.5 text-sm font-medium",
               isAccent
                 ? "text-white hover:text-white/80"
                 : "text-[#0066FF] hover:text-blue-700 dark:hover:text-blue-400",
             )}
+            href={stat.href}
           >
             {stat.cta}
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
@@ -290,6 +292,7 @@ function HeroCard({
 }) {
   return (
     <motion.div
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
       className={cn(
         "relative rounded-2xl overflow-hidden h-full min-h-[280px] md:min-h-[340px]",
         "p-6 md:p-8 lg:p-10",
@@ -298,7 +301,6 @@ function HeroCard({
         "flex flex-col justify-between",
       )}
       initial={{ opacity: 0, x: -30 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.6 }}
     >
       {/* Background decorations */}
@@ -317,17 +319,17 @@ function HeroCard({
       {/* Content */}
       <div className="relative z-10 flex-1 flex flex-col justify-center">
         <motion.h3
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4 leading-tight"
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           {title}
         </motion.h3>
         <motion.p
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-base md:text-lg text-white/80 max-w-md leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           {subtitle}
@@ -337,19 +339,19 @@ function HeroCard({
       {/* CTA Button */}
       {cta && (
         <motion.div
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="relative z-10 mt-6"
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <a
-            href={cta.href}
             className={cn(
               "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl",
               "bg-white text-[#0066FF] font-semibold text-sm md:text-base",
               "hover:bg-white/90 transition-colors duration-200",
               "shadow-lg shadow-black/10",
             )}
+            href={cta.href}
           >
             {cta.text}
             <ArrowRight className="w-4 h-4" />
@@ -367,6 +369,7 @@ function HeroCard({
 function FeatureCard({ isInView }: { isInView: boolean }) {
   return (
     <motion.div
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
       className={cn(
         "relative rounded-2xl overflow-hidden h-full min-h-[140px]",
         "p-5 md:p-6",
@@ -377,7 +380,6 @@ function FeatureCard({ isInView }: { isInView: boolean }) {
         "shadow-lg shadow-slate-900/20",
       )}
       initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 0.6 }}
     >
       {/* Background glow */}
@@ -433,10 +435,10 @@ export function AsymmetricBento({
       {/* Hero Card - Spans 2 rows on lg */}
       <div className="md:col-span-2 lg:col-span-2 lg:row-span-2">
         <HeroCard
-          title={heroTitle}
-          subtitle={heroSubtitle}
           cta={heroCta}
           isInView={isInView}
+          subtitle={heroSubtitle}
+          title={heroTitle}
         />
       </div>
 
@@ -444,8 +446,8 @@ export function AsymmetricBento({
       {stats.slice(0, 2).map((stat, index) => (
         <div key={stat.label} className="lg:col-span-1">
           <BentoCard
-            stat={stat}
             delay={0.2 + index * 0.1}
+            stat={stat}
             variant={index === 0 ? "accent" : "default"}
           />
         </div>
@@ -454,7 +456,7 @@ export function AsymmetricBento({
       {/* Remaining stats - Bottom row */}
       {stats.slice(2).map((stat, index) => (
         <div key={stat.label} className="lg:col-span-1">
-          <BentoCard stat={stat} delay={0.4 + index * 0.1} />
+          <BentoCard delay={0.4 + index * 0.1} stat={stat} />
         </div>
       ))}
 

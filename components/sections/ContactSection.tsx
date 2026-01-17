@@ -3,10 +3,11 @@
 import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Select, SelectItem } from "@heroui/select";
-import { FadeIn } from "@/components/ui/motion-primitives";
 import { Link } from "@heroui/link";
-import { Phone, Clock, MapPin, MessageCircle } from "@/components/ui/icons";
 import { motion } from "framer-motion";
+
+import { FadeIn } from "@/components/ui/motion-primitives";
+import { Phone, Clock, MapPin, MessageCircle } from "@/components/ui/icons";
 
 const serviceOptions = [
   { value: "custom-dev", label: "Custom Software Development" },
@@ -25,7 +26,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32 bg-white dark:bg-slate-950">
+    <section className="py-24 md:py-32 bg-white dark:bg-slate-950" id="contact">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Section Header */}
         <FadeIn distance={40} duration={0.8}>
@@ -45,77 +46,77 @@ export default function ContactSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <FadeIn distance={50} duration={0.8} delay={0.1}>
+          <FadeIn delay={0.1} distance={50} duration={0.8}>
             <motion.div
               className="bg-white dark:bg-slate-800 rounded-3xl shadow-lg shadow-slate-200/50 dark:shadow-black/20 p-8 md:p-10 border border-slate-100 dark:border-slate-700"
-              whileHover={{ y: -5 }}
               transition={{ duration: 0.3 }}
+              whileHover={{ y: -5 }}
             >
               <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-6">
                 Gửi yêu cầu tư vấn
               </h3>
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form className="space-y-5" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input
-                    label="Họ và tên"
-                    placeholder="Nguyễn Văn A"
-                    variant="bordered"
                     isRequired
                     classNames={{
                       inputWrapper:
                         "border-slate-200 hover:border-blue-300 focus-within:border-[#0066FF]",
                     }}
+                    label="Họ và tên"
+                    placeholder="Nguyễn Văn A"
+                    variant="bordered"
                   />
                   <Input
-                    label="Số điện thoại"
-                    placeholder="0912 345 678"
-                    variant="bordered"
-                    type="tel"
                     classNames={{
                       inputWrapper:
                         "border-slate-200 hover:border-blue-300 focus-within:border-[#0066FF]",
                     }}
+                    label="Số điện thoại"
+                    placeholder="0912 345 678"
+                    type="tel"
+                    variant="bordered"
                   />
                 </div>
                 <Input
-                  label="Email"
-                  placeholder="email@company.com"
-                  variant="bordered"
-                  type="email"
                   isRequired
                   classNames={{
                     inputWrapper:
                       "border-slate-200 hover:border-blue-300 focus-within:border-[#0066FF]",
                   }}
+                  label="Email"
+                  placeholder="email@company.com"
+                  type="email"
+                  variant="bordered"
                 />
                 <Select
-                  label="Loại dịch vụ"
-                  placeholder="Chọn dịch vụ quan tâm"
-                  variant="bordered"
                   classNames={{
                     trigger: "border-slate-200 hover:border-blue-300",
                   }}
+                  label="Loại dịch vụ"
+                  placeholder="Chọn dịch vụ quan tâm"
+                  variant="bordered"
                 >
                   {serviceOptions.map((option) => (
                     <SelectItem key={option.value}>{option.label}</SelectItem>
                   ))}
                 </Select>
                 <Textarea
-                  label="Mô tả yêu cầu"
-                  placeholder="Mô tả ngắn gọn về dự án hoặc vấn đề bạn cần giải quyết..."
-                  variant="bordered"
-                  minRows={4}
                   classNames={{
                     inputWrapper:
                       "border-slate-200 hover:border-blue-300 focus-within:border-[#0066FF]",
                   }}
+                  label="Mô tả yêu cầu"
+                  minRows={4}
+                  placeholder="Mô tả ngắn gọn về dự án hoặc vấn đề bạn cần giải quyết..."
+                  variant="bordered"
                 />
                 <Button
-                  type="submit"
-                  color="primary"
-                  size="lg"
-                  radius="full"
                   className="w-full font-semibold bg-[#0066FF] hover:bg-[#0052CC] shadow-lg shadow-blue-500/25"
+                  color="primary"
+                  radius="full"
+                  size="lg"
+                  type="submit"
                 >
                   Gửi yêu cầu tư vấn
                 </Button>
@@ -124,13 +125,13 @@ export default function ContactSection() {
           </FadeIn>
 
           {/* Contact Info */}
-          <FadeIn distance={50} duration={0.8} delay={0.2}>
+          <FadeIn delay={0.2} distance={50} duration={0.8}>
             <div className="flex flex-col gap-6">
               {/* Quick Contact Card */}
               <motion.div
                 className="bg-[#0066FF] rounded-3xl p-8 text-white relative overflow-hidden"
-                whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.02 }}
               >
                 {/* Decorative circles */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
@@ -147,10 +148,10 @@ export default function ContactSection() {
                     Phản hồi nhanh trong vòng 2 giờ làm việc
                   </p>
                   <Link
-                    href="https://zalo.me/0945700813"
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-3 px-6 py-3 bg-white text-[#0066FF] rounded-full font-semibold hover:bg-blue-50 transition-colors shadow-lg"
+                    href="https://zalo.me/0945700813"
+                    rel="noopener noreferrer"
+                    target="_blank"
                   >
                     <MessageCircle className="w-5 h-5" />
                     Chat Zalo ngay
@@ -161,8 +162,8 @@ export default function ContactSection() {
               {/* Contact Details */}
               <motion.div
                 className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-8 space-y-6"
-                whileHover={{ y: -5 }}
                 transition={{ duration: 0.3 }}
+                whileHover={{ y: -5 }}
               >
                 <h3 className="text-xl font-bold text-slate-800 dark:text-white">
                   Thông tin liên hệ
@@ -174,11 +175,15 @@ export default function ContactSection() {
                       <Phone className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">Hotline / Zalo</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">
+                        Hotline / Zalo
+                      </p>
                       <p className="text-lg font-semibold text-slate-800 dark:text-white">
                         0945 700 813
                       </p>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">Huy Diễn</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Huy Diễn
+                      </p>
                     </div>
                   </div>
 
@@ -187,7 +192,9 @@ export default function ContactSection() {
                       <Clock className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">Giờ làm việc</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">
+                        Giờ làm việc
+                      </p>
                       <p className="text-lg font-semibold text-slate-800 dark:text-white">
                         T2 - T7: 9:00 - 18:00
                       </p>
@@ -202,7 +209,9 @@ export default function ContactSection() {
                       <MapPin className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">Khu vực</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">
+                        Khu vực
+                      </p>
                       <p className="text-lg font-semibold text-slate-800 dark:text-white">
                         TP. Hồ Chí Minh
                       </p>

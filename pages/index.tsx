@@ -1,3 +1,6 @@
+import { Link } from "@heroui/link";
+import { Divider } from "@heroui/divider";
+
 import DefaultLayout from "@/layouts/default";
 import {
   HeroSection,
@@ -11,8 +14,6 @@ import {
 } from "@/components/sections";
 import { FadeIn } from "@/components/ui/motion-primitives";
 import { Phone, MapPin, ArrowUpRight } from "@/components/ui/icons";
-import { Link } from "@heroui/link";
-import { Divider } from "@heroui/divider";
 
 export default function IndexPage() {
   return (
@@ -59,9 +60,9 @@ export default function IndexPage() {
                   </p>
                   <div className="flex items-center gap-4">
                     <Link
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-sm text-white transition-colors"
                       href="https://zalo.me/0945700813"
                       target="_blank"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-sm text-white transition-colors"
                     >
                       Chat Zalo
                       <ArrowUpRight className="w-4 h-4" />
@@ -72,7 +73,7 @@ export default function IndexPage() {
 
               {/* Services Column */}
               <div className="md:col-span-3">
-                <FadeIn distance={20} delay={0.1}>
+                <FadeIn delay={0.1} distance={20}>
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">
                     Dịch vụ
                   </h4>
@@ -85,8 +86,8 @@ export default function IndexPage() {
                     ].map((service, i) => (
                       <li key={i}>
                         <Link
-                          href="#services"
                           className="text-slate-300 hover:text-white transition-colors text-sm"
+                          href="#services"
                         >
                           {service}
                         </Link>
@@ -98,7 +99,7 @@ export default function IndexPage() {
 
               {/* Contact Column */}
               <div className="md:col-span-4">
-                <FadeIn distance={20} delay={0.2}>
+                <FadeIn delay={0.2} distance={20}>
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">
                     Liên hệ
                   </h4>
@@ -129,14 +130,14 @@ export default function IndexPage() {
             </p>
             <div className="flex items-center gap-6">
               <Link
-                href="#"
                 className="text-slate-500 hover:text-slate-300 text-sm transition-colors"
+                href="#"
               >
                 Privacy Policy
               </Link>
               <Link
-                href="#"
                 className="text-slate-500 hover:text-slate-300 text-sm transition-colors"
+                href="#"
               >
                 Terms of Service
               </Link>

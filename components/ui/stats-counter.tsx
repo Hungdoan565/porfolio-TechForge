@@ -1,9 +1,11 @@
 "use client";
 
+import type { LucideIcon } from "lucide-react";
+
 import React, { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
+
 import { cn } from "@/lib/utils";
-import type { LucideIcon } from "lucide-react";
 
 interface StatsCounterProps {
   value: number;
@@ -70,6 +72,7 @@ export function StatsCounter({
     const timeout = setTimeout(
       () => {
         const targetWidth = Math.min((value / progressMax) * 100, 100);
+
         setProgressWidth(targetWidth);
       },
       delay * 1000 + 500,
@@ -81,6 +84,7 @@ export function StatsCounter({
   return (
     <motion.div
       ref={ref}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
       className={cn(
         "relative p-6 md:p-8 rounded-3xl transition-all duration-300 group",
         "bg-white dark:bg-slate-800/80",
@@ -90,7 +94,6 @@ export function StatsCounter({
         className,
       )}
       initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay }}
     >
       {/* Icon (optional - decorative when progress bar is hidden) */}
@@ -99,7 +102,7 @@ export function StatsCounter({
           className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity"
           whileHover={{ scale: 1.1, rotate: 5 }}
         >
-          <Icon className="w-8 h-8" style={{ color }} strokeWidth={1.5} />
+          <Icon className="w-8 h-8" strokeWidth={1.5} style={{ color }} />
         </motion.div>
       )}
 
@@ -140,10 +143,10 @@ export function StatsCounter({
         <div className="mt-4">
           <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
             <motion.div
-              className="h-full rounded-full"
-              style={{ backgroundColor: color }}
-              initial={{ width: 0 }}
               animate={{ width: `${progressWidth}%` }}
+              className="h-full rounded-full"
+              initial={{ width: 0 }}
+              style={{ backgroundColor: color }}
               transition={{
                 duration: 1,
                 delay: delay + 0.5,

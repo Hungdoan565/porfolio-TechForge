@@ -21,6 +21,7 @@ export function CursorFollower() {
     // Only show on non-touch devices
     const isTouchDevice =
       "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
     if (isTouchDevice) return;
 
     const handleMouseMove = (e: MouseEvent) => {

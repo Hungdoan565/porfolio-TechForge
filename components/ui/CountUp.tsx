@@ -47,12 +47,15 @@ export default function CountUp({
 
   const getDecimalPlaces = (num: number): number => {
     const str = num.toString();
+
     if (str.includes(".")) {
       const decimals = str.split(".")[1];
+
       if (parseInt(decimals) !== 0) {
         return decimals.length;
       }
     }
+
     return 0;
   };
 
@@ -75,6 +78,7 @@ export default function CountUp({
       const result = separator
         ? formattedNumber.replace(/,/g, separator)
         : formattedNumber;
+
       return `${prefix}${result}${suffix}`;
     },
     [maxDecimals, separator, suffix, prefix],
@@ -133,5 +137,5 @@ export default function CountUp({
     return () => unsubscribe();
   }, [springValue, formatValue]);
 
-  return <span className={className} ref={ref} />;
+  return <span ref={ref} className={className} />;
 }

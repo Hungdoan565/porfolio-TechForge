@@ -1,10 +1,12 @@
 "use client";
 
+import type { LucideIcon } from "lucide-react";
+
 import React, { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 interface FeaturedCardProps {
   title: string;
@@ -39,6 +41,7 @@ export function FeaturedCard({
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
+
     setPosition({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
@@ -48,6 +51,7 @@ export function FeaturedCard({
   return (
     <motion.div
       ref={ref}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
       className={cn(
         "relative p-8 md:p-10 rounded-3xl overflow-hidden transition-all duration-500",
         "bg-white dark:bg-slate-800/90",
@@ -56,12 +60,11 @@ export function FeaturedCard({
         className,
       )}
       initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay }}
-      onMouseMove={handleMouseMove}
+      whileHover={{ y: -5 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ y: -5 }}
+      onMouseMove={handleMouseMove}
     >
       {/* Spotlight Effect */}
       <div
@@ -82,9 +85,9 @@ export function FeaturedCard({
       <div className="relative z-10">
         {/* Icon with Float Animation */}
         <motion.div
+          animate={isInView ? { y: [0, -5, 0] } : {}}
           className="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mb-6"
           style={{ backgroundColor: `${color}15` }}
-          animate={isInView ? { y: [0, -5, 0] } : {}}
           transition={{
             duration: 3,
             repeat: Infinity,
@@ -126,9 +129,9 @@ export function FeaturedCard({
           {features.map((feature, idx) => (
             <motion.li
               key={idx}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
               className="flex items-start gap-3 text-slate-700 dark:text-slate-300"
               initial={{ opacity: 0, x: -15 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: delay + 0.2 + idx * 0.1 }}
             >
               <div
@@ -155,10 +158,10 @@ export function FeaturedCard({
             </div>
             <div className="h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
               <motion.div
-                className="h-full rounded-full"
-                style={{ backgroundColor: color }}
-                initial={{ width: 0 }}
                 animate={isInView ? { width: `${progressValue}%` } : {}}
+                className="h-full rounded-full"
+                initial={{ width: 0 }}
+                style={{ backgroundColor: color }}
                 transition={{
                   duration: 1.2,
                   delay: delay + 0.5,

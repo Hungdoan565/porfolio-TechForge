@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "motion/react";
-import { FadeIn, CountUp } from "@/components/ui/motion-primitives";
 import {
   ChevronDown,
   ArrowRight,
@@ -16,6 +15,8 @@ import {
 } from "lucide-react";
 import { Link } from "@heroui/link";
 import Image from "next/image";
+
+import { FadeIn, CountUp } from "@/components/ui/motion-primitives";
 import {
   ReactIcon,
   NextJSIcon,
@@ -43,17 +44,17 @@ function GlassBadge({
 }) {
   return (
     <motion.div
+      animate={{ opacity: 1, y: 0, scale: 1 }}
       className={`absolute z-30 ${className}`}
       initial={{ opacity: 0, y: 20, scale: 0.8 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ delay: delay + 0.5, duration: 0.6, ease: "easeOut" }}
     >
       <motion.div
+        animate={{ y: [-4, 4, -4] }}
         className="flex items-center gap-2 px-4 py-2.5 rounded-2xl
           bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl
           border border-white/50 dark:border-slate-700/50
           shadow-lg shadow-black/5 dark:shadow-black/20"
-        animate={{ y: [-4, 4, -4] }}
         transition={{
           duration: 3 + delay,
           repeat: Infinity,
@@ -208,8 +209,8 @@ export default function HeroSection() {
   return (
     <section
       ref={heroRef}
-      id="hero"
       className="relative min-h-[120vh] w-full overflow-hidden bg-slate-50 dark:bg-slate-900"
+      id="hero"
     >
       {/* Background Layer - hero-video.webp bleeding right (full width, centered laptop) */}
       <motion.div
@@ -219,12 +220,12 @@ export default function HeroSection() {
         {/* The image */}
         <div className="relative w-full h-full">
           <Image
-            src="/hero-video.webp"
-            alt="TechForge Portfolio Showcase"
             fill
-            className="object-cover object-center"
             priority
+            alt="TechForge Portfolio Showcase"
+            className="object-cover object-center"
             quality={85}
+            src="/hero-video.webp"
           />
         </div>
 
@@ -251,11 +252,11 @@ export default function HeroSection() {
         {glassBadges.map((badge) => (
           <GlassBadge
             key={badge.label}
-            icon={badge.icon}
-            label={badge.label}
+            className={badge.className}
             color={badge.color}
             delay={badge.delay}
-            className={badge.className}
+            icon={badge.icon}
+            label={badge.label}
           />
         ))}
       </motion.div>
@@ -340,9 +341,9 @@ export default function HeroSection() {
                     <div className="text-2xl md:text-3xl font-bold text-[#0066FF] flex items-baseline justify-center tabular-nums">
                       {stat.prefix && <span>{stat.prefix}</span>}
                       <CountUp
-                        end={stat.value}
-                        duration={2.5}
                         delay={0.5 + index * 0.2}
+                        duration={2.5}
+                        end={stat.value}
                       />
                       {stat.suffix && <span>{stat.suffix}</span>}
                     </div>
@@ -365,9 +366,9 @@ export default function HeroSection() {
               <TechIconReveal
                 key={tech.name}
                 icon={tech.icon}
+                index={index}
                 name={tech.name}
                 scrollProgress={scrollYProgress}
-                index={index}
                 total={techIcons.length}
               />
             ))}
@@ -377,15 +378,15 @@ export default function HeroSection() {
 
       {/* Scroll Indicator */}
       <motion.div
+        animate={{ opacity: 1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
         style={{ opacity: textOpacity }}
+        transition={{ delay: 1 }}
       >
         <a
-          href="#services"
           className="flex flex-col items-center gap-2 group cursor-pointer"
+          href="#services"
         >
           <span className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-widest group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors">
             Khám phá

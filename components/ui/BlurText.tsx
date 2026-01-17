@@ -28,9 +28,11 @@ const buildKeyframes = (
   ]);
 
   const keyframes: Record<string, Array<string | number>> = {};
+
   keys.forEach((k) => {
     keyframes[k] = [from[k], ...steps.map((s) => s[k])];
   });
+
   return keyframes;
 };
 
@@ -63,7 +65,9 @@ const BlurText: React.FC<BlurTextProps> = ({
       },
       { threshold, rootMargin },
     );
+
     observer.observe(ref.current);
+
     return () => observer.disconnect();
   }, [threshold, rootMargin]);
 
@@ -111,16 +115,16 @@ const BlurText: React.FC<BlurTextProps> = ({
         return (
           <motion.span
             key={index}
-            initial={fromSnapshot}
             animate={inView ? animateKeyframes : fromSnapshot}
-            transition={spanTransition}
-            onAnimationComplete={
-              index === elements.length - 1 ? onAnimationComplete : undefined
-            }
+            initial={fromSnapshot}
             style={{
               display: "inline-block",
               willChange: "transform, filter, opacity",
             }}
+            transition={spanTransition}
+            onAnimationComplete={
+              index === elements.length - 1 ? onAnimationComplete : undefined
+            }
           >
             {segment === " " ? "\u00A0" : segment}
             {animateBy === "words" && index < elements.length - 1 && "\u00A0"}

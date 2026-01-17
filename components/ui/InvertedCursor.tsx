@@ -75,6 +75,7 @@ export function InvertedCursor({
       {/* Outer ring */}
       <div
         ref={ringRef}
+        aria-hidden="true"
         className="absolute rounded-full border border-slate-400/40 dark:border-white/30 bg-slate-100/10 dark:bg-white/5 backdrop-blur-[1px] transition-colors duration-300"
         style={{
           width: ringSize,
@@ -83,11 +84,11 @@ export function InvertedCursor({
           willChange: "transform",
           transform: `translate3d(${-ringSize}px, ${-ringSize}px, 0)`,
         }}
-        aria-hidden="true"
       />
       {/* Inner dot */}
       <div
         ref={cursorRef}
+        aria-hidden="true"
         className="absolute rounded-full bg-slate-800 dark:bg-white shadow-sm transition-colors duration-300"
         style={{
           width: dotSize,
@@ -96,7 +97,6 @@ export function InvertedCursor({
           willChange: "transform",
           transform: `translate3d(${-ringSize}px, ${-ringSize}px, 0)`,
         }}
-        aria-hidden="true"
       />
     </div>
   );

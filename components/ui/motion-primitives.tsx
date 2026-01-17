@@ -39,14 +39,14 @@ export function FadeIn({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, ...directionOffset[direction] }}
       animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}}
+      className={className}
+      initial={{ opacity: 0, ...directionOffset[direction] }}
       transition={{
         duration,
         delay,
         ease: [0.25, 0.1, 0.25, 1],
       }}
-      className={className}
     >
       {children}
     </motion.div>
@@ -75,8 +75,9 @@ export function SlideIn({
   return (
     <motion.div
       ref={ref}
-      initial="hidden"
       animate={isInView ? "visible" : "hidden"}
+      className={className}
+      initial="hidden"
       variants={{
         hidden: {},
         visible: {
@@ -86,7 +87,6 @@ export function SlideIn({
           },
         },
       }}
-      className={className}
     >
       {children}
     </motion.div>
@@ -130,7 +130,7 @@ export function Parallax({
   const y = useTransform(scrollYProgress, [0, 1], [0, speed * 100]);
 
   return (
-    <motion.div ref={ref} style={{ y }} className={className}>
+    <motion.div ref={ref} className={className} style={{ y }}>
       {children}
     </motion.div>
   );
@@ -158,14 +158,14 @@ export function ScaleIn({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.9 }}
       animate={isInView ? { opacity: 1, scale: 1 } : {}}
+      className={className}
+      initial={{ opacity: 0, scale: 0.9 }}
       transition={{
         duration,
         delay,
         ease: [0.25, 0.1, 0.25, 1],
       }}
-      className={className}
     >
       {children}
     </motion.div>
@@ -196,14 +196,14 @@ export function TextReveal({
       {text.split("").map((char, index) => (
         <motion.span
           key={index}
-          initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
+          initial={{ opacity: 0, y: 10 }}
+          style={{ display: "inline-block" }}
           transition={{
             duration: 0.4,
             delay: delay + index * charDelay,
             ease: [0.25, 0.1, 0.25, 1],
           }}
-          style={{ display: "inline-block" }}
         >
           {char === " " ? "\u00A0" : char}
         </motion.span>
@@ -240,14 +240,14 @@ export function CountUp({
     <span ref={ref} className={className}>
       {prefix}
       <motion.span
-        initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : {}}
+        initial={{ opacity: 0 }}
         transition={{ delay }}
       >
         <CountUpNumber
-          end={end}
-          duration={duration}
           delay={delay}
+          duration={duration}
+          end={end}
           isInView={isInView}
         />
       </motion.span>
@@ -312,10 +312,10 @@ export function HoverScale({
 }: HoverScaleProps) {
   return (
     <motion.div
+      className={className}
+      transition={{ duration: 0.2 }}
       whileHover={{ scale }}
       whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.2 }}
-      className={className}
     >
       {children}
     </motion.div>

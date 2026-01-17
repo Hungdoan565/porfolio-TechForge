@@ -2,8 +2,9 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { Quote } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 interface Testimonial {
   quote: string;
@@ -84,9 +85,12 @@ export function TestimonialTicker({
       {/* Ticker container */}
       <motion.div
         ref={containerRef}
-        className="flex gap-4 md:gap-6"
         animate={{
           x: direction === "left" ? [0, -contentWidth] : [-contentWidth, 0],
+        }}
+        className="flex gap-4 md:gap-6"
+        style={{
+          animationPlayState: isPaused ? "paused" : "running",
         }}
         transition={{
           x: {
@@ -95,9 +99,6 @@ export function TestimonialTicker({
             ease: "linear",
             repeatType: "loop",
           },
-        }}
-        style={{
-          animationPlayState: isPaused ? "paused" : "running",
         }}
         onMouseEnter={() => pauseOnHover && setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
@@ -111,8 +112,8 @@ export function TestimonialTicker({
               "border border-slate-100 dark:border-slate-700/50",
               "shadow-sm hover:shadow-lg transition-shadow duration-300",
             )}
-            whileHover={{ scale: 1.02, y: -5 }}
             transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.02, y: -5 }}
           >
             {/* Quote icon */}
             <Quote className="w-6 h-6 text-[#0066FF]/30 mb-3" />
@@ -128,9 +129,9 @@ export function TestimonialTicker({
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0066FF] to-indigo-600 flex items-center justify-center text-white font-semibold text-sm overflow-hidden">
                 {testimonial.avatar ? (
                   <img
-                    src={testimonial.avatar}
                     alt={testimonial.author}
                     className="w-full h-full object-cover"
+                    src={testimonial.avatar}
                   />
                 ) : (
                   testimonial.author.charAt(0)

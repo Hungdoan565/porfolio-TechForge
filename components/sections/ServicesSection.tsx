@@ -1,9 +1,12 @@
 "use client";
 
-import { FadeIn } from "@/components/ui/motion-primitives";
-import SpotlightCard from "@/components/ui/SpotlightCard";
+import type { LucideIcon } from "lucide-react";
+
 import { Link } from "@heroui/link";
 import { motion } from "framer-motion";
+
+import { FadeIn } from "@/components/ui/motion-primitives";
+import SpotlightCard from "@/components/ui/SpotlightCard";
 import {
   Code2,
   Settings,
@@ -11,7 +14,6 @@ import {
   Check,
   ArrowRight,
 } from "@/components/ui/icons";
-import type { LucideIcon } from "lucide-react";
 
 const services = [
   {
@@ -85,11 +87,11 @@ function IconWithGlow({
   return (
     <motion.div
       className="relative"
+      transition={{ duration: 0.4 }}
       whileHover={{
         scale: 1.1,
         rotate: [0, -5, 5, 0],
       }}
-      transition={{ duration: 0.4 }}
     >
       {/* Glow effect behind icon */}
       <div
@@ -112,8 +114,8 @@ function IconWithGlow({
 export default function ServicesSection() {
   return (
     <section
-      id="services"
       className="py-24 md:py-32 bg-slate-50 dark:bg-slate-950 relative overflow-hidden"
+      id="services"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -139,17 +141,17 @@ export default function ServicesSection() {
             <motion.span
               className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
               initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
+              whileInView={{ opacity: 1, y: 0 }}
             >
-              Dich vu
+              Dịch vụ
             </motion.span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              Giai phap cong nghe toan dien
+              Giải pháp công nghệ toàn diện
             </h2>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              Dap ung moi nhu cau so hoa cua doanh nghiep voi doi ngu chuyen gia
-              giau kinh nghiem
+              Đáp ứng mọi nhu cầu số hóa của doanh nghiệp với đội ngũ chuyên gia
+              giàu kinh nghiệm
             </p>
           </div>
         </FadeIn>
@@ -159,21 +161,21 @@ export default function ServicesSection() {
           {services.map((service, index) => (
             <FadeIn
               key={index}
+              delay={0.15 * index}
               distance={60}
               duration={0.8}
-              delay={0.15 * index}
             >
               <SpotlightCard
                 className="group h-full p-8"
-                spotlightColor={service.spotlightColor}
                 hoverBorderColor={service.hoverBorderColor}
                 showBorderGlow={true}
+                spotlightColor={service.spotlightColor}
               >
                 {/* Icon */}
                 <IconWithGlow
                   Icon={service.icon}
-                  color={service.color}
                   bgClass={service.iconBg}
+                  color={service.color}
                   glowClass={service.iconGlow}
                 />
 
@@ -200,9 +202,9 @@ export default function ServicesSection() {
                       key={idx}
                       className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300"
                       initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 * idx + 0.3 }}
                       viewport={{ once: true }}
+                      whileInView={{ opacity: 1, x: 0 }}
                     >
                       <div
                         className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
@@ -225,8 +227,8 @@ export default function ServicesSection() {
 
                 {/* CTA */}
                 <Link
-                  href="#contact"
                   className="inline-flex items-center gap-2 font-semibold transition-all duration-300 group/link"
+                  href="#contact"
                   style={{ color: service.color }}
                 >
                   <span className="relative">
@@ -244,16 +246,16 @@ export default function ServicesSection() {
         </div>
 
         {/* Bottom CTA */}
-        <FadeIn distance={40} duration={0.8} delay={0.5}>
+        <FadeIn delay={0.5} distance={40} duration={0.8}>
           <div className="text-center mt-16">
             <p className="text-slate-600 dark:text-slate-400 mb-6">
-              Khong tim thay dich vu phu hop? Hay lien he de duoc tu van giai
-              phap rieng.
+              Không tìm thấy dịch vụ phù hợp? Hãy liên hệ để được tư vấn giải
+              pháp riêng.
             </p>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link
-                href="#contact"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-[#0066FF] text-white rounded-full font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 hover:bg-[#0052CC]"
+                href="#contact"
               >
                 Lien he tu van
                 <ArrowRight className="w-4 h-4" />

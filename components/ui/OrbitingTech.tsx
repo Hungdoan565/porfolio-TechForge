@@ -8,9 +8,6 @@ import React, {
   useRef,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { TechPopover, type TechInfo } from "./TechPopover";
-
 import {
   SiReact,
   SiNextdotjs,
@@ -23,6 +20,10 @@ import {
   SiDocker,
   SiAmazonwebservices,
 } from "react-icons/si";
+
+import { TechPopover, type TechInfo } from "./TechPopover";
+
+import { cn } from "@/lib/utils";
 
 export interface TechItemFull extends TechInfo {
   orbit: 1 | 2 | 3;
@@ -230,15 +231,16 @@ function calculateSmartPosition(
   const rightDistance = Math.min(
     containerWidth - MARGIN - (rightX + POPOVER_WIDTH),
     rightY - MARGIN,
-    containerHeight - MARGIN - (rightY + POPOVER_HEIGHT)
+    containerHeight - MARGIN - (rightY + POPOVER_HEIGHT),
   );
-  positions.push({ 
-    pos: "right", 
-    x: rightX, 
-    y: rightY, 
-    fits: rightFits, 
+
+  positions.push({
+    pos: "right",
+    x: rightX,
+    y: rightY,
+    fits: rightFits,
     distanceFromEdge: rightDistance,
-    priority: 10
+    priority: 10,
   });
 
   // Left position - HIGH PRIORITY (unless near edges)
@@ -251,22 +253,26 @@ function calculateSmartPosition(
   const leftDistance = Math.min(
     leftX - MARGIN,
     leftY - MARGIN,
-    containerHeight - MARGIN - (leftY + POPOVER_HEIGHT)
+    containerHeight - MARGIN - (leftY + POPOVER_HEIGHT),
   );
-  positions.push({ 
-    pos: "left", 
-    x: leftX, 
-    y: leftY, 
-    fits: leftFits, 
+
+  positions.push({
+    pos: "left",
+    x: leftX,
+    y: leftY,
+    fits: leftFits,
     distanceFromEdge: leftDistance,
-    priority: 10
+    priority: 10,
   });
 
   // Top position - DYNAMIC PRIORITY (HIGH when icon is near bottom)
-  const topX = Math.max(MARGIN, Math.min(
-    iconCenterX - POPOVER_WIDTH / 2,
-    containerWidth - POPOVER_WIDTH - MARGIN
-  ));
+  const topX = Math.max(
+    MARGIN,
+    Math.min(
+      iconCenterX - POPOVER_WIDTH / 2,
+      containerWidth - POPOVER_WIDTH - MARGIN,
+    ),
+  );
   const topY = iconY - POPOVER_HEIGHT - GAP;
   const topFits =
     topY >= MARGIN &&
@@ -275,22 +281,26 @@ function calculateSmartPosition(
   const topDistance = Math.min(
     topY - MARGIN,
     topX - MARGIN,
-    containerWidth - MARGIN - (topX + POPOVER_WIDTH)
+    containerWidth - MARGIN - (topX + POPOVER_WIDTH),
   );
-  positions.push({ 
-    pos: "top", 
-    x: topX, 
-    y: topY, 
-    fits: topFits, 
+
+  positions.push({
+    pos: "top",
+    x: topX,
+    y: topY,
+    fits: topFits,
     distanceFromEdge: topDistance,
-    priority: isNearBottom ? 15 : 5 // HIGHER priority when near bottom
+    priority: isNearBottom ? 15 : 5, // HIGHER priority when near bottom
   });
 
   // Bottom position - DYNAMIC PRIORITY (HIGH when icon is near top)
-  const bottomX = Math.max(MARGIN, Math.min(
-    iconCenterX - POPOVER_WIDTH / 2,
-    containerWidth - POPOVER_WIDTH - MARGIN
-  ));
+  const bottomX = Math.max(
+    MARGIN,
+    Math.min(
+      iconCenterX - POPOVER_WIDTH / 2,
+      containerWidth - POPOVER_WIDTH - MARGIN,
+    ),
+  );
   const bottomY = iconY + ICON_SIZE + GAP;
   const bottomFits =
     bottomY + POPOVER_HEIGHT <= containerHeight - MARGIN &&
@@ -299,19 +309,20 @@ function calculateSmartPosition(
   const bottomDistance = Math.min(
     containerHeight - MARGIN - (bottomY + POPOVER_HEIGHT),
     bottomX - MARGIN,
-    containerWidth - MARGIN - (bottomX + POPOVER_WIDTH)
+    containerWidth - MARGIN - (bottomX + POPOVER_WIDTH),
   );
-  positions.push({ 
-    pos: "bottom", 
-    x: bottomX, 
-    y: bottomY, 
-    fits: bottomFits, 
+
+  positions.push({
+    pos: "bottom",
+    x: bottomX,
+    y: bottomY,
+    fits: bottomFits,
     distanceFromEdge: bottomDistance,
-    priority: isNearTop ? 15 : 5 // HIGHER priority when near top
+    priority: isNearTop ? 15 : 5, // HIGHER priority when near top
   });
 
   // Filter positions that fit
-  const fittingPositions = positions.filter(p => p.fits);
+  const fittingPositions = positions.filter((p) => p.fits);
 
   // If we have positions that fit, choose by priority then by space
   if (fittingPositions.length > 0) {
@@ -320,10 +331,12 @@ function calculateSmartPosition(
       if (b.priority !== a.priority) {
         return b.priority - a.priority;
       }
+
       return b.distanceFromEdge - a.distanceFromEdge;
     });
-    
+
     const best = fittingPositions[0];
+
     return { x: best.x, y: best.y, position: best.pos };
   }
 
@@ -333,13 +346,20 @@ function calculateSmartPosition(
     if (b.priority !== a.priority) {
       return b.priority - a.priority;
     }
+
     return b.distanceFromEdge - a.distanceFromEdge;
   })[0];
 
-  return { 
-    x: Math.max(MARGIN, Math.min(bestEffort.x, containerWidth - POPOVER_WIDTH - MARGIN)), 
-    y: Math.max(MARGIN, Math.min(bestEffort.y, containerHeight - POPOVER_HEIGHT - MARGIN)), 
-    position: bestEffort.pos 
+  return {
+    x: Math.max(
+      MARGIN,
+      Math.min(bestEffort.x, containerWidth - POPOVER_WIDTH - MARGIN),
+    ),
+    y: Math.max(
+      MARGIN,
+      Math.min(bestEffort.y, containerHeight - POPOVER_HEIGHT - MARGIN),
+    ),
+    position: bestEffort.pos,
   };
 }
 
@@ -444,8 +464,8 @@ export function OrbitingTech({
     >
       {/* Center logo - LUÔN Ở TRUNG TÂM */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
         animate={{ scale: isPaused ? 1.05 : 1 }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
         transition={{ duration: 0.3 }}
       >
         <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-[#0066FF] to-indigo-600 flex items-center justify-center shadow-2xl shadow-blue-500/30">
@@ -474,11 +494,11 @@ export function OrbitingTech({
       {Object.entries(orbits).map(([orbitNum, config]) => (
         <OrbitRing
           key={orbitNum}
+          hoveredTech={hoveredTech}
+          isPaused={isPaused}
+          items={config.items}
           radius={config.radius}
           speed={config.speed}
-          items={config.items}
-          isPaused={isPaused}
-          hoveredTech={hoveredTech}
           onTechHover={handleTechHover}
           onTechLeave={handleTechLeave}
         />
@@ -486,13 +506,13 @@ export function OrbitingTech({
 
       {/* Center glow */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full blur-3xl pointer-events-none z-0"
         animate={{
           backgroundColor: hoveredTech
             ? `${hoveredTech.color}30`
             : "rgba(59, 130, 246, 0.2)",
           scale: isPaused ? 1.1 : 1,
         }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full blur-3xl pointer-events-none z-0"
         transition={{ duration: 0.3 }}
       />
 
@@ -501,36 +521,36 @@ export function OrbitingTech({
         {hoveredTech && popoverData && (
           <motion.div
             key={hoveredTech.name}
-            layoutId="tech-popover"
-            className="absolute z-[100]"
-            style={{
-              left: popoverData.x,
-              top: popoverData.y,
-              pointerEvents: 'auto',
-            }}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ 
-              opacity: 1, 
+            animate={{
+              opacity: 1,
               scale: 1,
               x: 0,
               y: 0,
             }}
+            className="absolute z-[100]"
             exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ 
+            initial={{ opacity: 0, scale: 0.9 }}
+            layoutId="tech-popover"
+            style={{
+              left: popoverData.x,
+              top: popoverData.y,
+              pointerEvents: "auto",
+            }}
+            transition={{
               duration: 0.25,
               ease: "easeInOut",
               layout: {
                 duration: 0.3,
-                ease: "easeInOut"
-              }
+                ease: "easeInOut",
+              },
             }}
             onMouseEnter={handlePopoverEnter}
             onMouseLeave={handlePopoverLeave}
           >
             <TechPopover
-              tech={hoveredTech}
               isOpen={true}
               position={popoverData.position}
+              tech={hoveredTech}
             />
           </motion.div>
         )}
@@ -538,8 +558,8 @@ export function OrbitingTech({
 
       {/* Instruction hint */}
       <motion.p
-        className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-slate-400 dark:text-slate-500 whitespace-nowrap"
         animate={{ opacity: isPaused ? 0 : 1 }}
+        className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs text-slate-400 dark:text-slate-500 whitespace-nowrap"
         transition={{ duration: 0.3 }}
       >
         Di chuột vào công nghệ để xem chi tiết
@@ -575,6 +595,7 @@ function OrbitRing({
 
     const animate = (time: number) => {
       const deltaTime = (time - lastTime) / 1000;
+
       lastTime = time;
 
       if (!isPaused) {
@@ -585,6 +606,7 @@ function OrbitRing({
     };
 
     animationFrame = requestAnimationFrame(animate);
+
     return () => cancelAnimationFrame(animationFrame);
   }, [isPaused, speed]);
 
@@ -618,6 +640,10 @@ function OrbitRing({
             }}
           >
             <motion.div
+              animate={{
+                scale: isHovered ? 1.2 : 1,
+                opacity: isPaused && !isHovered ? 0.5 : 1,
+              }}
               className={cn(
                 "w-14 h-14 md:w-16 md:h-16 rounded-xl",
                 "bg-white dark:bg-white/95 shadow-lg",
@@ -630,10 +656,6 @@ function OrbitRing({
                 color: tech.color,
                 borderColor: isHovered ? tech.color : undefined,
               }}
-              animate={{
-                scale: isHovered ? 1.2 : 1,
-                opacity: isPaused && !isHovered ? 0.5 : 1,
-              }}
               transition={{ duration: 0.2 }}
               onMouseEnter={(e) => onTechHover(tech, e)}
               onMouseLeave={onTechLeave}
@@ -642,9 +664,9 @@ function OrbitRing({
 
               {isHovered && (
                 <motion.div
+                  animate={{ opacity: 1 }}
                   className="absolute inset-0 rounded-xl pointer-events-none"
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
                   style={{
                     boxShadow: `0 0 20px ${tech.color}40, inset 0 0 10px ${tech.color}20`,
                   }}

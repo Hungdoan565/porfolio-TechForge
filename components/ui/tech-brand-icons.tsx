@@ -6,8 +6,8 @@ type IconProps = SVGProps<SVGSVGElement>;
 export function HTML5Icon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -43,8 +43,8 @@ export function HTML5Icon(props: IconProps) {
 export function CSS3Icon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -80,12 +80,12 @@ export function CSS3Icon(props: IconProps) {
 export function JavaScriptIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect x="4" y="4" width="24" height="24" fill="#F7DF1E" />
+      <rect fill="#F7DF1E" height="24" width="24" x="4" y="4" />
       <path
         d="M9.927 22.778L11.879 21.564C12.305 22.306 12.693 22.936 13.561 22.936C14.393 22.936 14.929 22.622 14.929 21.426V14.0647H17.361V21.464C17.361 23.944 15.893 25.074 13.671 25.074C11.671 25.074 10.503 24.0167 9.927 22.778Z"
         fill="#323330"
@@ -102,12 +102,12 @@ export function JavaScriptIcon(props: IconProps) {
 export function TypeScriptIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect x="4" y="4" width="24" height="24" rx="2" fill="#3178C6" />
+      <rect fill="#3178C6" height="24" rx="2" width="24" x="4" y="4" />
       <path
         d="M15.4373 17.3293H13.4627V25.0707H11.5307V17.3293H9.56V15.7573H15.4373V17.3293Z"
         fill="white"
@@ -124,12 +124,12 @@ export function TypeScriptIcon(props: IconProps) {
 export function ReactIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <circle cx="16" cy="16" r="2.66667" fill="#61DAFB" />
+      <circle cx="16" cy="16" fill="#61DAFB" r="2.66667" />
       <ellipse
         cx="16"
         cy="16"
@@ -164,12 +164,12 @@ export function ReactIcon(props: IconProps) {
 export function NextJSIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <circle cx="16" cy="16" r="12" fill="black" />
+      <circle cx="16" cy="16" fill="black" r="12" />
       <path
         d="M12.5 21V11H13.5L20.5 20.25V11H21.5V21H20.5L13.5 11.75V21H12.5Z"
         fill="url(#nextjs-gradient)"
@@ -181,23 +181,23 @@ export function NextJSIcon(props: IconProps) {
       />
       <defs>
         <linearGradient
+          gradientUnits="userSpaceOnUse"
           id="nextjs-gradient"
           x1="18"
-          y1="19"
           x2="25"
+          y1="19"
           y2="27"
-          gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="white" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
+          gradientUnits="userSpaceOnUse"
           id="nextjs-gradient2"
           x1="21.5"
-          y1="11"
           x2="21.5"
+          y1="11"
           y2="21"
-          gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="white" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
@@ -211,8 +211,8 @@ export function NextJSIcon(props: IconProps) {
 export function NodeJSIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -230,8 +230,8 @@ export function NodeJSIcon(props: IconProps) {
 export function PythonIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -251,8 +251,8 @@ export function PythonIcon(props: IconProps) {
 export function PostgreSQLIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -276,8 +276,8 @@ export function PostgreSQLIcon(props: IconProps) {
 export function AWSIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -309,16 +309,16 @@ export function AWSIcon(props: IconProps) {
 export function DockerIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        fillRule="evenodd"
         clipRule="evenodd"
         d="M18.0625 11.125H20.5V13.625H22.8125C23.375 13.625 23.9375 13.5 24.4375 13.25C24.75 13.0938 25.1875 12.8125 25.5 12.4375C25.375 12.25 25.125 11.8125 25.0625 11.375C24.9375 10.625 25 9.5 25.5625 8.75L25.875 8.375L26.25 8.6875C27.0625 9.25 27.6875 10.1875 27.8125 11.1875C28.4375 10.9375 29.25 10.875 30 11.0625L30.4375 11.1875L30.3125 11.625C29.875 13.0625 28.6875 13.875 27.0625 13.875H26.8125C25.6875 18.625 22.1875 21.625 17.0625 21.625C13.3125 21.625 11 19.875 9.75 18.25C8.3125 16.375 7.9375 14.3125 7.9375 13.625H10.5V11.125H13V8.625H18.0625V6.125H20.5V11.125H18.0625ZM10.75 12.875H13.25V10.375H10.75V12.875ZM10.75 12.875H8.25V10.375H10.75V12.875ZM13.5 12.875H16V10.375H13.5V12.875ZM16.25 12.875H18.75V10.375H16.25V12.875ZM19 12.875H21.5V10.375H19V12.875ZM13.5 10.125H16V7.625H13.5V10.125ZM16.25 10.125H18.75V7.625H16.25V10.125Z"
         fill="#2396ED"
+        fillRule="evenodd"
       />
     </svg>
   );
@@ -328,8 +328,8 @@ export function DockerIcon(props: IconProps) {
 export function VueIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -344,16 +344,16 @@ export function VueIcon(props: IconProps) {
 export function TailwindIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        fillRule="evenodd"
         clipRule="evenodd"
         d="M16 8C12.8 8 10.8 9.6 10 12.8C11.2 11.2 12.6 10.6 14.2 11C15.1164 11.2296 15.7752 11.8996 16.5068 12.644C17.7124 13.8712 19.1168 15.3 22 15.3C25.2 15.3 27.2 13.7 28 10.5C26.8 12.1 25.4 12.7 23.8 12.3C22.8836 12.0704 22.2248 11.4004 21.4932 10.656C20.2876 9.4288 18.8832 8 16 8ZM10 15.3C6.8 15.3 4.8 16.9 4 20.1C5.2 18.5 6.6 17.9 8.2 18.3C9.1164 18.5296 9.7752 19.1996 10.5068 19.944C11.7124 21.1712 13.1168 22.6 16 22.6C19.2 22.6 21.2 21 22 17.8C20.8 19.4 19.4 20 17.8 19.6C16.8836 19.3704 16.2248 18.7004 15.4932 17.956C14.2876 16.7288 12.8832 15.3 10 15.3Z"
         fill="#38BDF8"
+        fillRule="evenodd"
       />
     </svg>
   );
@@ -363,8 +363,8 @@ export function TailwindIcon(props: IconProps) {
 export function MongoDBIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -384,8 +384,8 @@ export function MongoDBIcon(props: IconProps) {
 export function GitIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -401,8 +401,8 @@ export function GitIcon(props: IconProps) {
 export function FigmaIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -434,8 +434,8 @@ export function FigmaIcon(props: IconProps) {
 export function GraphQLIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -444,12 +444,12 @@ export function GraphQLIcon(props: IconProps) {
         stroke="#E535AB"
         strokeWidth="1.5"
       />
-      <circle cx="16.0002" cy="4.00039" r="2" fill="#E535AB" />
-      <circle cx="27.2002" cy="10.4004" r="2" fill="#E535AB" />
-      <circle cx="27.2002" cy="23.4004" r="2" fill="#E535AB" />
-      <circle cx="16.0002" cy="30.0004" r="2" fill="#E535AB" />
-      <circle cx="4.80017" cy="23.4004" r="2" fill="#E535AB" />
-      <circle cx="4.80017" cy="10.4004" r="2" fill="#E535AB" />
+      <circle cx="16.0002" cy="4.00039" fill="#E535AB" r="2" />
+      <circle cx="27.2002" cy="10.4004" fill="#E535AB" r="2" />
+      <circle cx="27.2002" cy="23.4004" fill="#E535AB" r="2" />
+      <circle cx="16.0002" cy="30.0004" fill="#E535AB" r="2" />
+      <circle cx="4.80017" cy="23.4004" fill="#E535AB" r="2" />
+      <circle cx="4.80017" cy="10.4004" fill="#E535AB" r="2" />
       <path
         d="M7.2002 11.6004L24.8002 11.6004M7.2002 22.2004H24.8002M16.0002 6.00039L26.0002 21.6004M16.0002 6.00039L6.00017 21.6004"
         stroke="#E535AB"
@@ -463,8 +463,8 @@ export function GraphQLIcon(props: IconProps) {
 export function ReduxIcon(props: IconProps) {
   return (
     <svg
-      viewBox="0 0 32 32"
       fill="none"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >

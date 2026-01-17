@@ -2,8 +2,9 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { ExternalLink, CheckCircle2, Briefcase, Calendar } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 export interface TechInfo {
   name: string;
@@ -43,14 +44,14 @@ export function TechPopover({
       {isOpen && (
         <motion.div
           key={tech.name}
-          className={cn("relative w-72 md:w-80", className)}
-          initial={slideDirection[position]}
           animate={{ x: 0, y: 0, opacity: 1 }}
+          className={cn("relative w-72 md:w-80", className)}
           exit={slideDirection[position]}
-          transition={{ 
-            duration: 0.25, 
+          initial={slideDirection[position]}
+          transition={{
+            duration: 0.25,
             ease: "easeInOut",
-            opacity: { duration: 0.2 }
+            opacity: { duration: 0.2 },
           }}
         >
           {/* Arrow pointing to icon */}
@@ -90,6 +91,7 @@ export function TechPopover({
 
           {/* Card Content */}
           <motion.div
+            animate={{ scale: 1, opacity: 1 }}
             className={cn(
               "relative rounded-2xl overflow-hidden",
               "bg-white dark:bg-slate-800",
@@ -97,53 +99,56 @@ export function TechPopover({
               "shadow-2xl shadow-slate-900/10 dark:shadow-black/30",
             )}
             initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ 
-              duration: 0.25, 
+            transition={{
+              duration: 0.25,
               delay: 0.05,
-              ease: "easeOut" 
+              ease: "easeOut",
             }}
           >
             {/* Header with gradient */}
             <motion.div
               key={`${tech.name}-header`}
+              animate={{ opacity: 1 }}
               className="p-4 pb-3 dark:bg-slate-750"
+              initial={{ opacity: 0 }}
               style={{
                 background: `linear-gradient(135deg, ${tech.color}15 0%, transparent 100%)`,
               }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
               transition={{ duration: 0.2 }}
             >
               <div className="flex items-center gap-3">
                 {/* Icon */}
                 <motion.div
+                  animate={{ scale: 1, rotate: 0 }}
                   className={cn(
                     "w-12 h-12 rounded-xl flex items-center justify-center",
                     // Dark icons get white background in dark mode
-                    (tech.color === "#000000" || tech.color.toLowerCase().includes("#2d3"))
+                    tech.color === "#000000" ||
+                      tech.color.toLowerCase().includes("#2d3")
                       ? "dark:bg-white"
-                      : ""
+                      : "",
                   )}
-                  style={{ 
-                    backgroundColor: (tech.color === "#000000" || tech.color.toLowerCase().includes("#2d3"))
-                      ? `${tech.color}20`
-                      : `${tech.color}20`
-                  }}
                   initial={{ scale: 0.8, rotate: -10 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ 
-                    duration: 0.3, 
+                  style={{
+                    backgroundColor:
+                      tech.color === "#000000" ||
+                      tech.color.toLowerCase().includes("#2d3")
+                        ? `${tech.color}20`
+                        : `${tech.color}20`,
+                  }}
+                  transition={{
+                    duration: 0.3,
                     delay: 0.1,
                     type: "spring",
-                    stiffness: 200
+                    stiffness: 200,
                   }}
                 >
-                  <div 
+                  <div
                     className={cn(
-                      (tech.color === "#000000" || tech.color.toLowerCase().includes("#2d3"))
+                      tech.color === "#000000" ||
+                        tech.color.toLowerCase().includes("#2d3")
                         ? "dark:[&>svg]:text-slate-400"
-                        : ""
+                        : "",
                     )}
                     style={{ color: tech.color }}
                   >
@@ -153,18 +158,18 @@ export function TechPopover({
 
                 {/* Name */}
                 <motion.div
-                  initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, x: -10 }}
                   transition={{ duration: 0.25, delay: 0.15 }}
                 >
                   <h4 className="text-lg font-bold text-slate-800 dark:text-white">
                     {tech.name}
                   </h4>
                   <a
-                    href={tech.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-[#0066FF] transition-colors"
+                    href={tech.link}
+                    rel="noopener noreferrer"
+                    target="_blank"
                   >
                     {new URL(tech.link).hostname}
                     <ExternalLink className="w-3 h-3" />
@@ -174,10 +179,10 @@ export function TechPopover({
             </motion.div>
 
             {/* Description */}
-            <motion.div 
+            <motion.div
+              animate={{ opacity: 1, y: 0 }}
               className="px-4 pb-3"
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.25, delay: 0.2 }}
             >
               <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -186,10 +191,10 @@ export function TechPopover({
             </motion.div>
 
             {/* Why we use */}
-            <motion.div 
+            <motion.div
+              animate={{ opacity: 1, y: 0 }}
               className="px-4 pb-3"
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.25, delay: 0.25 }}
             >
               <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
@@ -199,22 +204,25 @@ export function TechPopover({
                 {tech.whyWeUse.map((reason, index) => (
                   <motion.li
                     key={`${tech.name}-reason-${index}`}
+                    animate={{ opacity: 1, x: 0 }}
                     className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-200"
                     initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 + index * 0.05, duration: 0.2 }}
                   >
                     <CheckCircle2
                       className={cn(
                         "w-4 h-4 mt-0.5 flex-shrink-0",
-                        (tech.color === "#000000" || tech.color.toLowerCase().includes("#2d3"))
+                        tech.color === "#000000" ||
+                          tech.color.toLowerCase().includes("#2d3")
                           ? "dark:text-blue-400"
-                          : ""
+                          : "",
                       )}
-                      style={{ 
-                        color: (tech.color === "#000000" || tech.color.toLowerCase().includes("#2d3"))
-                          ? undefined
-                          : tech.color 
+                      style={{
+                        color:
+                          tech.color === "#000000" ||
+                          tech.color.toLowerCase().includes("#2d3")
+                            ? undefined
+                            : tech.color,
                       }}
                     />
                     <span>{reason}</span>
@@ -224,10 +232,10 @@ export function TechPopover({
             </motion.div>
 
             {/* Stats */}
-            <motion.div 
+            <motion.div
+              animate={{ opacity: 1, y: 0 }}
               className="px-4 pb-4"
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.25, delay: 0.35 }}
             >
               <div className="flex gap-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-700/50">
@@ -237,19 +245,24 @@ export function TechPopover({
                     <p
                       className={cn(
                         "text-lg font-bold",
-                        (tech.color === "#000000" || tech.color.toLowerCase().includes("#2d3"))
+                        tech.color === "#000000" ||
+                          tech.color.toLowerCase().includes("#2d3")
                           ? "dark:text-blue-400"
-                          : ""
+                          : "",
                       )}
-                      style={{ 
-                        color: (tech.color === "#000000" || tech.color.toLowerCase().includes("#2d3"))
-                          ? undefined
-                          : tech.color 
+                      style={{
+                        color:
+                          tech.color === "#000000" ||
+                          tech.color.toLowerCase().includes("#2d3")
+                            ? undefined
+                            : tech.color,
                       }}
                     >
                       {tech.stats.projects}+
                     </p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">Dự án</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                      Dự án
+                    </p>
                   </div>
                 </div>
                 <div className="w-px bg-slate-200 dark:bg-slate-700" />
@@ -259,19 +272,24 @@ export function TechPopover({
                     <p
                       className={cn(
                         "text-lg font-bold",
-                        (tech.color === "#000000" || tech.color.toLowerCase().includes("#2d3"))
+                        tech.color === "#000000" ||
+                          tech.color.toLowerCase().includes("#2d3")
                           ? "dark:text-blue-400"
-                          : ""
+                          : "",
                       )}
-                      style={{ 
-                        color: (tech.color === "#000000" || tech.color.toLowerCase().includes("#2d3"))
-                          ? undefined
-                          : tech.color 
+                      style={{
+                        color:
+                          tech.color === "#000000" ||
+                          tech.color.toLowerCase().includes("#2d3")
+                            ? undefined
+                            : tech.color,
                       }}
                     >
                       {tech.stats.yearsExp}+
                     </p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">Năm kinh nghiệm</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                      Năm kinh nghiệm
+                    </p>
                   </div>
                 </div>
               </div>
