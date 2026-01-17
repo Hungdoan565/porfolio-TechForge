@@ -7,6 +7,7 @@ import {
   FAQSection,
   ContactSection,
   ProcessSection,
+  CultureSection,
 } from "@/components/sections";
 import { FadeIn } from "@/components/ui/motion-primitives";
 import { Phone, MapPin, ArrowUpRight } from "@/components/ui/icons";
@@ -30,6 +31,9 @@ export default function IndexPage() {
 
       {/* Why Choose Us Section */}
       <WhyUsSection />
+
+      {/* Culture Section - Team Values */}
+      <CultureSection />
 
       {/* FAQ Section */}
       <FAQSection />

@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { AsymmetricBento } from "@/components/ui/AsymmetricBento";
 import { OrbitingTech } from "@/components/ui/OrbitingTech";
 import { TestimonialTicker } from "@/components/ui/TestimonialTicker";
-import { CulturePreview } from "@/components/ui/CulturePreview";
 import { CaseStudyGrid } from "@/components/ui/CaseStudyCard";
 import { FadeIn } from "@/components/ui/motion-primitives";
 
@@ -40,31 +39,6 @@ const testimonials = [
     author: "Phạm Thị D",
     role: "Founder",
     company: "DigitalHub",
-  },
-];
-
-// Culture values (placeholder)
-const cultureValues = [
-  {
-    title: "Collaboration First",
-    description:
-      "Chúng tôi tin rằng ý tưởng tốt nhất đến từ sự hợp tác. Làm việc nhóm, chia sẻ kiến thức.",
-    emoji: "🤝",
-    teamMembers: [],
-  },
-  {
-    title: "Always Learning",
-    description:
-      "Tech talks hàng tuần, budget học tập, conference attendance. Không ngừng phát triển.",
-    emoji: "📚",
-    teamMembers: [],
-  },
-  {
-    title: "Work-Life Balance",
-    description:
-      "Remote-first, flexible hours, mental health days. Sức khỏe quan trọng hơn deadline.",
-    emoji: "⚖️",
-    teamMembers: [],
   },
 ];
 
@@ -125,10 +99,9 @@ export default function WhyUsSection() {
           <AsymmetricBento
             heroTitle="Tại sao chọn chúng tôi?"
             heroSubtitle="Chúng tôi không chỉ code, chúng tôi xây dựng mối quan hệ đối tác lâu dài với khách hàng"
-            floatingTestimonial={{
-              quote: "Team làm việc chuyên nghiệp, đúng cam kết",
-              author: "Nguyễn Văn A",
-              role: "CEO, TechCorp",
+            heroCta={{
+              text: "Liên hệ ngay",
+              href: "#contact",
             }}
           />
         </FadeIn>
@@ -184,31 +157,7 @@ export default function WhyUsSection() {
         </div>
 
         {/* ============================================ */}
-        {/* SECTION 4: Culture Preview */}
-        {/* ============================================ */}
-        <div className="mt-20 md:mt-28">
-          <FadeIn distance={40} duration={0.8}>
-            <div className="text-center mb-8 md:mb-12">
-              <motion.span
-                className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                Văn hóa làm việc
-              </motion.span>
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 dark:text-white">
-                Giá trị cốt lõi của team
-              </h3>
-            </div>
-          </FadeIn>
-
-          <CulturePreview values={cultureValues} />
-        </div>
-
-        {/* ============================================ */}
-        {/* SECTION 5: Case Study Previews */}
+        {/* SECTION 4: Case Study Previews */}
         {/* ============================================ */}
         <div className="mt-20 md:mt-28">
           <FadeIn distance={40} duration={0.8}>

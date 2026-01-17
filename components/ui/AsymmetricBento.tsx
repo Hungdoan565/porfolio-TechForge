@@ -4,70 +4,88 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 import type { LucideIcon } from "lucide-react";
-import { TrendingUp, Users, Calendar, Clock, Quote } from "lucide-react";
+import {
+  TrendingUp,
+  Users,
+  Calendar,
+  Clock,
+  Headphones,
+  ArrowRight,
+} from "lucide-react";
+
+// ============================================
+// TYPES
+// ============================================
 
 interface StatItem {
   value: number;
   suffix?: string;
   prefix?: string;
   label: string;
+  description?: string;
   icon?: LucideIcon;
-  color?: string;
-}
-
-interface FloatingTestimonial {
-  quote: string;
-  author: string;
-  role: string;
+  href?: string;
+  cta?: string;
 }
 
 interface AsymmetricBentoProps {
   stats?: StatItem[];
   heroTitle?: string;
   heroSubtitle?: string;
-  floatingTestimonial?: FloatingTestimonial;
+  heroCta?: {
+    text: string;
+    href: string;
+  };
   className?: string;
 }
 
-// Default stats
+// ============================================
+// DEFAULT DATA
+// ============================================
+
 const defaultStats: StatItem[] = [
   {
     value: 98,
     suffix: "%",
     label: "Đúng deadline",
+    description: "Cam kết giao hàng đúng hẹn",
     icon: Clock,
-    color: "#0066FF",
+    href: "#services",
+    cta: "Xem dịch vụ",
   },
   {
     value: 50,
     suffix: "+",
     label: "Dự án hoàn thành",
+    description: "Đa dạng ngành nghề",
     icon: TrendingUp,
-    color: "#10B981",
+    href: "#portfolio",
+    cta: "Xem portfolio",
   },
   {
     value: 30,
     suffix: "+",
     label: "Khách hàng",
+    description: "Tin tưởng và quay lại",
     icon: Users,
-    color: "#F59E0B",
+    href: "#testimonials",
+    cta: "Đọc reviews",
   },
   {
     value: 5,
     suffix: "+",
     label: "Năm kinh nghiệm",
+    description: "Liên tục phát triển",
     icon: Calendar,
-    color: "#8B5CF6",
+    href: "#about",
+    cta: "Về chúng tôi",
   },
 ];
 
-const defaultTestimonial: FloatingTestimonial = {
-  quote: "Team làm việc chuyên nghiệp, đúng cam kết",
-  author: "Nguyễn Văn A",
-  role: "CEO, TechCorp",
-};
+// ============================================
+// ANIMATED COUNTER HOOK
+// ============================================
 
-// Animated counter hook
 function useCounter(
   target: number,
   duration: number = 2000,
@@ -98,97 +116,307 @@ function useCounter(
   return count;
 }
 
-// Individual stat card
-function StatCard({
+// ============================================
+// BENTO CARD COMPONENT (Feature-First Style)
+// ============================================
+
+function BentoCard({
   stat,
   delay = 0,
-  size = "normal",
+  variant = "default",
 }: {
   stat: StatItem;
   delay?: number;
-  size?: "normal" | "large";
+  variant?: "default" | "accent";
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const count = useCounter(stat.value, 2000, isInView);
   const Icon = stat.icon;
 
+  const isAccent = variant === "accent";
+
   return (
     <motion.div
       ref={ref}
       className={cn(
-        "relative rounded-2xl overflow-hidden",
-        "bg-white dark:bg-slate-800/80",
-        "border border-slate-100 dark:border-slate-700/50",
-        "p-5 md:p-6",
-        size === "large" && "p-6 md:p-8",
+        "group relative flex flex-col justify-between overflow-hidden rounded-2xl",
+        "p-5 md:p-6 h-full min-h-[160px]",
+        // Light mode
+        isAccent
+          ? "bg-gradient-to-br from-[#0066FF] to-blue-600"
+          : "bg-white border border-slate-200/80",
+        // Dark mode
+        isAccent
+          ? "dark:from-blue-600 dark:to-blue-700"
+          : "dark:bg-slate-800/90 dark:border-slate-700/50",
+        // Shadows
+        isAccent
+          ? "shadow-lg shadow-blue-500/20"
+          : "shadow-sm hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-slate-900/50",
+        // Transform
+        "transition-all duration-300 ease-out",
+        "hover:-translate-y-1",
       )}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay }}
-      whileHover={{
-        y: -5,
-        boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.1)",
-      }}
     >
-      {/* Icon background */}
+      {/* Background Icon */}
       {Icon && (
-        <motion.div
-          className="absolute top-3 right-3 opacity-10"
-          whileHover={{ scale: 1.2, rotate: 10 }}
+        <div
+          className={cn(
+            "absolute top-4 right-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6",
+            isAccent ? "opacity-20" : "opacity-[0.08]",
+          )}
         >
-          <Icon className="w-12 h-12" style={{ color: stat.color }} />
-        </motion.div>
+          <Icon
+            className={cn(
+              "w-14 h-14",
+              isAccent ? "text-white" : "text-[#0066FF]",
+            )}
+          />
+        </div>
       )}
 
-      {/* Value */}
-      <div className="flex items-baseline gap-1">
-        {stat.prefix && (
-          <span
-            className={cn(
-              "font-bold",
-              size === "large" ? "text-2xl md:text-3xl" : "text-xl md:text-2xl",
-            )}
-            style={{ color: stat.color }}
-          >
-            {stat.prefix}
-          </span>
-        )}
-        <motion.span
-          className={cn(
-            "font-bold tabular-nums",
-            size === "large" ? "text-4xl md:text-5xl" : "text-3xl md:text-4xl",
+      {/* Content */}
+      <div className="relative z-10 flex flex-col gap-1 transition-transform duration-300 group-hover:-translate-y-1">
+        {/* Value */}
+        <div className="flex items-baseline gap-0.5">
+          {stat.prefix && (
+            <span
+              className={cn(
+                "text-xl md:text-2xl font-bold",
+                isAccent ? "text-white" : "text-[#0066FF]",
+              )}
+            >
+              {stat.prefix}
+            </span>
           )}
-          style={{ color: stat.color }}
-        >
-          {count}
-        </motion.span>
-        {stat.suffix && (
-          <span
+          <motion.span
             className={cn(
-              "font-bold",
-              size === "large" ? "text-2xl md:text-3xl" : "text-xl md:text-2xl",
+              "text-3xl md:text-4xl font-bold tabular-nums tracking-tight",
+              isAccent ? "text-white" : "text-[#0066FF]",
             )}
-            style={{ color: stat.color }}
           >
-            {stat.suffix}
-          </span>
+            {count}
+          </motion.span>
+          {stat.suffix && (
+            <span
+              className={cn(
+                "text-xl md:text-2xl font-bold",
+                isAccent ? "text-white" : "text-[#0066FF]",
+              )}
+            >
+              {stat.suffix}
+            </span>
+          )}
+        </div>
+
+        {/* Label */}
+        <p
+          className={cn(
+            "text-sm md:text-base font-semibold",
+            isAccent ? "text-white" : "text-slate-800 dark:text-slate-200",
+          )}
+        >
+          {stat.label}
+        </p>
+
+        {/* Description */}
+        {stat.description && (
+          <p
+            className={cn(
+              "text-xs md:text-sm",
+              isAccent ? "text-white/70" : "text-slate-500 dark:text-slate-400",
+            )}
+          >
+            {stat.description}
+          </p>
         )}
       </div>
 
-      {/* Label */}
-      <p className="text-sm md:text-base font-medium text-slate-600 dark:text-slate-400 mt-1">
-        {stat.label}
-      </p>
+      {/* Hover CTA */}
+      {stat.href && stat.cta && (
+        <motion.div
+          className={cn(
+            "absolute bottom-0 left-0 right-0 p-4",
+            "translate-y-full opacity-0",
+            "group-hover:translate-y-0 group-hover:opacity-100",
+            "transition-all duration-300 ease-out",
+          )}
+        >
+          <a
+            href={stat.href}
+            className={cn(
+              "inline-flex items-center gap-1.5 text-sm font-medium",
+              isAccent
+                ? "text-white hover:text-white/80"
+                : "text-[#0066FF] hover:text-blue-700 dark:hover:text-blue-400",
+            )}
+          >
+            {stat.cta}
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
+        </motion.div>
+      )}
+
+      {/* Hover overlay */}
+      <div
+        className={cn(
+          "absolute inset-0 transition-opacity duration-300",
+          "opacity-0 group-hover:opacity-100",
+          isAccent ? "bg-white/5" : "bg-slate-50/50 dark:bg-slate-700/20",
+        )}
+      />
     </motion.div>
   );
 }
 
+// ============================================
+// HERO CARD COMPONENT
+// ============================================
+
+function HeroCard({
+  title,
+  subtitle,
+  cta,
+  isInView,
+}: {
+  title: string;
+  subtitle: string;
+  cta?: { text: string; href: string };
+  isInView: boolean;
+}) {
+  return (
+    <motion.div
+      className={cn(
+        "relative rounded-2xl overflow-hidden h-full min-h-[280px] md:min-h-[340px]",
+        "p-6 md:p-8 lg:p-10",
+        "bg-gradient-to-br from-[#0066FF] via-blue-600 to-indigo-600",
+        "shadow-xl shadow-blue-500/25",
+        "flex flex-col justify-between",
+      )}
+      initial={{ opacity: 0, x: -30 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.6 }}
+    >
+      {/* Background decorations */}
+      <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
+      <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-400/20 rounded-full blur-2xl translate-y-1/4 -translate-x-1/4" />
+
+      {/* Grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+          backgroundSize: "24px 24px",
+        }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10 flex-1 flex flex-col justify-center">
+        <motion.h3
+          className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4 leading-tight"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          {title}
+        </motion.h3>
+        <motion.p
+          className="text-base md:text-lg text-white/80 max-w-md leading-relaxed"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          {subtitle}
+        </motion.p>
+      </div>
+
+      {/* CTA Button */}
+      {cta && (
+        <motion.div
+          className="relative z-10 mt-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <a
+            href={cta.href}
+            className={cn(
+              "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl",
+              "bg-white text-[#0066FF] font-semibold text-sm md:text-base",
+              "hover:bg-white/90 transition-colors duration-200",
+              "shadow-lg shadow-black/10",
+            )}
+          >
+            {cta.text}
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </motion.div>
+      )}
+    </motion.div>
+  );
+}
+
+// ============================================
+// FEATURE CARD COMPONENT (Support 24/7)
+// ============================================
+
+function FeatureCard({ isInView }: { isInView: boolean }) {
+  return (
+    <motion.div
+      className={cn(
+        "relative rounded-2xl overflow-hidden h-full min-h-[140px]",
+        "p-5 md:p-6",
+        "bg-gradient-to-br from-slate-900 to-slate-800",
+        "dark:from-slate-800 dark:to-slate-900",
+        "flex items-center justify-between gap-4",
+        "group hover:-translate-y-1 transition-all duration-300",
+        "shadow-lg shadow-slate-900/20",
+      )}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.6 }}
+    >
+      {/* Background glow */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
+
+      {/* Content */}
+      <div className="relative z-10">
+        <p className="text-white font-bold text-lg md:text-xl mb-1">
+          Hỗ trợ 24/7
+        </p>
+        <p className="text-slate-400 text-sm">
+          Đội ngũ support sẵn sàng hỗ trợ mọi lúc
+        </p>
+      </div>
+
+      {/* Icon */}
+      <motion.div
+        className={cn(
+          "relative z-10 w-12 h-12 rounded-xl",
+          "bg-[#0066FF]/20 flex items-center justify-center",
+          "group-hover:bg-[#0066FF]/30 transition-colors duration-300",
+        )}
+        whileHover={{ scale: 1.05, rotate: 5 }}
+      >
+        <Headphones className="w-6 h-6 text-[#0066FF]" />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// ============================================
+// MAIN COMPONENT
+// ============================================
+
 export function AsymmetricBento({
   stats = defaultStats,
   heroTitle = "Tại sao chọn chúng tôi?",
-  heroSubtitle = "Chúng tôi không chỉ code, chúng tôi xây dựng mối quan hệ đối tác lâu dài",
-  floatingTestimonial = defaultTestimonial,
+  heroSubtitle = "Chúng tôi không chỉ code, chúng tôi xây dựng mối quan hệ đối tác lâu dài với khách hàng",
+  heroCta = { text: "Liên hệ ngay", href: "#contact" },
   className,
 }: AsymmetricBentoProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -198,135 +426,42 @@ export function AsymmetricBento({
     <div
       ref={containerRef}
       className={cn(
-        "grid grid-cols-12 gap-3 md:gap-4 auto-rows-[minmax(100px,auto)]",
+        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4",
         className,
       )}
     >
-      {/* Hero Card - Large (spans 7 cols, 2 rows on desktop) */}
-      <motion.div
-        className={cn(
-          "col-span-12 lg:col-span-7 row-span-1 lg:row-span-2",
-          "relative rounded-3xl overflow-hidden",
-          "p-6 md:p-8 lg:p-10",
-          "bg-gradient-to-br from-[#0066FF] to-indigo-600",
-        )}
-        initial={{ opacity: 0, x: -50 }}
-        animate={isInView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 0.6 }}
-        whileHover={{ scale: 1.01 }}
-      >
-        {/* Background decorations */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-400/20 rounded-full blur-2xl" />
-
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-            backgroundSize: "30px 30px",
-          }}
+      {/* Hero Card - Spans 2 rows on lg */}
+      <div className="md:col-span-2 lg:col-span-2 lg:row-span-2">
+        <HeroCard
+          title={heroTitle}
+          subtitle={heroSubtitle}
+          cta={heroCta}
+          isInView={isInView}
         />
+      </div>
 
-        {/* Content */}
-        <div className="relative z-10">
-          <motion.h3
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            {heroTitle}
-          </motion.h3>
-          <motion.p
-            className="text-base md:text-lg text-white/80 max-w-md"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            {heroSubtitle}
-          </motion.p>
-        </div>
-
-        {/* Floating testimonial quote */}
-        <motion.div
-          className="absolute bottom-6 right-6 md:bottom-8 md:right-8 max-w-[250px] md:max-w-xs"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-        >
-          <motion.div
-            className="bg-white/20 backdrop-blur-md rounded-2xl p-4 md:p-5"
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <Quote className="w-5 h-5 text-white/50 mb-2" />
-            <p className="text-sm text-white font-medium italic mb-3">
-              &ldquo;{floatingTestimonial.quote}&rdquo;
-            </p>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center text-white text-xs font-bold">
-                {floatingTestimonial.author.charAt(0)}
-              </div>
-              <div>
-                <p className="text-xs text-white font-semibold">
-                  {floatingTestimonial.author}
-                </p>
-                <p className="text-xs text-white/60">
-                  {floatingTestimonial.role}
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      </motion.div>
-
-      {/* Stats Cards - Right column (5 cols each, stacked) */}
+      {/* First two stats - Right column on lg */}
       {stats.slice(0, 2).map((stat, index) => (
-        <div key={stat.label} className="col-span-6 lg:col-span-5 row-span-1">
-          <StatCard stat={stat} delay={0.3 + index * 0.1} />
+        <div key={stat.label} className="lg:col-span-1">
+          <BentoCard
+            stat={stat}
+            delay={0.2 + index * 0.1}
+            variant={index === 0 ? "accent" : "default"}
+          />
         </div>
       ))}
 
-      {/* Bottom row - remaining stats */}
+      {/* Remaining stats - Bottom row */}
       {stats.slice(2).map((stat, index) => (
-        <div key={stat.label} className="col-span-6 lg:col-span-3 row-span-1">
-          <StatCard stat={stat} delay={0.5 + index * 0.1} />
+        <div key={stat.label} className="lg:col-span-1">
+          <BentoCard stat={stat} delay={0.4 + index * 0.1} />
         </div>
       ))}
 
-      {/* Feature highlight card - spans remaining space */}
-      <motion.div
-        className={cn(
-          "col-span-12 lg:col-span-6 row-span-1",
-          "relative rounded-2xl overflow-hidden",
-          "bg-gradient-to-br from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-900",
-          "p-5 md:p-6",
-        )}
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: 0.7 }}
-        whileHover={{ scale: 1.01 }}
-      >
-        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
-        <div className="relative z-10 flex items-center justify-between">
-          <div>
-            <p className="text-white font-bold text-lg md:text-xl mb-1">
-              Hỗ trợ 24/7
-            </p>
-            <p className="text-slate-400 text-sm">
-              Đội ngũ support sẵn sàng hỗ trợ mọi lúc
-            </p>
-          </div>
-          <motion.div
-            className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center"
-            animate={{ rotate: [0, 5, -5, 0] }}
-            transition={{ duration: 4, repeat: Infinity }}
-          >
-            <span className="text-2xl">💬</span>
-          </motion.div>
-        </div>
-      </motion.div>
+      {/* Feature Card - 24/7 Support */}
+      <div className="md:col-span-2 lg:col-span-1">
+        <FeatureCard isInView={isInView} />
+      </div>
     </div>
   );
 }
