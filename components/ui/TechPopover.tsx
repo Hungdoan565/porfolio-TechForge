@@ -31,20 +31,6 @@ export function TechPopover({
   position = "right",
   className,
 }: TechPopoverProps) {
-  const positionStyles = {
-    left: "right-full mr-4 top-1/2 -translate-y-1/2",
-    right: "left-full ml-4 top-1/2 -translate-y-1/2",
-    top: "bottom-full mb-4 left-1/2 -translate-x-1/2",
-    bottom: "top-full mt-4 left-1/2 -translate-x-1/2",
-  };
-
-  const arrowStyles = {
-    left: "right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-45",
-    right: "left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 rotate-45",
-    top: "bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 rotate-45",
-    bottom: "top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-45",
-  };
-
   const slideDirection = {
     left: { x: 20, opacity: 0 },
     right: { x: -20, opacity: 0 },
@@ -56,22 +42,45 @@ export function TechPopover({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className={cn(
-            "absolute z-[100] w-72 md:w-80",
-            positionStyles[position],
-            className,
-          )}
+          className={cn("relative w-72 md:w-80", className)}
           initial={slideDirection[position]}
           animate={{ x: 0, y: 0, opacity: 1 }}
           exit={slideDirection[position]}
           transition={{ duration: 0.2, ease: "easeOut" }}
         >
-          {/* Arrow */}
+          {/* Arrow pointing to icon */}
           <div
-            className={cn(
-              "absolute w-3 h-3 bg-white dark:bg-slate-800 border-l border-t border-slate-200 dark:border-slate-700",
-              arrowStyles[position],
-            )}
+            className="absolute w-3 h-3 bg-white dark:bg-slate-800 border-l border-t border-slate-200 dark:border-slate-700 z-10"
+            style={{
+              ...(position === "right" && {
+                left: -7,
+                top: "50%",
+                transform: "translateY(-50%) rotate(45deg)",
+                borderRight: "none",
+                borderBottom: "none",
+              }),
+              ...(position === "left" && {
+                right: -7,
+                top: "50%",
+                transform: "translateY(-50%) rotate(45deg)",
+                borderLeft: "none",
+                borderTop: "none",
+              }),
+              ...(position === "bottom" && {
+                top: -7,
+                left: "50%",
+                transform: "translateX(-50%) rotate(45deg)",
+                borderLeft: "none",
+                borderTop: "none",
+              }),
+              ...(position === "top" && {
+                bottom: -7,
+                left: "50%",
+                transform: "translateX(-50%) rotate(45deg)",
+                borderRight: "none",
+                borderBottom: "none",
+              }),
+            }}
           />
 
           {/* Card Content */}
