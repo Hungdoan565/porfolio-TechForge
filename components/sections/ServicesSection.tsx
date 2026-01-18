@@ -117,11 +117,11 @@ export default function ServicesSection() {
       className="py-24 md:py-32 bg-slate-50 dark:bg-slate-950 relative overflow-hidden"
       id="services"
     >
-      {/* Background decoration */}
+      {/* Background decoration - Reduced on mobile for performance */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Gradient orbs */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-blue-500/5 to-purple-500/5 dark:from-blue-500/10 dark:to-purple-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-500/5 to-cyan-500/5 dark:from-emerald-500/10 dark:to-cyan-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+        {/* Gradient orbs - Smaller on mobile */}
+        <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gradient-to-br from-blue-500/5 to-purple-500/5 dark:from-blue-500/10 dark:to-purple-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gradient-to-tr from-emerald-500/5 to-cyan-500/5 dark:from-emerald-500/10 dark:to-cyan-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
         {/* Grid pattern for dark mode */}
         <div
@@ -232,7 +232,7 @@ export default function ServicesSection() {
                   style={{ color: service.color }}
                 >
                   <span className="relative">
-                    Tim hieu them
+                    Tìm hiểu thêm
                     <span
                       className="absolute bottom-0 left-0 w-0 h-0.5 group-hover/link:w-full transition-all duration-300"
                       style={{ backgroundColor: service.color }}

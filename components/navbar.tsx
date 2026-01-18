@@ -108,11 +108,10 @@ export const Navbar = () => {
   return (
     <HeroUINavbar
       classNames={{
-        base: `transition-all duration-300 ${
-          isScrolled
+        base: `transition-all duration-300 ${isScrolled
             ? "bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 shadow-sm"
             : "bg-transparent border-b border-transparent"
-        }`,
+          }`,
         wrapper: "px-4 md:px-8",
       }}
       isMenuOpen={isMenuOpen}
@@ -333,12 +332,12 @@ export const Navbar = () => {
         </Menu>
       </NavbarContent>
 
-      {/* Right side - Theme switch & CTA */}
+      {/* Right side - Theme switch & CTA (hidden on mobile/tablet) */}
       <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
+        className="hidden lg:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden sm:flex gap-3 items-center">
+        <NavbarItem className="hidden lg:flex gap-3 items-center">
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
@@ -352,8 +351,8 @@ export const Navbar = () => {
         </NavbarItem>
       </NavbarContent>
 
-      {/* Mobile menu toggle */}
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+      {/* Mobile menu toggle - Show until lg breakpoint */}
+      <NavbarContent className="lg:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>

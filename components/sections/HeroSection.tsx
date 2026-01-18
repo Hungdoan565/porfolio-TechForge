@@ -214,27 +214,27 @@ export default function HeroSection() {
     >
       {/* Background Layer - hero-video.webp bleeding right (full width, centered laptop) */}
       <motion.div
-        className="absolute top-0 right-0 w-[60%] h-full z-0"
+        className="absolute top-0 right-0 w-full md:w-[70%] lg:w-[60%] h-full z-0"
         style={{ scale: imageScale, opacity: imageOpacity }}
       >
-        {/* The image */}
-        <div className="relative w-full h-full">
+        {/* The image with aspect ratio to prevent CLS */}
+        <div className="relative w-full h-full" style={{ aspectRatio: '16/9' }}>
           <Image
             fill
             priority
             alt="TechForge Portfolio Showcase"
             className="object-cover object-center"
             quality={85}
-            sizes="60vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 70vw, 60vw"
             src="/hero-video.webp"
           />
         </div>
 
-        {/* Gradient mask - fades from left to right */}
+        {/* Gradient mask - fades from left to right (stronger on mobile) */}
         <div
           className="absolute inset-0 z-10 bg-gradient-to-r 
-            from-slate-50 via-slate-50/70 to-transparent
-            dark:from-slate-900 dark:via-slate-900/70 dark:to-transparent"
+            from-slate-50 via-slate-50/90 md:via-slate-50/70 to-transparent
+            dark:from-slate-900 dark:via-slate-900/90 md:dark:via-slate-900/70 dark:to-transparent"
         />
 
         {/* Top/Bottom gradient for blending */}
@@ -245,9 +245,9 @@ export default function HeroSection() {
         />
       </motion.div>
 
-      {/* Floating Glassmorphism Badges */}
+      {/* Floating Glassmorphism Badges - Hidden on mobile/tablet for performance */}
       <motion.div
-        className="absolute inset-0 z-20 hidden lg:block"
+        className="absolute inset-0 z-20 hidden xl:block"
         style={{ y: badgesY, opacity: badgesOpacity }}
       >
         {glassBadges.map((badge) => (
@@ -334,12 +334,12 @@ export default function HeroSection() {
               </div>
             </FadeIn>
 
-            {/* Stats Row */}
+            {/* Stats Row - Responsive spacing */}
             <FadeIn delay={0.5} distance={50}>
-              <div className="flex items-center gap-8">
+              <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
                 {stats.map((stat, index) => (
-                  <div key={index} className="text-center">
-                    <div className="text-2xl md:text-3xl font-bold text-[#0066FF] flex items-baseline justify-center tabular-nums">
+                  <div key={index} className="text-center min-w-[60px]">
+                    <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0066FF] flex items-baseline justify-center tabular-nums">
                       {stat.prefix && <span>{stat.prefix}</span>}
                       <CountUp
                         delay={0.5 + index * 0.2}
@@ -348,7 +348,7 @@ export default function HeroSection() {
                       />
                       {stat.suffix && <span>{stat.suffix}</span>}
                     </div>
-                    <span className="text-sm text-slate-500 dark:text-slate-400">
+                    <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
                       {stat.label}
                     </span>
                   </div>
