@@ -257,7 +257,7 @@ export default function ServicesSection() {
                 className="inline-flex items-center gap-2 px-8 py-4 bg-[#0066FF] text-white rounded-full font-semibold transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 hover:bg-[#0052CC]"
                 href="#contact"
               >
-                Lien he tu van
+                Liên hệ tư vấn
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
