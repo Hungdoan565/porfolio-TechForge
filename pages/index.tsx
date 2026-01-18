@@ -9,6 +9,7 @@ import {
   ProcessSection,
   CultureSection,
   FooterSection,
+  CaseStudiesSection,
 } from "@/components/sections";
 
 export default function IndexPage() {
@@ -19,6 +20,9 @@ export default function IndexPage() {
 
       {/* Services Section */}
       <ServicesSection />
+
+      {/* Case Studies Section - Bento Grid */}
+      <CaseStudiesSection />
 
       {/* Tech Stack Section */}
       <TechStackSection />

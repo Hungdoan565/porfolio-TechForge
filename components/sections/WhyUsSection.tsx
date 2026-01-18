@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { AsymmetricBento } from "@/components/ui/AsymmetricBento";
 import { OrbitingTech } from "@/components/ui/OrbitingTech";
 import { TestimonialTicker } from "@/components/ui/TestimonialTicker";
-import { CaseStudyGrid } from "@/components/ui/CaseStudyCard";
 import { FadeIn } from "@/components/ui/motion-primitives";
 
 // ============================================
@@ -39,30 +38,6 @@ const testimonials = [
     author: "Phạm Thị D",
     role: "Founder",
     company: "DigitalHub",
-  },
-];
-
-// Case studies (placeholder)
-const caseStudies = [
-  {
-    title: "TechCorp App",
-    category: "Mobile App",
-    description: "Ứng dụng quản lý doanh nghiệp toàn diện với React Native",
-    stats: [
-      { label: "Revenue", value: "+150%" },
-      { label: "Users", value: "50K+" },
-    ],
-    color: "#0066FF",
-  },
-  {
-    title: "E-commerce Platform",
-    category: "Web Platform",
-    description: "Nền tảng thương mại điện tử với Next.js và headless CMS",
-    stats: [
-      { label: "Performance", value: "3x faster" },
-      { label: "Conversion", value: "+80%" },
-    ],
-    color: "#10B981",
   },
 ];
 
@@ -154,41 +129,6 @@ export default function WhyUsSection() {
           </FadeIn>
 
           <TestimonialTicker speed={40} testimonials={testimonials} />
-        </div>
-
-        {/* ============================================ */}
-        {/* SECTION 4: Case Study Previews */}
-        {/* ============================================ */}
-        <div className="mt-20 md:mt-28">
-          <FadeIn distance={40} duration={0.8}>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 md:mb-12">
-              <div>
-                <motion.span
-                  className="inline-block text-sm font-semibold text-[#0066FF] dark:text-blue-400 uppercase tracking-wider mb-3"
-                  initial={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                >
-                  Case Studies
-                </motion.span>
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 dark:text-white">
-                  Dự án tiêu biểu
-                </h3>
-              </div>
-
-              <motion.a
-                className="mt-4 md:mt-0 inline-flex items-center gap-2 text-[#0066FF] dark:text-blue-400 font-medium hover:underline"
-                href="#portfolio"
-                whileHover={{ x: 5 }}
-              >
-                Xem tất cả dự án
-                <span>→</span>
-              </motion.a>
-            </div>
-          </FadeIn>
-
-          <CaseStudyGrid caseStudies={caseStudies} />
         </div>
       </div>
     </section>

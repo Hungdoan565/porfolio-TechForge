@@ -377,6 +377,38 @@ export function OrbitingTech({
   const containerRef = useRef<HTMLDivElement>(null);
   const leaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Performance: Pause animations when not visible
+  const [isVisible, setIsVisible] = useState(false);
+  const [isDocumentVisible, setIsDocumentVisible] = useState(true);
+
+  // Intersection Observer for visibility
+  useEffect(() => {
+    const element = containerRef.current;
+
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1, rootMargin: "100px" },
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Document visibility (tab focus)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsDocumentVisible(document.visibilityState === "visible");
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
   const orbits = useMemo(
     () => ({
       1: {
@@ -452,7 +484,9 @@ export function OrbitingTech({
     }, 150);
   }, []);
 
-  const isPaused = hoveredTech !== null;
+  // Combine visibility states: pause when not visible OR when hovered OR when tab not focused
+  const shouldAnimate = isVisible && isDocumentVisible && hoveredTech === null;
+  const isPaused = !shouldAnimate;
 
   return (
     <div
@@ -586,7 +620,9 @@ function OrbitRing({
   onTechHover: (tech: TechItemFull, e: React.MouseEvent) => void;
   onTechLeave: () => void;
 }) {
-  const [rotation, setRotation] = useState(0);
+  // Use ref instead of state to avoid re-renders on every frame
+  const rotationRef = useRef(0);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const ICON_SIZE = 56; // w-14 = 56px
 
   useEffect(() => {
@@ -599,7 +635,23 @@ function OrbitRing({
       lastTime = time;
 
       if (!isPaused) {
-        setRotation((prev) => (prev + (360 / speed) * deltaTime) % 360);
+        rotationRef.current =
+          (rotationRef.current + (360 / speed) * deltaTime) % 360;
+
+        // Direct DOM manipulation instead of setState - MAJOR PERF IMPROVEMENT
+        items.forEach((_, index) => {
+          const element = itemRefs.current[index];
+
+          if (element) {
+            const baseAngle = (360 / items.length) * index;
+            const currentAngle = baseAngle + rotationRef.current;
+            const angleRad = (currentAngle * Math.PI) / 180;
+            const x = Math.cos(angleRad) * radius;
+            const y = Math.sin(angleRad) * radius;
+
+            element.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+          }
+        });
       }
 
       animationFrame = requestAnimationFrame(animate);
@@ -608,24 +660,37 @@ function OrbitRing({
     animationFrame = requestAnimationFrame(animate);
 
     return () => cancelAnimationFrame(animationFrame);
-  }, [isPaused, speed]);
+  }, [isPaused, speed, items.length, radius]);
+
+  // Initialize refs array when items change
+  useEffect(() => {
+    itemRefs.current = itemRefs.current.slice(0, items.length);
+  }, [items.length]);
+
+  // Calculate initial positions for SSR/first render
+  const getInitialPosition = (index: number) => {
+    const baseAngle = (360 / items.length) * index;
+    const angleRad = (baseAngle * Math.PI) / 180;
+
+    return {
+      x: Math.cos(angleRad) * radius,
+      y: Math.sin(angleRad) * radius,
+    };
+  };
 
   return (
     <>
       {items.map((tech, index) => {
-        const baseAngle = (360 / items.length) * index;
-        const currentAngle = baseAngle + rotation;
-        const angleRad = (currentAngle * Math.PI) / 180;
         const isHovered = hoveredTech?.name === tech.name;
-
-        // Calculate x, y position from center
-        const x = Math.cos(angleRad) * radius;
-        const y = Math.sin(angleRad) * radius;
+        const initialPos = getInitialPosition(index);
 
         return (
-          <motion.div
+          <div
             key={tech.name}
-            className="absolute"
+            ref={(el) => {
+              itemRefs.current[index] = el;
+            }}
+            className="absolute will-change-transform"
             style={{
               // Position from center of container, offset by half icon size
               left: "50%",
@@ -634,8 +699,7 @@ function OrbitRing({
               height: ICON_SIZE,
               marginLeft: -ICON_SIZE / 2,
               marginTop: -ICON_SIZE / 2,
-              x,
-              y,
+              transform: `translate3d(${initialPos.x}px, ${initialPos.y}px, 0)`,
               zIndex: isHovered ? 50 : 10,
             }}
           >
@@ -673,7 +737,7 @@ function OrbitRing({
                 />
               )}
             </motion.div>
-          </motion.div>
+          </div>
         );
       })}
     </>

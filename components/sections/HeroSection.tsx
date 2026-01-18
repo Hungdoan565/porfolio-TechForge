@@ -225,6 +225,7 @@ export default function HeroSection() {
             alt="TechForge Portfolio Showcase"
             className="object-cover object-center"
             quality={85}
+            sizes="60vw"
             src="/hero-video.webp"
           />
         </div>

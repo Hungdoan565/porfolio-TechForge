@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { button as buttonStyles } from "@heroui/theme";
@@ -278,11 +279,14 @@ export default function HeroSection() {
 
         {/* Laptop Image */}
         <div ref={laptopRef} className="relative z-10 w-full">
-          <img
+          <Image
+            priority
             alt="NextGen Dev Laptop with code"
             className="w-full h-auto object-contain drop-shadow-2xl"
-            loading="eager"
+            height={1080}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
             src="/hero-video.webp"
+            width={1920}
           />
         </div>
       </div>

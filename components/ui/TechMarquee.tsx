@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { TechIcons, TechIconKey } from "./icons";
 
@@ -36,7 +35,7 @@ const techData = {
 interface MarqueeRowProps {
   items: { name: string; key: TechIconKey }[];
   direction?: "left" | "right";
-  speed?: number;
+  duration?: number;
   isPaused: boolean;
   onHover: (paused: boolean) => void;
 }
@@ -44,14 +43,14 @@ interface MarqueeRowProps {
 function MarqueeRow({
   items,
   direction = "left",
-  speed = 30,
+  duration = 30,
   isPaused,
   onHover,
 }: MarqueeRowProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  // Duplicate items for seamless loop
-  const duplicatedItems = [...items, ...items, ...items];
+  // Duplicate items for seamless loop - only 2x needed for CSS animation
+  const duplicatedItems = [...items, ...items];
 
   return (
     <div
@@ -62,92 +61,115 @@ function MarqueeRow({
         setHoveredIndex(null);
       }}
     >
-      <motion.div
-        animate={{
-          x: direction === "left" ? ["0%", "-33.333%"] : ["-33.333%", "0%"],
-        }}
-        className="flex gap-6 md:gap-8"
+      <div
+        className={`flex gap-6 md:gap-8 ${
+          direction === "left"
+            ? "animate-marquee-left"
+            : "animate-marquee-right"
+        }`}
         style={{
+          animationDuration: `${duration}s`,
           animationPlayState: isPaused ? "paused" : "running",
-        }}
-        transition={{
-          x: {
-            duration: speed,
-            repeat: Infinity,
-            ease: "linear",
-            repeatType: "loop",
-          },
         }}
       >
         {duplicatedItems.map((tech, index) => (
-          <motion.div
+          <div
             key={`${tech.key}-${index}`}
-            animate={{
-              scale: hoveredIndex === index ? 1.15 : 1,
-              y: hoveredIndex === index ? -5 : 0,
-            }}
-            className="flex-shrink-0"
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className={`flex-shrink-0 transition-transform duration-200 ease-out ${
+              hoveredIndex === index ? "scale-110 -translate-y-1" : ""
+            }`}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
-            <motion.div
-              className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-sm transition-all duration-300"
-              whileHover={{
-                boxShadow: "0 10px 40px -10px rgba(99, 102, 241, 0.3)",
-                borderColor: "rgba(99, 102, 241, 0.3)",
-              }}
+            <div
+              className={`flex items-center gap-3 px-5 py-3 rounded-2xl bg-white/90 backdrop-blur-sm border shadow-sm transition-all duration-300 ${
+                hoveredIndex === index
+                  ? "shadow-lg shadow-indigo-500/20 border-indigo-500/30"
+                  : "border-slate-200/50"
+              }`}
             >
               {/* Icon with color - larger size */}
-              <motion.div
-                animate={{
-                  rotate: hoveredIndex === index ? [0, -10, 10, 0] : 0,
-                }}
-                className="w-8 h-8 md:w-10 md:h-10"
-                transition={{ duration: 0.5 }}
+              <div
+                className={`w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 ${
+                  hoveredIndex === index ? "animate-wiggle" : ""
+                }`}
               >
                 {TechIcons[tech.key]}
-              </motion.div>
+              </div>
               <span className="text-sm md:text-base font-medium text-slate-700 whitespace-nowrap">
                 {tech.name}
               </span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }
 
 export default function TechMarquee() {
   const [isPaused, setIsPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Pause animations when not visible
+  useEffect(() => {
+    const element = containerRef.current;
+
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1, rootMargin: "100px" },
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Also pause when tab is not visible
+  const [isDocumentVisible, setIsDocumentVisible] = useState(true);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsDocumentVisible(document.visibilityState === "visible");
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  const shouldAnimate = isVisible && isDocumentVisible && !isPaused;
 
   return (
-    <div className="w-full overflow-hidden">
+    <div ref={containerRef} className="w-full overflow-hidden">
       {/* Row 1 - Left direction */}
       <MarqueeRow
         direction="left"
-        isPaused={isPaused}
+        duration={35}
+        isPaused={!shouldAnimate}
         items={techData.row1}
-        speed={35}
         onHover={setIsPaused}
       />
 
       {/* Row 2 - Right direction (staggered) */}
       <MarqueeRow
         direction="right"
-        isPaused={isPaused}
+        duration={40}
+        isPaused={!shouldAnimate}
         items={techData.row2}
-        speed={40}
         onHover={setIsPaused}
       />
 
       {/* Row 3 - Left direction */}
       <MarqueeRow
         direction="left"
-        isPaused={isPaused}
+        duration={32}
+        isPaused={!shouldAnimate}
         items={techData.row3}
-        speed={32}
         onHover={setIsPaused}
       />
     </div>

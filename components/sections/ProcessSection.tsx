@@ -106,18 +106,36 @@ const processSteps: ProcessStep[] = [
 export default function ProcessSection() {
   const [activeStep, setActiveStep] = useState<number>(3);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  // Auto-rotate through steps
+  // Visibility observer - pause animation when not in viewport
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    const element = sectionRef.current;
+
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1 },
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-rotate through steps - only when visible
+  useEffect(() => {
+    if (!isAutoPlaying || !isVisible) return;
 
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev % 5) + 1);
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, isVisible]);
 
   const getStatusColor = (status: ProcessStep["status"]) => {
     switch (status) {
@@ -147,6 +165,7 @@ export default function ProcessSection() {
 
   return (
     <section
+      ref={sectionRef}
       className="py-24 md:py-32 bg-slate-50 dark:bg-slate-900 relative overflow-hidden"
       id="process"
     >

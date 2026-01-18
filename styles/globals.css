@@ -226,6 +226,71 @@
   animation: pulse-ring 2s ease-out infinite;
 }
 
+/* Marquee Animations - Pure CSS for better performance */
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-right {
+  animation: marquee-right linear infinite;
+  will-change: transform;
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-float-slow,
+  .animate-glow-pulse,
+  .animate-shimmer,
+  .animate-rotate-slow,
+  .animate-pulse-ring,
+  .animate-marquee-left,
+  .animate-marquee-right,
+  .animate-wiggle {
+    animation: none !important;
+  }
+
+  .card-3d:hover {
+    transform: none;
+  }
+}
+
 /* 3D Card Hover Effect */
 .card-3d {
   transition:
